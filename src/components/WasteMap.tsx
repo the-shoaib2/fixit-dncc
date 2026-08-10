@@ -189,27 +189,44 @@ export const WasteMap: React.FC<WasteMapProps> = ({
               <Marker key={m.id} position={[m.latitude, m.longitude]} icon={icon}>
                 {/* @ts-ignore */}
                 <Popup>
-                  <div className="p-1 max-w-[200px]">
-                    <div className="font-['Archivo'] font-bold text-xs text-[#0F4C2E] mb-1">
-                      #{m.publicId}
+                  <div className="p-1 max-w-[220px]">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <span className="font-['Archivo'] font-black text-xs text-[#0F4C2E]">
+                        #{m.publicId}
+                      </span>
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#182619] ${
+                          m.status === 'RESOLVED'
+                            ? 'bg-[#2F9E5A] text-white'
+                            : m.status === 'SUBMITTED'
+                            ? 'bg-[#C23B36] text-white'
+                            : 'bg-[#E39A2E] text-[#182619]'
+                        }`}
+                      >
+                        {t(`track.timeline.${m.status.toLowerCase()}`) || m.status}
+                      </span>
                     </div>
-                    <div className="text-xs font-semibold text-[#182619] mb-1">
+
+                    <div className="text-xs font-bold text-[#182619] mb-1">
                       {lang === 'bn' ? m.category?.nameBn : m.category?.nameEn}
                     </div>
-                    <div className="text-[11px] text-[#3f4f40] line-clamp-2 mb-1.5">
-                      {m.locationAddress}
+
+                    <div className="text-[11px] text-[#3f4f40] line-clamp-2 mb-1">
+                      📍 {m.locationAddress}
                     </div>
-                    <span
-                      className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#182619] ${
-                        m.status === 'RESOLVED'
-                          ? 'bg-[#2F9E5A] text-white'
-                          : m.status === 'SUBMITTED'
-                          ? 'bg-[#C23B36] text-white'
-                          : 'bg-[#E39A2E] text-[#182619]'
-                      }`}
+
+                    {m.description && (
+                      <div className="text-[11px] text-[#182619] italic line-clamp-2 mb-2 bg-[#F8F7EC] p-1 rounded border border-[#c9c8b3]">
+                        "{m.description}"
+                      </div>
+                    )}
+
+                    <a
+                      href={`/track?q=${m.publicId}`}
+                      className="block text-center text-xs font-bold bg-[#0F4C2E] text-white py-1 px-2 rounded border border-[#182619] shadow-[2px_2px_0_#182619] hover:bg-[#1E7A45] transition-colors"
                     >
-                      {t(`track.timeline.${m.status.toLowerCase()}`) || m.status}
-                    </span>
+                      🔍 স্ট্যাটাস ট্র্যাক করুন (Track Report) →
+                    </a>
                   </div>
                 </Popup>
               </Marker>

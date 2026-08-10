@@ -4,7 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useLanguage } from '../../lib/i18n';
 import { Search, CheckCircle2, Clock, AlertTriangle, FileText, MapPin } from 'lucide-react';
-import { formatDate } from '../../lib/utils';
+import { formatDate, SAMPLE_BEFORE_IMAGE, SAMPLE_AFTER_IMAGE } from '../../lib/utils';
 
 function TrackPageContent() {
   const { lang, t } = useLanguage();
@@ -177,12 +177,12 @@ function TrackPageContent() {
                       src={
                         report.images?.find((img: any) => img.type === 'BEFORE')?.imageUrl ||
                         report.images?.[0]?.imageUrl ||
-                        '/samples/waste-before.jpg'
+                        SAMPLE_BEFORE_IMAGE
                       }
                       alt="Before Waste"
                       className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-95 transition-opacity"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/samples/waste-before.jpg';
+                        (e.target as HTMLImageElement).src = SAMPLE_BEFORE_IMAGE;
                       }}
                     />
                   </div>
@@ -198,7 +198,7 @@ function TrackPageContent() {
                         alt="After Cleanup"
                         className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-95 transition-opacity"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = '/samples/waste-after.jpg';
+                          (e.target as HTMLImageElement).src = SAMPLE_AFTER_IMAGE;
                         }}
                       />
                     </div>

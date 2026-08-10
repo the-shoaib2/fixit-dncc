@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../../../components/AdminLayout';
 import Link from 'next/link';
 import { Search, Filter, Eye, AlertCircle } from 'lucide-react';
-import { formatDate } from '../../../lib/utils';
+import { formatDate, SAMPLE_BEFORE_IMAGE } from '../../../lib/utils';
 
 export default function AdminReportsListPage() {
   const [reports, setReports] = useState<any[]>([]);
@@ -162,7 +162,7 @@ export default function AdminReportsListPage() {
                           alt="Report photo"
                           className="w-10 h-10 object-cover rounded border border-[#182619]"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/samples/waste-before.jpg';
+                            (e.target as HTMLImageElement).src = SAMPLE_BEFORE_IMAGE;
                           }}
                         />
                       ) : (

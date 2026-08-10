@@ -33,3 +33,9 @@ export function formatDate(date: string | Date, locale: 'bn' | 'en' = 'bn'): str
 
   return `${day} ${month}, ${year}`;
 }
+
+export const SAMPLE_BEFORE_IMAGE =
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%235c4f37"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23ffffff" font-family="sans-serif" font-size="20" font-weight="bold">Reported Waste Issue</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="%23e39a2e" font-family="sans-serif" font-size="14">(Before Cleanup Evidence)</text></svg>';
+
+export const SAMPLE_AFTER_IMAGE =
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%230F4C2E"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23ffffff" font-family="sans-serif" font-size="20" font-weight="bold">Area Cleaned &amp; Sanitized</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="%232F9E5A" font-family="sans-serif" font-size="14">(DNCC Resolution Complete)</text></svg>';

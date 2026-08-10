@@ -95,9 +95,11 @@
     "timeline": {
       "submitted": "জমা দেওয়া হয়েছে",
       "underVerification": "যাচাই চলছে",
+      "under_verification": "যাচাই চলছে",
       "verified": "যাচাই সম্পন্ন",
       "assigned": "দায়িত্ব দেওয়া হয়েছে",
       "inProgress": "কাজ চলছে",
+      "in_progress": "কাজ চলছে",
       "resolved": "সমাধান হয়েছে",
       "rejected": "বাতিল"
     }

@@ -95,9 +95,11 @@
     "timeline": {
       "submitted": "Submitted",
       "underVerification": "Under Verification",
+      "under_verification": "Under Verification",
       "verified": "Verified",
       "assigned": "Assigned to Team",
       "inProgress": "Work In Progress",
+      "in_progress": "Work In Progress",
       "resolved": "Resolved",
       "rejected": "Rejected"
     }

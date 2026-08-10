@@ -106,12 +106,16 @@ function TrackPageContent() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span
-                      className={`text-xs font-bold px-3.5 py-1.5 rounded-full border-2 border-[#182619] ${
+                      className={`text-xs font-bold px-3.5 py-1.5 rounded-full border-2 border-[#182619] shadow-[2px_2px_0_#182619] ${
                         report.status === 'RESOLVED'
                           ? 'bg-[#2F9E5A] text-white'
                           : report.status === 'REJECTED'
                           ? 'bg-[#C23B36] text-white'
-                          : 'bg-[#E39A2E] text-[#182619]'
+                          : report.status === 'IN_PROGRESS' || report.status === 'ASSIGNED'
+                          ? 'bg-[#E39A2E] text-[#182619]'
+                          : report.status === 'VERIFIED'
+                          ? 'bg-[#1E7A45] text-white'
+                          : 'bg-[#3b82f6] text-white'
                       }`}
                     >
                       {t(`track.timeline.${report.status.toLowerCase()}`) || report.status}
@@ -152,17 +156,31 @@ function TrackPageContent() {
                     অগ্রগতির ইতিহাস (Timeline)
                   </h4>
                   <div className="space-y-3 border-l-2 border-[#182619] ml-2 pl-4">
-                    {report.statusHistory?.map((h: any, idx: number) => (
-                      <div key={idx} className="relative">
-                        <div className="absolute -left-[23px] top-1 w-3 h-3 rounded-full bg-[#E39A2E] border-2 border-[#182619]" />
-                        <div className="text-xs font-bold text-[#182619]">
-                          {t(`track.timeline.${h.status.toLowerCase()}`) || h.status}
+                    {report.statusHistory?.map((h: any, idx: number) => {
+                      const statusUpper = h.status?.toUpperCase();
+                      const dotBg =
+                        statusUpper === 'RESOLVED'
+                          ? 'bg-[#2F9E5A]'
+                          : statusUpper === 'REJECTED'
+                          ? 'bg-[#C23B36]'
+                          : statusUpper === 'IN_PROGRESS' || statusUpper === 'ASSIGNED'
+                          ? 'bg-[#E39A2E]'
+                          : statusUpper === 'VERIFIED'
+                          ? 'bg-[#1E7A45]'
+                          : 'bg-[#3b82f6]';
+
+                      return (
+                        <div key={idx} className="relative">
+                          <div className={`absolute -left-[23px] top-1 w-3 h-3 rounded-full border-2 border-[#182619] ${dotBg}`} />
+                          <div className="text-xs font-bold text-[#182619]">
+                            {t(`track.timeline.${h.status.toLowerCase()}`) || h.status}
+                          </div>
+                          <div className="text-[11px] text-[#3f4f40]">
+                            {formatDate(h.createdAt, lang)}
+                          </div>
                         </div>
-                        <div className="text-[11px] text-[#3f4f40]">
-                          {formatDate(h.createdAt, lang)}
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 

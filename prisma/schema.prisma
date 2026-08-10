@@ -50,6 +50,13 @@ model Report {
   statusHistory   ReportStatusHistory[]
   cleaningActivity CleaningActivity?
   publicUpdates   PublicUpdate[]
+
+  @@index([publicId])
+  @@index([mobileNumber])
+  @@index([status])
+  @@index([categoryId])
+  @@index([priority])
+  @@index([createdAt])
 }
 
 model ReportImage {
@@ -59,6 +66,9 @@ model ReportImage {
   imageUrl  String
   type      String   @default("BEFORE") // BEFORE, AFTER
   createdAt DateTime @default(now())
+
+  @@index([reportId])
+  @@index([type])
 }
 
 model ReportStatusHistory {
@@ -69,6 +79,9 @@ model ReportStatusHistory {
   note      String?
   createdBy String?
   createdAt DateTime @default(now())
+
+  @@index([reportId])
+  @@index([createdAt])
 }
 
 model CleaningActivity {
@@ -90,6 +103,8 @@ model PublicUpdate {
   title     String
   message   String
   createdAt DateTime @default(now())
+
+  @@index([reportId])
 }
 
 model Faq {
@@ -111,6 +126,9 @@ model ContactMessage {
   message   String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  @@index([mobile])
+  @@index([createdAt])
 }
 
 model ActivityLog {
@@ -121,4 +139,7 @@ model ActivityLog {
   details   String
   ipAddress String?
   createdAt DateTime @default(now())
+
+  @@index([adminId])
+  @@index([createdAt])
 }

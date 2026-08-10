@@ -54,11 +54,72 @@ export default function AdminReportDetailPage() {
     loadReportDetail();
   }, [id]);
 
+  // Client-side image compression targeting ~150-200 KB
+  const compressImage = (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      if (file.size <= 200 * 1024) {
+        resolve(file);
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDimension = 1200;
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(file);
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            0.7
+          );
+        };
+        img.onerror = () => resolve(file);
+      };
+      reader.onerror = () => resolve(file);
+    });
+  };
+
   // After Image Upload Handler
   const handleAfterImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const rawFile = e.target.files?.[0];
+    if (!rawFile) return;
 
+    const file = await compressImage(rawFile);
     setUploadingAfter(true);
     try {
       const formData = new FormData();
@@ -401,6 +462,36 @@ export default function AdminReportDetailPage() {
           </div>
         </div>
       </div>
+      {/* Enlarged Image Preview Modal Dialog */}
+      {activeModalImage && (
+        <div
+          className="fixed inset-0 z-[1000] bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setActiveModalImage(null)}
+        >
+          <div
+            className="relative max-w-4xl max-h-[90vh] bg-[#F8F7EC] border-4 border-[#182619] rounded-xl p-3 shadow-[8px_8px_0_#000] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-2 mb-2 border-b-2 border-[#182619] px-1">
+              <span className="font-bold text-xs text-[#0F4C2E] uppercase tracking-wider">
+                {activeModalImage.title}
+              </span>
+              <button
+                onClick={() => setActiveModalImage(null)}
+                className="bg-[#C23B36] text-white p-1 rounded-full border-2 border-[#182619] hover:bg-red-700 transition-colors"
+                title="বন্ধ করুন"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <img
+              src={activeModalImage.url}
+              alt="Enlarged view"
+              className="w-full max-h-[78vh] object-contain rounded-lg border border-[#c9c8b3]"
+            />
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }

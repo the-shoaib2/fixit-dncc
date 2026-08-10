@@ -3,7 +3,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useLanguage } from '../../lib/i18n';
-import { Search, CheckCircle2, Clock, AlertTriangle, FileText, MapPin } from 'lucide-react';
+import { Search, CheckCircle2, Clock, AlertTriangle, FileText, MapPin, X } from 'lucide-react';
 import { formatDate, SAMPLE_BEFORE_IMAGE, SAMPLE_AFTER_IMAGE } from '../../lib/utils';
 
 function TrackPageContent() {

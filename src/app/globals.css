@@ -1,0 +1,143 @@
+@import 'leaflet/dist/leaflet.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Archivo:wght@600;700;800;900&display=swap');
+
+:root {
+  --ink: #182619;
+  --ink-soft: #3f4f40;
+  --paper: #EFEFE1;
+  --paper-raised: #F8F7EC;
+  --green-deep: #0F4C2E;
+  --green-mid: #1E7A45;
+  --green-bright: #2F9E5A;
+  --amber: #E39A2E;
+  --amber-deep: #C97C16;
+  --red: #C23B36;
+  --line: #c9c8b3;
+  --shadow: 0 10px 24px rgba(15, 76, 46, 0.12);
+  --radius: 6px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 60px;
+}
+
+body {
+  scroll-behavior: smooth;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+h1, h2, h3, .disp {
+  font-family: 'Baloo Da 2', 'Hind Siliguri', sans-serif;
+  font-weight: 700;
+  color: var(--green-deep);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.eng {
+  font-family: 'Archivo', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+/* Texture overlay matching index.html */
+.grid-texture {
+  background-image: radial-gradient(circle, rgba(15, 76, 46, 0.14) 1px, transparent 1.4px);
+  background-size: 20px 20px;
+}
+
+/* Perforated ticket styling matching index.html */
+.ticket {
+  background: var(--paper-raised);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  padding: 22px 14px 18px;
+  text-align: center;
+  position: relative;
+}
+
+.ticket::before, .ticket::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: var(--green-deep);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+
+.ticket::before {
+  left: -9px;
+}
+
+.ticket::after {
+  right: -9px;
+}
+
+.ticket .num {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-size: 30px;
+  color: var(--green-deep);
+}
+
+.ticket .lbl {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+.ticket .stamp {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: var(--red);
+  border: 1.5px solid var(--red);
+  border-radius: 100px;
+  padding: 1px 6px;
+  transform: rotate(6deg);
+  font-family: 'Archivo', sans-serif;
+  letter-spacing: .05em;
+}
+
+/* Custom interactive map pin style */
+.leaflet-popup-content-wrapper {
+  background: var(--paper-raised) !important;
+  border: 2px solid var(--ink) !important;
+  border-radius: 6px !important;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2) !important;
+  font-family: 'Hind Siliguri', sans-serif !important;
+}
+
+.leaflet-container {
+  background: #DDE6D3 !important;
+  font-family: 'Hind Siliguri', sans-serif !important;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
+}

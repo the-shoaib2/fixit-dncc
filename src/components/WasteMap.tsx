@@ -1,0 +1,238 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useLanguage } from '@/lib/i18n';
+
+interface MarkerItem {
+  id: string;
+  publicId: string;
+  latitude: number;
+  longitude: number;
+  status: string;
+  locationAddress: string;
+  description: string;
+  category?: { nameBn: string; nameEn: string };
+}
+
+interface WasteMapProps {
+  markers?: MarkerItem[];
+  interactive?: boolean;
+  selectable?: boolean;
+  onSelectLocation?: (lat: number, lng: number) => void;
+  height?: string;
+}
+
+// Dynamically import Leaflet components to bypass SSR issues
+const MapContainer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Marker = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Marker),
+  { ssr: false }
+);
+const Popup = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Popup),
+  { ssr: false }
+);
+const LocationPickerHandler = dynamic(
+  () =>
+    import('react-leaflet').then((mod) => {
+      const { useMapEvents } = mod;
+      return function Handler({ onSelect }: { onSelect: (lat: number, lng: number) => void }) {
+        useMapEvents({
+          click(e) {
+            onSelect(e.latlng.lat, e.latlng.lng);
+          },
+        });
+        return null;
+      };
+    }),
+  { ssr: false }
+);
+
+// Map Resizer component to ensure Leaflet recalculates dimensions after mount
+const MapResizer = dynamic(
+  () =>
+    import('react-leaflet').then((mod) => {
+      const { useMap } = mod;
+      return function Resizer() {
+        const map = useMap();
+        useEffect(() => {
+          const timer = setTimeout(() => {
+            map.invalidateSize();
+          }, 250);
+          return () => clearTimeout(timer);
+        }, [map]);
+        return null;
+      };
+    }),
+  { ssr: false }
+);
+
+export const WasteMap: React.FC<WasteMapProps> = ({
+  markers = [],
+  selectable = false,
+  onSelectLocation,
+  height = '420px',
+}) => {
+  const { lang, t } = useLanguage();
+  const [leafletLoaded, setLeafletLoaded] = useState(false);
+  const [customIcons, setCustomIcons] = useState<any>({});
+  const [selectedPos, setSelectedPos] = useState<{ lat: number; lng: number } | null>(null);
+
+  // Default center: Central Dhaka North (Mirpur/Gulshan area)
+  const defaultCenter = [23.8103, 90.4125];
+
+  useEffect(() => {
+    import('leaflet').then((L) => {
+      // Create colored marker icons matching exact palette
+      const redIcon = L.divIcon({
+        className: 'custom-pin-red',
+        html: `<div style="background:#C23B36; width:22px; height:22px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #182619;"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 22],
+      });
+      const amberIcon = L.divIcon({
+        className: 'custom-pin-amber',
+        html: `<div style="background:#E39A2E; width:22px; height:22px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #182619;"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 22],
+      });
+      const greenIcon = L.divIcon({
+        className: 'custom-pin-green',
+        html: `<div style="background:#2F9E5A; width:22px; height:22px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #182619;"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 22],
+      });
+
+      setCustomIcons({
+        SUBMITTED: redIcon,
+        UNDER_VERIFICATION: amberIcon,
+        VERIFIED: amberIcon,
+        ASSIGNED: amberIcon,
+        IN_PROGRESS: amberIcon,
+        RESOLVED: greenIcon,
+        REJECTED: redIcon,
+        DEFAULT: amberIcon,
+      });
+      setLeafletLoaded(true);
+    });
+  }, []);
+
+  const handleMapClick = (lat: number, lng: number) => {
+    setSelectedPos({ lat, lng });
+    if (onSelectLocation) {
+      onSelectLocation(lat, lng);
+    }
+  };
+
+  if (!leafletLoaded) {
+    return (
+      <div
+        style={{ height }}
+        className="w-full bg-[#DDE6D3] grid-texture border-2 border-[#182619] rounded-lg shadow-[4px_4px_0_rgba(0,0,0,0.15)]"
+      />
+    );
+  }
+
+  return (
+    <div className="relative w-full border-2 border-[#182619] rounded-lg overflow-hidden shadow-[4px_4px_0_rgba(0,0,0,0.15)]">
+      <div style={{ height }}>
+        {/* @ts-ignore */}
+        <MapContainer
+          center={defaultCenter as [number, number]}
+          zoom={12}
+          scrollWheelZoom={false}
+          attributionControl={false}
+          style={{ height: '100%', width: '100%' }}
+        >
+          {/* Automatic Leaflet container resizer */}
+          <MapResizer />
+
+          {/* @ts-ignore */}
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          />
+
+          {selectable && onSelectLocation && (
+            <LocationPickerHandler onSelect={handleMapClick} />
+          )}
+
+          {/* User selected location pin */}
+          {selectedPos && (
+            // @ts-ignore
+            <Marker
+              position={[selectedPos.lat, selectedPos.lng]}
+              icon={customIcons.SUBMITTED || customIcons.DEFAULT}
+            >
+              {/* @ts-ignore */}
+              <Popup>
+                <div className="text-xs font-bold text-[#182619]">
+                  নির্বাচন করা স্থান ({selectedPos.lat.toFixed(4)}, {selectedPos.lng.toFixed(4)})
+                </div>
+              </Popup>
+            </Marker>
+          )}
+
+          {/* Pre-loaded Report Markers */}
+          {markers.map((m) => {
+            const icon = customIcons[m.status] || customIcons.DEFAULT;
+            return (
+              // @ts-ignore
+              <Marker key={m.id} position={[m.latitude, m.longitude]} icon={icon}>
+                {/* @ts-ignore */}
+                <Popup>
+                  <div className="p-1 max-w-[200px]">
+                    <div className="font-['Archivo'] font-bold text-xs text-[#0F4C2E] mb-1">
+                      #{m.publicId}
+                    </div>
+                    <div className="text-xs font-semibold text-[#182619] mb-1">
+                      {lang === 'bn' ? m.category?.nameBn : m.category?.nameEn}
+                    </div>
+                    <div className="text-[11px] text-[#3f4f40] line-clamp-2 mb-1.5">
+                      {m.locationAddress}
+                    </div>
+                    <span
+                      className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#182619] ${
+                        m.status === 'RESOLVED'
+                          ? 'bg-[#2F9E5A] text-white'
+                          : m.status === 'SUBMITTED'
+                          ? 'bg-[#C23B36] text-white'
+                          : 'bg-[#E39A2E] text-[#182619]'
+                      }`}
+                    >
+                      {t(`track.timeline.${m.status.toLowerCase()}`) || m.status}
+                    </span>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MapContainer>
+      </div>
+
+      {/* Map Legend */}
+      <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur border-2 border-[#182619] rounded-md px-3 py-2 text-xs font-bold flex gap-4 z-[400]">
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#C23B36]"></span>
+          {t('hero.status.submitted')}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#E39A2E]"></span>
+          {t('hero.status.inProgress')}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#2F9E5A]"></span>
+          {t('hero.status.resolved')}
+        </span>
+      </div>
+    </div>
+  );
+};

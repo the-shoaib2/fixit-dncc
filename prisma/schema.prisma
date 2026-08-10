@@ -1,0 +1,124 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String
+  passwordHash String
+  role         String        @default("ADMIN")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  activityLogs ActivityLog[]
+}
+
+model WasteCategory {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  nameBn      String
+  nameEn      String
+  description String?
+  icon        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  reports     Report[]
+}
+
+model Report {
+  id              String                @id @default(uuid())
+  publicId        String                @unique // FIX-2026-XXXXXX
+  categoryId      String
+  category        WasteCategory         @relation(fields: [categoryId], references: [id])
+  description     String
+  locationAddress String
+  latitude        Float
+  longitude       Float
+  mobileNumber    String?
+  status          String                @default("SUBMITTED") // SUBMITTED, UNDER_VERIFICATION, VERIFIED, ASSIGNED, IN_PROGRESS, RESOLVED, REJECTED
+  priority        String                @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT
+  assignedTo      String?
+  rejectionReason String?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  images          ReportImage[]
+  statusHistory   ReportStatusHistory[]
+  cleaningActivity CleaningActivity?
+  publicUpdates   PublicUpdate[]
+}
+
+model ReportImage {
+  id        String   @id @default(uuid())
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  type      String   @default("BEFORE") // BEFORE, AFTER
+  createdAt DateTime @default(now())
+}
+
+model ReportStatusHistory {
+  id        String   @id @default(uuid())
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  status    String
+  note      String?
+  createdBy String?
+  createdAt DateTime @default(now())
+}
+
+model CleaningActivity {
+  id            String    @id @default(uuid())
+  reportId      String    @unique
+  report        Report    @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  cleanedAt     DateTime  @default(now())
+  cleanedBy     String
+  notes         String?
+  wasteVolumeKg Float?
+  afterImageUrl String?
+  createdAt     DateTime  @default(now())
+}
+
+model PublicUpdate {
+  id        String   @id @default(uuid())
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Faq {
+  id         String   @id @default(uuid())
+  questionBn String
+  questionEn String
+  answerBn   String
+  answerEn   String
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  mobile    String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  adminId   String?
+  admin     Admin?   @relation(fields: [adminId], references: [id], onDelete: SetNull)
+  action    String
+  details   String
+  ipAddress String?
+  createdAt DateTime @default(now())
+}

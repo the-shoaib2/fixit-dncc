@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixIt DNCC — Report Waste. Build a Cleaner Dhaka.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Archivo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182619;
+    --ink-soft:#3f4f40;
+    --paper:#EFEFE1;
+    --paper-raised:#F8F7EC;
+    --green-deep:#0F4C2E;
+    --green-mid:#1E7A45;
+    --green-bright:#2F9E5A;
+    --amber:#E39A2E;
+    --amber-deep:#C97C16;
+    --red:#C23B36;
+    --line:#c9c8b3;
+    --shadow: 0 10px 24px rgba(15,76,46,0.12);
+    --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Hind Siliguri','Noto Sans Bengali',sans-serif;
+    font-size:16px;
+    line-height:1.65;
+  }
+  h1,h2,h3,.disp{
+    font-family:'Baloo Da 2','Hind Siliguri',sans-serif;
+    font-weight:700;
+    color:var(--green-deep);
+    line-height:1.25;
+    margin:0;
+  }
+  .eng{
+    font-family:'Archivo',sans-serif;
+    letter-spacing:0.02em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--amber);color:var(--ink);}
+
+  /* subtle dot-grid texture used across paper sections */
+  .grid-texture{
+    background-image: radial-gradient(circle, rgba(15,76,46,0.14) 1px, transparent 1.4px);
+    background-size: 20px 20px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:var(--paper-raised);
+    border-bottom:2px solid var(--ink);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--green-deep);
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--ink);
+  }
+  .brand-mark svg{width:20px;height:20px;stroke:var(--paper-raised);}
+  .brand-name{font-family:'Archivo',sans-serif;font-weight:900;font-size:19px;color:var(--ink);}
+  .brand-name span{color:var(--green-mid);}
+  nav.links{display:flex;gap:28px;}
+  nav.links a{
+    font-size:14.5px;font-weight:600;color:var(--ink-soft);
+    position:relative;padding:4px 0;
+  }
+  nav.links a:hover{color:var(--green-deep);}
+  .nav-cta{
+    background:var(--amber);border:2px solid var(--ink);border-radius:var(--radius);
+    padding:9px 18px;font-weight:700;font-size:14.5px;color:var(--ink);
+    box-shadow:3px 3px 0 var(--ink);
+    transition:transform .12s ease;
+  }
+  .nav-cta:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+  .burger{display:none;background:none;border:2px solid var(--ink);border-radius:4px;width:42px;height:42px;align-items:center;justify-content:center;}
+  .burger svg{width:20px;height:20px;stroke:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:var(--green-deep);
+    color:var(--paper-raised);
+    overflow:hidden;
+    border-bottom:2px solid var(--ink);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1.4px, transparent 1.6px);
+    background-size:26px 26px;
+    opacity:.5;
+  }
+  .hero-inner{
+    position:relative;
+    padding:96px 24px 84px;
+    max-width:1180px;margin:0 auto;
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;
+  }
+  .eyebrow-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--amber);color:var(--ink);
+    font-weight:700;font-size:13px;padding:6px 12px;border-radius:100px;
+    border:2px solid var(--ink);
+    margin-bottom:22px;
+  }
+  .hero h1.eng{
+    font-size:clamp(32px,4.6vw,54px);
+    font-weight:900;color:#fff;
+    letter-spacing:-0.01em;
+    margin-bottom:20px;
+  }
+  .hero h1.eng em{
+    font-style:normal;color:var(--amber);
+  }
+  .hero .sub{
+    font-family:'Hind Siliguri',sans-serif;
+    font-size:19px;font-weight:600;
+    color:#DCE8DD;
+    max-width:520px;margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    font-weight:700;font-size:15.5px;
+    padding:14px 26px;border-radius:var(--radius);
+    border:2px solid var(--ink);
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--amber);color:var(--ink);box-shadow:4px 4px 0 rgba(0,0,0,0.4);}
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,0.4);}
+  .btn-ghost{background:transparent;color:#fff;border-color:#fff;}
+  .btn-ghost:hover{background:rgba(255,255,255,0.1);}
+
+  /* hero ticket-map visual */
+  .hero-visual{
+    position:relative;
+    background:var(--paper-raised);
+    border:2px solid var(--ink);
+    border-radius:8px;
+    box-shadow:8px 8px 0 rgba(0,0,0,0.35);
+    padding:20px;
+    color:var(--ink);
+  }
+  .hero-visual .map-face{
+    position:relative;height:230px;border-radius:5px;overflow:hidden;
+    background:#DDE6D3;
+    background-image: radial-gradient(circle, rgba(15,76,46,0.18) 1.2px, transparent 1.4px);
+    background-size:16px 16px;
+    border:1.5px solid var(--line);
+  }
+  .pin{position:absolute;width:16px;height:16px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid var(--ink);}
+  .pin.p1{background:var(--red);top:30%;left:22%;}
+  .pin.p2{background:var(--amber);top:55%;left:60%;}
+  .pin.p3{background:var(--green-bright);top:20%;left:72%;}
+  .pin.p4{background:var(--amber);top:72%;left:38%;}
+  .hero-visual .caption-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
+  .hero-visual .caption-row .lbl{font-weight:700;font-size:13.5px;color:var(--green-deep);}
+  .status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-inline-end:5px;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:74px 0;}
+  .section-head{max-width:640px;margin:0 auto 44px;text-align:center;}
+  .section-head .tag{
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:12.5px;letter-spacing:.14em;
+    color:var(--green-mid);text-transform:uppercase;margin-bottom:10px;display:block;
+  }
+  .section-head h2{font-size:clamp(24px,3vw,34px);}
+
+  /* ---------- STATS (perforated ticket cards) ---------- */
+  .stats-section{background:var(--green-deep);color:#fff;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .stats-section .section-head h2{color:#fff;}
+  .stats-section .section-head .tag{color:var(--amber);}
+  .ticket-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+  .ticket{
+    background:var(--paper-raised);color:var(--ink);
+    border:2px solid var(--ink);border-radius:6px;
+    padding:22px 14px 18px;text-align:center;position:relative;
+  }
+  .ticket::before,.ticket::after{
+    content:"";position:absolute;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;background:var(--green-deep);border:2px solid var(--ink);border-radius:50%;
+  }
+  .ticket::before{left:-9px;}
+  .ticket::after{right:-9px;}
+  .ticket .num{font-family:'Archivo',sans-serif;font-weight:900;font-size:30px;color:var(--green-deep);}
+  .ticket .lbl{font-size:13.5px;font-weight:600;color:var(--ink-soft);margin-top:6px;}
+  .ticket .stamp{
+    position:absolute;top:8px;right:10px;font-size:9.5px;font-weight:800;color:var(--red);
+    border:1.5px solid var(--red);border-radius:100px;padding:1px 6px;transform:rotate(6deg);
+    font-family:'Archivo',sans-serif;letter-spacing:.05em;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:step;}
+  .step{position:relative;background:var(--paper-raised);border:2px solid var(--ink);border-radius:6px;padding:26px 20px;}
+  .step .step-no{
+    font-family:'Archivo',sans-serif;font-weight:900;font-size:38px;color:var(--paper);
+    -webkit-text-stroke:2px var(--green-deep);
+    margin-bottom:10px;
+  }
+  .step h3{font-size:18px;margin-bottom:8px;}
+  .step p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .step-icon{width:34px;height:34px;stroke:var(--green-deep);fill:none;stroke-width:1.6;margin-bottom:12px;}
+  .steps-track{display:flex;align-items:center;justify-content:center;margin-top:6px;}
+
+  /* ---------- CATEGORIES ---------- */
+  .cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+  .cat-card{
+    background:var(--paper-raised);border:2px solid var(--ink);border-radius:6px;
+    padding:24px 16px;text-align:center;transition:transform .12s ease;
+  }
+  .cat-card:hover{transform:translateY(-4px);box-shadow:5px 5px 0 rgba(0,0,0,0.15);}
+  .cat-card svg{width:32px;height:32px;stroke:var(--green-deep);fill:none;stroke-width:1.6;margin-bottom:12px;}
+  .cat-card h3{font-size:15px;line-height:1.4;}
+
+  /* ---------- REPORT FORM ---------- */
+  .form-section{background:var(--paper-raised);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .form-card{background:#fff;border:2px solid var(--ink);border-radius:8px;padding:30px;box-shadow:6px 6px 0 rgba(0,0,0,0.08);}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-weight:700;font-size:14px;margin-bottom:7px;color:var(--ink);}
+  .field .hint{font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-top:4px;}
+  .upload-box{
+    border:2px dashed var(--line);border-radius:6px;padding:26px;text-align:center;
+    background:var(--paper);cursor:pointer;
+  }
+  .upload-box svg{width:26px;height:26px;stroke:var(--green-mid);margin-bottom:8px;}
+  .upload-box .u-txt{font-weight:600;font-size:14px;color:var(--ink-soft);}
+  select,input[type=text],input[type=tel],textarea{
+    width:100%;padding:11px 13px;border:2px solid var(--line);border-radius:5px;
+    font-family:inherit;font-size:14.5px;background:#fff;color:var(--ink);
+  }
+  select:focus,input:focus,textarea:focus{outline:3px solid var(--amber);outline-offset:1px;border-color:var(--green-mid);}
+  textarea{resize:vertical;min-height:90px;}
+  .loc-row{display:flex;gap:8px;}
+  .loc-row input{flex:1;}
+  .loc-row button{
+    border:2px solid var(--ink);background:var(--paper);border-radius:5px;padding:0 14px;
+    font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer;
+  }
+  .submit-btn{
+    width:100%;background:var(--green-deep);color:#fff;border:2px solid var(--ink);
+    border-radius:6px;padding:14px;font-weight:700;font-size:16px;cursor:pointer;
+    box-shadow:4px 4px 0 rgba(0,0,0,0.25);
+  }
+  .submit-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,0.25);}
+
+  .side-note{padding-top:12px;}
+  .side-note h3{font-size:22px;margin-bottom:14px;}
+  .side-note p{color:var(--ink-soft);margin-bottom:20px;}
+  .mini-steps{list-style:none;margin:0;padding:0;}
+  .mini-steps li{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;font-size:14.5px;color:var(--ink-soft);}
+  .mini-steps .dot{
+    flex:none;width:24px;height:24px;border-radius:50%;background:var(--amber);
+    border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;color:var(--ink);
+  }
+
+  /* ---------- TRACK ---------- */
+  .track-card{
+    background:var(--green-deep);color:#fff;border:2px solid var(--ink);border-radius:8px;
+    padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;
+  }
+  .track-card h3{color:#fff;font-size:24px;margin-bottom:10px;}
+  .track-card p{color:#D9E5DA;font-size:14.5px;margin-bottom:20px;}
+  .track-tabs{display:flex;gap:8px;margin-bottom:14px;}
+  .track-tab{
+    flex:1;text-align:center;padding:9px;border-radius:5px;border:2px solid rgba(255,255,255,0.4);
+    font-weight:700;font-size:13.5px;cursor:pointer;background:transparent;color:#fff;
+  }
+  .track-tab.active{background:var(--amber);color:var(--ink);border-color:var(--ink);}
+  .track-input-row{display:flex;gap:10px;}
+  .track-input-row input{flex:1;border:none;border-radius:5px;padding:12px 14px;font-size:14.5px;}
+  .track-input-row button{
+    background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:5px;
+    padding:0 20px;font-weight:700;cursor:pointer;
+  }
+  .status-timeline{background:#fff;color:var(--ink);border-radius:6px;padding:20px;}
+  .status-timeline .t-item{display:flex;gap:12px;padding:8px 0;font-size:13.5px;align-items:center;}
+  .status-timeline .t-item .circ{width:11px;height:11px;border-radius:50%;flex:none;}
+  .status-timeline .t-item.done .circ{background:var(--green-bright);}
+  .status-timeline .t-item.now .circ{background:var(--amber);}
+  .status-timeline .t-item.pending .circ{background:var(--line);}
+  .status-timeline .t-item.now{font-weight:700;}
+
+  /* ---------- BEFORE/AFTER ---------- */
+  .ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .ba-card{border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff;}
+  .ba-imgs{display:grid;grid-template-columns:1fr 1fr;}
+  .ba-imgs .panel{
+    aspect-ratio:4/3;position:relative;display:flex;align-items:center;justify-content:center;
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;letter-spacing:.08em;color:#fff;
+  }
+  .ba-imgs .before{background:linear-gradient(135deg,#7a6a4a,#5c4f37);}
+  .ba-imgs .after{background:linear-gradient(135deg,var(--green-mid),var(--green-deep));}
+  .ba-imgs .panel svg{width:34px;height:34px;stroke:rgba(255,255,255,0.85);position:absolute;top:14px;left:14px;}
+  .ba-imgs .panel span{position:absolute;bottom:10px;left:12px;}
+  .ba-cap{padding:14px 16px;font-size:13.5px;font-weight:600;color:var(--ink-soft);}
+
+  /* ---------- MAP ---------- */
+  .map-section{background:var(--paper-raised);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);}
+  .live-map{
+    position:relative;height:420px;border:2px solid var(--ink);border-radius:8px;overflow:hidden;
+    background:#DDE6D3;
+    background-image: radial-gradient(circle, rgba(15,76,46,0.18) 1.3px, transparent 1.5px);
+    background-size:22px 22px;
+  }
+  .live-map .road{position:absolute;background:rgba(15,76,46,0.18);}
+  .live-map .pin-lg{position:absolute;width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid var(--ink);cursor:pointer;}
+  .map-legend{
+    position:absolute;bottom:16px;left:16px;background:#fff;border:2px solid var(--ink);border-radius:6px;
+    padding:12px 16px;font-size:13px;font-weight:600;display:flex;gap:16px;
+  }
+  .map-legend .li{display:flex;align-items:center;gap:6px;}
+  .map-legend .sw{width:11px;height:11px;border-radius:50%;}
+
+  /* ---------- WHY ---------- */
+  .why-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+  .why-card{text-align:center;padding:10px;}
+  .why-card svg{width:40px;height:40px;stroke:var(--green-deep);fill:none;stroke-width:1.5;margin-bottom:14px;}
+  .why-card h3{font-size:15px;margin-bottom:6px;}
+  .why-card p{font-size:13px;color:var(--ink-soft);margin:0;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px;margin:0 auto;}
+  details{
+    background:var(--paper-raised);border:2px solid var(--ink);border-radius:6px;
+    padding:18px 22px;margin-bottom:14px;
+  }
+  summary{
+    cursor:pointer;font-weight:700;font-size:16px;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;color:var(--green-deep);
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary .plus{font-family:'Archivo',sans-serif;font-weight:900;font-size:20px;transition:transform .2s ease;}
+  details[open] summary .plus{transform:rotate(45deg);}
+  details p{margin:14px 0 0;color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    background:var(--amber);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    text-align:center;padding:64px 24px;
+  }
+  .final-cta h2{font-size:clamp(22px,3vw,30px);max-width:680px;margin:0 auto 26px;color:var(--ink);}
+  .final-cta .btn-primary{background:var(--ink);color:var(--paper-raised);}
+  .final-cta .btn-primary:hover{box-shadow:6px 6px 0 rgba(0,0,0,0.25);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:#cfd8cf;padding:52px 0 26px;}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;padding-bottom:32px;border-bottom:1px solid #37473a;}
+  .foot-brand .eng{font-family:'Archivo',sans-serif;font-weight:900;font-size:19px;color:#fff;}
+  .foot-brand p{max-width:340px;font-size:13.5px;color:#9fb09f;margin-top:10px;}
+  .foot-links{display:flex;gap:50px;flex-wrap:wrap;}
+  .foot-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#7f9280;margin-bottom:14px;}
+  .foot-col a{display:block;font-size:14px;margin-bottom:9px;color:#dfe6df;}
+  .foot-col a:hover{color:var(--amber);}
+  .foot-bottom{padding-top:22px;font-size:12.5px;color:#7f9280;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    nav.links{display:none;}
+    .burger{display:flex;}
+    .hero-inner{grid-template-columns:1fr;padding-top:56px;}
+    .ticket-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+    .form-grid{grid-template-columns:1fr;}
+    .track-card{grid-template-columns:1fr;}
+    .ba-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:520px){
+    .ticket-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .hero-ctas{flex-direction:column;}
+    .btn{width:100%;justify-content:center;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V9l6-6 6 6v12M9 21v-6h6v6"/></svg>
+      </span>
+      <span class="brand-name eng">FixIt <span>DNCC</span></span>
+    </a>
+    <nav class="links">
+      <a href="#top">Home</a>
+      <a href="#report">Report Waste</a>
+      <a href="#track">Track Report</a>
+      <a href="#map">Waste Map</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#report" class="nav-cta">রিপোর্ট করুন</a>
+    <button class="burger" aria-label="মেনু খুলুন"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow-tag">🇧🇩 ঢাকা উত্তর সিটি কর্পোরেশন — নাগরিক সেবা</span>
+      <h1 class="eng">FixIt <em>DNCC</em><br>Report Waste. Build a<br>Cleaner Dhaka.</h1>
+      <p class="sub">আপনার একটি রিপোর্ট, পরিচ্ছন্ন ঢাকার একটি পদক্ষেপ।</p>
+      <div class="hero-ctas">
+        <a href="#report" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          রিপোর্ট করুন
+        </a>
+        <a href="#track" class="btn btn-ghost">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          রিপোর্ট ট্র্যাক করুন
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="map-face">
+        <div class="pin p1"></div>
+        <div class="pin p2"></div>
+        <div class="pin p3"></div>
+        <div class="pin p4"></div>
+      </div>
+      <div class="caption-row">
+        <span class="lbl">লাইভ রিপোর্ট ম্যাপ — মিরপুর, ঢাকা উত্তর</span>
+      </div>
+      <div class="caption-row" style="margin-top:6px;">
+        <span style="font-size:12.5px;"><span class="status-dot" style="background:var(--red)"></span>প্রক্রিয়াধীন</span>
+        <span style="font-size:12.5px;"><span class="status-dot" style="background:var(--amber)"></span>পরিদর্শনে</span>
+        <span style="font-size:12.5px;"><span class="status-dot" style="background:var(--green-bright)"></span>সমাধান হয়েছে</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Campaign Progress</span>
+      <h2>ঢাকা আরও পরিচ্ছন্ন করার অভিযানে</h2>
+    </div>
+    <div class="ticket-grid">
+      <div class="ticket"><span class="stamp">DNCC</span><div class="num">১২,৪৮০</div><div class="lbl">মোট রিপোর্ট</div></div>
+      <div class="ticket"><span class="stamp">DNCC</span><div class="num">৯,৬৩৫</div><div class="lbl">সমাধানকৃত রিপোর্ট</div></div>
+      <div class="ticket"><span class="stamp">DNCC</span><div class="num">২,১৪০</div><div class="lbl">প্রক্রিয়াধীন</div></div>
+      <div class="ticket"><span class="stamp">DNCC</span><div class="num">৭৮৫</div><div class="lbl">পরিচ্ছন্নতা কার্যক্রম সম্পন্ন</div></div>
+      <div class="ticket"><span class="stamp">DNCC</span><div class="num">৬,৩২০</div><div class="lbl">নাগরিক অংশগ্রহণ</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">প্রক্রিয়া</span>
+      <h2>কীভাবে কাজ করে</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">০১</div>
+        <svg class="step-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <h3>ছবি তুলুন</h3>
+        <p>সমস্যাযুক্ত স্থানের একটি স্পষ্ট ছবি তুলুন বা গ্যালারি থেকে আপলোড করুন।</p>
+      </div>
+      <div class="step">
+        <div class="step-no">০২</div>
+        <svg class="step-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <h3>লোকেশন নির্বাচন করুন</h3>
+        <p>জিপিএস স্বয়ংক্রিয়ভাবে সঠিক অবস্থান শনাক্ত করে, প্রয়োজনে ম্যাপে পিন সরান।</p>
+      </div>
+      <div class="step">
+        <div class="step-no">০৩</div>
+        <svg class="step-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        <h3>তথ্য দিন</h3>
+        <p>সমস্যার ধরন বাছাই করে সংক্ষিপ্ত বিবরণ লিখুন — যত বিস্তারিত, তত দ্রুত সমাধান।</p>
+      </div>
+      <div class="step">
+        <div class="step-no">০৪</div>
+        <svg class="step-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+        <h3>সাবমিট করুন</h3>
+        <p>রিপোর্ট পাঠান — একটি রিপোর্ট আইডি পাবেন, যা দিয়ে অগ্রগতি ট্র্যাক করা যাবে।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">সমস্যার ধরন</span>
+      <h2>রিপোর্ট ক্যাটেগরি</h2>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20L9 9"/><path d="M4 20l6-1 8.5-8.5a2.1 2.1 0 0 0-3-3L7 16z"/><path d="M2 22l2-5"/></svg>
+        <h3>রাস্তার ময়লা</h3>
+      </div>
+      <div class="cat-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        <h3>ডাস্টবিন উপচে পড়া</h3>
+      </div>
+      <div class="cat-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        <h3>অবৈধভাবে বর্জ্য ফেলা</h3>
+      </div>
+      <div class="cat-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-6h6v6"/></svg>
+        <h3>নির্মাণ বর্জ্য</h3>
+      </div>
+      <div class="cat-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M9 9a3 3 0 1 1 6 0c0 2-3 3-3 3s-3-1-3-3z"/><path d="M5 15a4 4 0 0 1 4-6 4 4 0 0 1 6 0 4 4 0 0 1 4 6z"/></svg>
+        <h3>পার্ক বা উন্মুক্ত স্থানের বর্জ্য</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT FORM -->
+<section class="section form-section" id="report">
+  <div class="wrap">
+    <div class="form-grid">
+      <div class="side-note">
+        <span class="tag" style="display:block;margin-bottom:8px;">রিপোর্ট ফর্ম</span>
+        <h3>এক মিনিটে অভিযোগ জানান</h3>
+        <p>নিচের ফর্মটি পূরণ করুন — অ্যাকাউন্ট খোলার প্রয়োজন নেই। জিপিএস লোকেশন সহ পাঠানো রিপোর্ট দ্রুততম সময়ে DNCC টিমের কাছে পৌঁছায়।</p>
+        <ul class="mini-steps">
+          <li><span class="dot">১</span> ছবি আপলোড করুন</li>
+          <li><span class="dot">২</span> সমস্যার ধরন বেছে নিন</li>
+          <li><span class="dot">৩</span> লোকেশন নিশ্চিত করুন</li>
+          <li><span class="dot">৪</span> বিস্তারিত লিখে সাবমিট করুন</li>
+        </ul>
+      </div>
+      <form class="form-card" onsubmit="return false;">
+        <div class="field">
+          <label>ছবি আপলোড</label>
+          <div class="upload-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+            <div class="u-txt">ছবি টেনে আনুন অথবা ক্লিক করে আপলোড করুন</div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="issue">সমস্যা নির্বাচন করুন</label>
+          <select id="issue">
+            <option>রাস্তার ময়লা</option>
+            <option>ডাস্টবিন উপচে পড়া</option>
+            <option>অবৈধভাবে বর্জ্য ফেলা</option>
+            <option>নির্মাণ বর্জ্য</option>
+            <option>পার্ক বা উন্মুক্ত স্থানের বর্জ্য</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="loc">লোকেশন</label>
+          <div class="loc-row">
+            <input type="text" id="loc" placeholder="ওয়ার্ড, রাস্তা বা এলাকার নাম লিখুন">
+            <button type="button">📍 বর্তমান লোকেশন</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="details">বিস্তারিত</label>
+          <textarea id="details" placeholder="সমস্যাটি সংক্ষেপে বর্ণনা করুন..."></textarea>
+        </div>
+        <div class="field">
+          <label for="phone">মোবাইল নম্বর (ঐচ্ছিক — স্ট্যাটাস আপডেটের জন্য)</label>
+          <input type="tel" id="phone" placeholder="01XXXXXXXXX">
+        </div>
+        <button class="submit-btn" type="submit">রিপোর্ট সাবমিট করুন</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK -->
+<section class="section" id="track">
+  <div class="wrap">
+    <div class="track-card">
+      <div>
+        <span class="tag" style="color:var(--amber);display:block;margin-bottom:8px;">রিপোর্ট ট্র্যাক করুন</span>
+        <h3>আপনার রিপোর্টের অগ্রগতি দেখুন</h3>
+        <p>রিপোর্ট আইডি অথবা রেজিস্টার্ড মোবাইল নম্বর দিয়ে বর্তমান স্ট্যাটাস দেখুন।</p>
+        <div class="track-tabs">
+          <div class="track-tab active">রিপোর্ট আইডি</div>
+          <div class="track-tab">মোবাইল নম্বর</div>
+        </div>
+        <div class="track-input-row">
+          <input type="text" placeholder="যেমন: DNCC-238914">
+          <button type="button">স্ট্যাটাস দেখুন</button>
+        </div>
+      </div>
+      <div class="status-timeline">
+        <div style="font-weight:800;font-size:13px;color:var(--ink-soft);margin-bottom:10px;">রিপোর্ট #DNCC-238914</div>
+        <div class="t-item done"><span class="circ"></span> গৃহীত হয়েছে — ১০ আগস্ট</div>
+        <div class="t-item done"><span class="circ"></span> পরিদর্শন সম্পন্ন — ১০ আগস্ট</div>
+        <div class="t-item now"><span class="circ"></span> সমাধানের প্রক্রিয়ায়</div>
+        <div class="t-item pending"><span class="circ"></span> সমাধান সম্পন্ন</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">ফলাফল</span>
+      <h2>বিফোর অ্যান্ড আফটার</h2>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="panel before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>বিফোর</span></div>
+          <div class="panel after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/></svg><span>আফটার</span></div>
+        </div>
+        <div class="ba-cap">মিরপুর ১০ — ডাস্টবিন উপচে পড়া সমস্যা সমাধান</div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="panel before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>বিফোর</span></div>
+          <div class="panel after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/></svg><span>আফটার</span></div>
+        </div>
+        <div class="ba-cap">উত্তরা সেক্টর ৭ — রাস্তার ময়লা পরিষ্কার</div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="panel before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>বিফোর</span></div>
+          <div class="panel after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/></svg><span>আফটার</span></div>
+        </div>
+        <div class="ba-cap">গুলশান পার্ক — উন্মুক্ত স্থানের বর্জ্য অপসারণ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="section map-section" id="map">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Live Map</span>
+      <h2>ইন্টারঅ্যাকটিভ ঢাকা শহর লাইভ রিপোর্ট ম্যাপ</h2>
+    </div>
+    <div class="live-map">
+      <div class="road" style="top:30%;left:0;right:0;height:3px;"></div>
+      <div class="road" style="top:0;bottom:0;left:45%;width:3px;"></div>
+      <div class="road" style="top:65%;left:0;right:0;height:3px;"></div>
+      <div class="pin-lg" style="background:var(--red);top:20%;left:18%;"></div>
+      <div class="pin-lg" style="background:var(--amber);top:34%;left:52%;"></div>
+      <div class="pin-lg" style="background:var(--green-bright);top:50%;left:30%;"></div>
+      <div class="pin-lg" style="background:var(--green-bright);top:58%;left:68%;"></div>
+      <div class="pin-lg" style="background:var(--red);top:72%;left:44%;"></div>
+      <div class="pin-lg" style="background:var(--amber);top:80%;left:20%;"></div>
+      <div class="map-legend">
+        <span class="li"><span class="sw" style="background:var(--red)"></span>প্রক্রিয়াধীন</span>
+        <span class="li"><span class="sw" style="background:var(--amber)"></span>পরিদর্শনে</span>
+        <span class="li"><span class="sw" style="background:var(--green-bright)"></span>সমাধান হয়েছে</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">সুবিধাসমূহ</span>
+      <h2>কেন এই প্ল্যাটফর্ম?</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>
+        <h3>দ্রুত অভিযোগ গ্রহণ</h3>
+        <p>মাত্র কয়েক ধাপে রিপোর্ট জমা দিন।</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <h3>জিপিএস ভিত্তিক সঠিক লোকেশন</h3>
+        <p>নির্ভুল অবস্থান শনাক্তকরণ নিশ্চিত করে দ্রুত ব্যবস্থা।</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l2-3 4 6 2-3h7"/></svg>
+        <h3>স্বচ্ছ ও ট্র্যাকযোগ্য</h3>
+        <p>প্রতিটি ধাপের আপডেট দেখতে পাবেন।</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <h3>দ্রুত সমাধান</h3>
+        <p>সরাসরি সংশ্লিষ্ট টিমের কাছে পৌঁছায় রিপোর্ট।</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <h3>নাগরিক–DNCC সরাসরি সংযোগ</h3>
+        <p>মধ্যস্বত্বভোগী ছাড়াই সরাসরি যোগাযোগ।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background:var(--paper-raised);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">প্রশ্নোত্তর</span>
+      <h2>সচরাচর জিজ্ঞাসিত প্রশ্ন</h2>
+    </div>
+    <div class="faq-list">
+      <details open>
+        <summary>রিপোর্ট করতে কি অ্যাকাউন্ট লাগবে? <span class="plus">+</span></summary>
+        <p>না, সাধারণ রিপোর্ট অ্যাকাউন্ট ছাড়াও করা যাবে। শুধু ছবি, লোকেশন ও বিস্তারিত তথ্য দিয়ে সাবমিট করলেই হবে।</p>
+      </details>
+      <details>
+        <summary>রিপোর্ট করার পর কী হবে? <span class="plus">+</span></summary>
+        <p>DNCC টিম যাচাই করে ব্যবস্থা নেবে। যাচাইয়ের পর সংশ্লিষ্ট পরিচ্ছন্নতা কর্মীদের কাছে সমস্যাটি পাঠানো হয়।</p>
+      </details>
+      <details>
+        <summary>আমি কি রিপোর্টের অগ্রগতি দেখতে পারবো? <span class="plus">+</span></summary>
+        <p>হ্যাঁ, রিপোর্ট আইডি বা মোবাইল নম্বর দিয়ে স্ট্যাটাস দেখা যাবে — গৃহীত হওয়া থেকে সমাধান পর্যন্ত সব ধাপ ট্র্যাক করা যায়।</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>পরিচ্ছন্ন ঢাকা গড়তে আপনার অংশগ্রহণই সবচেয়ে গুরুত্বপূর্ণ। এখনই রিপোর্ট করুন।</h2>
+  <a href="#report" class="btn btn-primary">রিপোর্ট করুন</a>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="eng">FixIt DNCC</div>
+        <p>Citizen Waste Reporting &amp; Management System — ঢাকা উত্তর সিটি কর্পোরেশনের নাগরিক বর্জ্য অভিযোগ ব্যবস্থাপনা প্ল্যাটফর্ম।</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>প্ল্যাটফর্ম</h4>
+          <a href="#top">Home</a>
+          <a href="#report">Report Waste</a>
+          <a href="#track">Track Report</a>
+          <a href="#map">Waste Map</a>
+        </div>
+        <div class="foot-col">
+          <h4>সহায়তা</h4>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© ২০২৬ FixIt DNCC. সর্বস্বত্ব সংরক্ষিত।</span>
+      <span>ঢাকা উত্তর সিটি কর্পোরেশন</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.track-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.track-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+  const burger=document.querySelector('.burger');
+  const links=document.querySelector('nav.links');
+  if(burger){
+    burger.addEventListener('click',()=>{
+      const open = links.style.display==='flex';
+      links.style.display = open ? 'none' : 'flex';
+      links.style.cssText += open ? '' : 'position:absolute;top:68px;left:0;right:0;background:var(--paper-raised);flex-direction:column;padding:20px 24px;border-bottom:2px solid var(--ink);gap:16px;';
+    });
+  }
+</script>
+</body>
+</html>

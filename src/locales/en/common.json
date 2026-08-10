@@ -1,0 +1,147 @@
+{
+  "brandName": "FixIt DNCC",
+  "tagline": "Report Waste. Build a Cleaner Dhaka.",
+  "subtagline": "আপনার একটি রিপোর্ট, পরিচ্ছন্ন ঢাকার একটি পদক্ষেপ।",
+  "nav": {
+    "home": "Home",
+    "report": "Report Waste",
+    "track": "Track Report",
+    "map": "Waste Map",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "adminLogin": "Admin Login"
+  },
+  "hero": {
+    "eyebrow": "Dhaka North City Corporation — Civic Service",
+    "titlePrefix": "FixIt ",
+    "titleAccent": "DNCC",
+    "titleSuffix": "Report Waste. Build a Cleaner Dhaka.",
+    "subtitle": "Your single report is a step towards a cleaner Dhaka.",
+    "ctaReport": "Report Waste",
+    "ctaTrack": "Track Report",
+    "liveMapCaption": "Live Report Map — Dhaka North",
+    "status": {
+      "submitted": "Submitted",
+      "inProgress": "In Progress",
+      "resolved": "Resolved"
+    }
+  },
+  "stats": {
+    "campaignTag": "Campaign Progress",
+    "campaignTitle": "In the Campaign to Make Dhaka Cleaner",
+    "totalReports": "Total Reports",
+    "resolvedReports": "Resolved Reports",
+    "inProgress": "In Progress",
+    "cleanedActivity": "Cleaning Activity Done",
+    "citizenParticipation": "Citizen Participation"
+  },
+  "howItWorks": {
+    "tag": "Process",
+    "title": "How It Works",
+    "step1Title": "Take a Photo",
+    "step1Desc": "Take a clear photo of the waste issue or upload from your device.",
+    "step2Title": "Select Location",
+    "step2Desc": "GPS automatically detects location; refine location on map if needed.",
+    "step3Title": "Provide Details",
+    "step3Desc": "Select category and write a short description — more details help quick resolution.",
+    "step4Title": "Submit Report",
+    "step4Desc": "Submit your report and receive a unique Report ID for live tracking."
+  },
+  "categories": {
+    "tag": "Issue Types",
+    "title": "Report Categories",
+    "streetWaste": "Street Waste",
+    "overflowingBin": "Overflowing Dumpster",
+    "illegalDumping": "Illegal Dumping",
+    "constructionWaste": "Construction Debris",
+    "parkWaste": "Park & Open Space Waste"
+  },
+  "form": {
+    "tag": "Report Form",
+    "title": "Report an Issue in 1 Minute",
+    "subtitle": "Fill out the form below — no account required. GPS location helps DNCC teams reach faster.",
+    "steps": [
+      "Upload waste photo",
+      "Select issue category",
+      "Confirm GPS location",
+      "Fill details & submit"
+    ],
+    "imageLabel": "Upload Photo",
+    "imageHint": "Drag & drop image or click to select",
+    "categoryLabel": "Select Waste Category",
+    "locationLabel": "Location",
+    "locationPlaceholder": "Enter ward, street, or area name",
+    "gpsBtn": "📍 Current Location",
+    "detailsLabel": "Problem Details",
+    "detailsPlaceholder": "Describe the issue briefly...",
+    "phoneLabel": "Mobile Number (Optional — for status SMS/tracking)",
+    "phonePlaceholder": "01XXXXXXXXX",
+    "submitBtn": "Submit Report",
+    "submitting": "Submitting Report...",
+    "successTitle": "Report Submitted Successfully!",
+    "reportIdLabel": "Your Unique Report ID:",
+    "saveNotice": "Please save your Report ID to track resolution progress."
+  },
+  "track": {
+    "tag": "Track Report",
+    "title": "Check Your Report Progress",
+    "subtitle": "Track your report status using your Report ID or Mobile Number.",
+    "byReportId": "Report ID",
+    "byPhone": "Mobile Number",
+    "idPlaceholder": "e.g. FIX-2026-000123",
+    "phonePlaceholder": "e.g. 01712345678",
+    "btn": "View Status",
+    "notFound": "No report found matching this ID or Mobile Number.",
+    "timeline": {
+      "submitted": "Submitted",
+      "underVerification": "Under Verification",
+      "verified": "Verified",
+      "assigned": "Assigned to Team",
+      "inProgress": "Work In Progress",
+      "resolved": "Resolved",
+      "rejected": "Rejected"
+    }
+  },
+  "beforeAfter": {
+    "tag": "Results",
+    "title": "Before & After",
+    "before": "BEFORE",
+    "after": "AFTER"
+  },
+  "why": {
+    "tag": "Benefits",
+    "title": "Why FixIt DNCC?",
+    "f1Title": "Fast Citizen Reporting",
+    "f1Desc": "Submit reports easily in a few simple steps.",
+    "f2Title": "GPS-based Precise Location",
+    "f2Desc": "Pinpoint accuracy ensures rapid team deployment.",
+    "f3Title": "Transparent & Trackable",
+    "f3Desc": "Real-time step-by-step progress tracking.",
+    "f4Title": "Quick Resolution",
+    "f4Desc": "Direct routing to local field cleaning teams.",
+    "f5Title": "Direct Citizen–DNCC Connect",
+    "f5Desc": "Direct interaction without intermediaries."
+  },
+  "faq": {
+    "tag": "Q&A",
+    "title": "Frequently Asked Questions",
+    "q1": "Do I need an account to submit a report?",
+    "a1": "No, citizens can submit waste reports directly without registering or logging in. Just upload a photo, select location, and submit.",
+    "q2": "What happens after I submit a report?",
+    "a2": "The DNCC administration team verifies the report and assigns it to local field cleaning workers for immediate cleanup action.",
+    "q3": "Can I track the progress of my report?",
+    "a3": "Yes, you can track real-time progress using your unique Report ID (e.g. FIX-2026-000123) or mobile number on the tracking page."
+  },
+  "cta": {
+    "title": "Your participation is key to building a cleaner Dhaka. Report waste today.",
+    "btn": "Report Waste Now"
+  },
+  "footer": {
+    "brandDesc": "Citizen Waste Reporting & Management System — Dhaka North City Corporation civic complaint management platform.",
+    "col1": "Platform",
+    "col2": "Support",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "© 2026 FixIt DNCC. All rights reserved. Dhaka North City Corporation."
+  }
+}

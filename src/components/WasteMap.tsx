@@ -219,7 +219,7 @@ export const WasteMap: React.FC<WasteMapProps> = ({
       </div>
 
       {/* Map Legend */}
-      <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur border-2 border-[#182619] rounded-md px-3 py-2 text-xs font-bold flex gap-4 z-[400]">
+      <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur border-2 border-[#182619] rounded-md px-3 py-2 text-xs font-bold flex gap-4 z-10">
         <span className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#C23B36]"></span>
           {t('hero.status.submitted')}

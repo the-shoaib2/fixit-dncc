@@ -10,18 +10,11 @@ export const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F8F7EC] border-b-2 border-[#182619]">
+    <header className="sticky top-0 z-[1000] bg-[#F8F7EC] border-b-2 border-[#182619]">
       <div className="max-w-[1180px] mx-auto px-4 sm:px-6 h-[52px] flex items-center justify-between">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-full bg-[#0F4C2E] flex items-center justify-center border-2 border-[#182619] flex-shrink-0">
-            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 stroke-[#F8F7EC]" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 21h18M6 21V9l6-6 6 6v12M9 21v-6h6v6" />
-            </svg>
-          </span>
-          <span className="font-['Archivo'] font-black text-lg text-[#182619] tracking-tight">
-            FixIt <span className="text-[#1E7A45]">DNCC</span>
-          </span>
+        <Link href="/" className="flex items-center gap-2 py-1">
+          <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-9 sm:h-10 w-auto object-contain" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -35,7 +28,7 @@ export const Header: React.FC = () => {
           <Link href="/track" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
             {t('nav.track')}
           </Link>
-          <Link href="/map" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+          <Link href="/#map" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
             {t('nav.map')}
           </Link>
           <Link href="/faq" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
@@ -86,8 +79,8 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Mobile Drawer Menu */}
-      {mobileOpen && (
-        <div className="md:hidden border-t-2 border-[#182619] bg-[#F8F7EC] px-5 py-3 flex flex-col gap-2 shadow-lg">
+      <div className={`md:hidden grid transition-[grid-template-rows,opacity] duration-300 ease-in-out border-t-2 border-[#182619] bg-[#F8F7EC] ${mobileOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'}`}>
+        <div className="overflow-hidden px-5 py-3 flex flex-col gap-2 shadow-lg">
           <Link
             href="/"
             onClick={() => setMobileOpen(false)}
@@ -110,7 +103,7 @@ export const Header: React.FC = () => {
             {t('nav.track')}
           </Link>
           <Link
-            href="/map"
+            href="/#map"
             onClick={() => setMobileOpen(false)}
             className="text-sm font-semibold py-1.5 border-b border-[#c9c8b3] text-[#182619]"
           >
@@ -138,7 +131,7 @@ export const Header: React.FC = () => {
             {t('nav.report')}
           </Link>
         </div>
-      )}
+      </div>
     </header>
   );
 };

@@ -136,6 +136,17 @@ h1, h2, h3, .disp {
 .leaflet-container {
   background: #DDE6D3 !important;
   font-family: 'Hind Siliguri', sans-serif !important;
+  z-index: 1 !important;
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 20 !important;
 }
 
 .leaflet-control-attribution {

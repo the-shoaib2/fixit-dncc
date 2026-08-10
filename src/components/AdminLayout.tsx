@@ -40,12 +40,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <aside className="w-full md:w-64 bg-[#182619] text-white flex-shrink-0 border-r-2 border-[#182619] flex flex-col justify-between">
         <div>
           {/* Header Branding */}
-          <div className="p-6 border-b border-[#37473a] flex items-center gap-3">
-            <ShieldAlert className="w-7 h-7 text-[#E39A2E]" />
-            <div>
-              <div className="font-['Archivo'] font-black text-lg text-white">DNCC Control</div>
-              <div className="text-[10px] text-[#9fb09f] uppercase tracking-wider font-bold">Admin Portal</div>
-            </div>
+          <div className="p-4 sm:p-5 border-b border-[#37473a]">
+            <Link href="/admin" className="flex items-center gap-2">
+              <img src="/logo/Asset 3@4x.png" alt="FixIt DNCC Logo" className="h-8 w-auto object-contain" />
+            </Link>
+            <div className="text-[10px] text-[#9fb09f] uppercase tracking-wider font-bold mt-1.5">Admin Control Room</div>
           </div>
 
           {/* Navigation Links */}

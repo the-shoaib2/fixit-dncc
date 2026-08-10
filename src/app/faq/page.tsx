@@ -32,22 +32,27 @@ export default function FaqPage() {
         </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-white border-2 border-[#182619] rounded-lg p-5 shadow-[4px_4px_0_rgba(0,0,0,0.06)]">
-              <button
-                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full flex justify-between items-center text-left font-bold text-base text-[#0F4C2E]"
-              >
-                <span>{faq.q}</span>
-                <span className="font-['Archivo'] font-black text-xl">{openIndex === idx ? '−' : '+'}</span>
-              </button>
-              {openIndex === idx && (
-                <p className="mt-3 text-sm text-[#3f4f40] leading-relaxed border-t border-[#c9c8b3] pt-3">
-                  {faq.a}
-                </p>
-              )}
-            </div>
-          ))}
+          {faqs.map((faq, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <div key={idx} className="bg-white border-2 border-[#182619] rounded-lg p-5 shadow-[4px_4px_0_rgba(0,0,0,0.06)]">
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  className="w-full flex justify-between items-center text-left font-bold text-base text-[#0F4C2E]"
+                >
+                  <span>{faq.q}</span>
+                  <span className={`font-['Archivo'] font-black text-xl inline-block transition-transform duration-300 ${isOpen ? 'rotate-45 text-[#C23B36]' : 'rotate-0'}`}>+</span>
+                </button>
+                <div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100 mt-3 pt-3 border-t border-[#c9c8b3]' : 'grid-rows-[0fr] opacity-0'}`}>
+                  <div className="overflow-hidden">
+                    <p className="text-sm text-[#3f4f40] leading-relaxed">
+                      {faq.a}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -12,10 +12,10 @@ export const Footer: React.FC = () => {
       <div className="max-w-[1180px] mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between gap-8 pb-8 border-b border-[#37473a]">
           <div className="max-w-md">
-            <div className="font-['Archivo'] font-black text-xl text-white tracking-tight">
-              FixIt DNCC
-            </div>
-            <p className="mt-2.5 text-[13.5px] text-[#9fb09f] leading-relaxed">
+            <Link href="/" className="inline-block mb-3">
+              <img src="/logo/Asset 3@4x.png" alt="FixIt DNCC Logo" className="h-9.5 w-auto object-contain" />
+            </Link>
+            <p className="text-[13.5px] text-[#9fb09f] leading-relaxed">
               {t('footer.brandDesc')}
             </p>
           </div>

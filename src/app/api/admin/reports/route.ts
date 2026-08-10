@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { getAdminFromCookies } from '@/lib/auth';
+import { prisma } from '../../../../lib/prisma';
+import { getAdminFromCookies } from '../../../../lib/auth';
 
 export async function GET(request: Request) {
   try {

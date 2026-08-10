@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { WasteMap } from '@/components/WasteMap';
+import { WasteMap } from '../WasteMap';
 
 interface LiveMapSectionProps {
   mapMarkers: any[];

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 import { Trash2, Archive, AlertTriangle, Building2, Trees } from 'lucide-react';
 
 export const CategoriesSection: React.FC = () => {

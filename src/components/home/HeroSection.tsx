@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useLanguage } from '@/lib/i18n';
-import { WasteMap } from '@/components/WasteMap';
+import { useLanguage } from '../../lib/i18n';
+import { WasteMap } from '../WasteMap';
 import { Camera, Search } from 'lucide-react';
 
 interface HeroSectionProps {

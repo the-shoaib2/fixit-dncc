@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { generateReportId } from '@/lib/utils';
+import { prisma } from '../../../lib/prisma';
+import { generateReportId } from '../../../lib/utils';
 
 export async function POST(request: Request) {
   try {

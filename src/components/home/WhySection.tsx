@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 import { Zap, MapPin, ShieldCheck, CheckCircle2, Trash2 } from 'lucide-react';
 
 export const WhySection: React.FC = () => {

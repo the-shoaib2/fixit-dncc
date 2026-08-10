@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 
 export default function FaqPage() {
   const { t } = useLanguage();

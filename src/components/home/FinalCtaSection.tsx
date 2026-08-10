@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 
 export const FinalCtaSection: React.FC = () => {
   const { t } = useLanguage();

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import en from '@/locales/en/common.json';
-import bn from '@/locales/bn/common.json';
+import en from '../locales/en/common.json';
+import bn from '../locales/bn/common.json';
 
 type Language = 'bn' | 'en';
 type Translations = typeof bn;

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 import { Search, CheckCircle2, Clock, AlertTriangle, FileText, MapPin } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
+import { formatDate } from '../../lib/utils';
 
 function TrackPageContent() {
   const { lang, t } = useLanguage();

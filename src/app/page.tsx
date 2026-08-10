@@ -1,16 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { HeroSection } from '@/components/home/HeroSection';
-import { StatsSection } from '@/components/home/StatsSection';
-import { HowItWorksSection } from '@/components/home/HowItWorksSection';
-import { CategoriesSection } from '@/components/home/CategoriesSection';
-import { QuickTrackSection } from '@/components/home/QuickTrackSection';
-import { ResultsSection } from '@/components/home/ResultsSection';
-import { LiveMapSection } from '@/components/home/LiveMapSection';
-import { WhySection } from '@/components/home/WhySection';
-import { FaqSection } from '@/components/home/FaqSection';
-import { FinalCtaSection } from '@/components/home/FinalCtaSection';
+import { HeroSection } from '../components/home/HeroSection';
+import { StatsSection } from '../components/home/StatsSection';
+import { HowItWorksSection } from '../components/home/HowItWorksSection';
+import { CategoriesSection } from '../components/home/CategoriesSection';
+import { QuickTrackSection } from '../components/home/QuickTrackSection';
+import { ResultsSection } from '../components/home/ResultsSection';
+import { LiveMapSection } from '../components/home/LiveMapSection';
+import { WhySection } from '../components/home/WhySection';
+import { FaqSection } from '../components/home/FaqSection';
+import { FinalCtaSection } from '../components/home/FinalCtaSection';
 
 export default function HomePage() {
   const [stats, setStats] = useState({

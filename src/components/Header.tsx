@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../lib/i18n';
 import { Menu, X, ShieldAlert } from 'lucide-react';
 
 export const Header: React.FC = () => {

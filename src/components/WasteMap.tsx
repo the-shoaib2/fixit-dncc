@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../lib/i18n';
 
 interface MarkerItem {
   id: string;

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useLanguage } from '../../lib/i18n';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
 
 export default function ContactPage() {

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 import { useRouter } from 'next/navigation';
 
 export const QuickTrackSection: React.FC = () => {

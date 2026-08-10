@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 import { Camera, MapPin, Edit3, Send } from 'lucide-react';
 
 export const HowItWorksSection: React.FC = () => {

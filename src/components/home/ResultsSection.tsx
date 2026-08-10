@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage } from '../../lib/i18n';
 import { AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export const ResultsSection: React.FC = () => {

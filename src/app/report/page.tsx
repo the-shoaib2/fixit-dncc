@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/lib/i18n';
-import { WasteMap } from '@/components/WasteMap';
+import { useLanguage } from '../../lib/i18n';
+import { WasteMap } from '../../components/WasteMap';
 import { Upload, MapPin, CheckCircle2, AlertCircle, Trash2, Camera, Copy, Check, Eye, X, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 

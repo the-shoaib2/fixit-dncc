@@ -12,4 +12,13 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: DATABASE_URL
-        value: file:./dev.db
+        fromDatabase:
+          name: fixit-dncc-db
+          property: connectionString
+
+databases:
+  - name: fixit-dncc-db
+    plan: free
+    region: singapore
+    databaseName: fixit_dncc
+    user: fixit_admin

@@ -141,6 +141,7 @@ export default function AdminReportsListPage() {
               <thead>
                 <tr className="border-b-2 border-[#182619] bg-[#EFEFE1] text-[#182619]">
                   <th className="p-3">আইডি</th>
+                  <th className="p-3">ছবি</th>
                   <th className="p-3">ক্যাটেগরি</th>
                   <th className="p-3">অবস্থান</th>
                   <th className="p-3">মোবাইল</th>
@@ -154,6 +155,22 @@ export default function AdminReportsListPage() {
                 {reports.map((r) => (
                   <tr key={r.id} className="hover:bg-[#F8F7EC]">
                     <td className="p-3 font-['Archivo'] font-bold text-[#0F4C2E]">#{r.publicId}</td>
+                    <td className="p-3">
+                      {r.images && r.images.length > 0 ? (
+                        <img
+                          src={r.images[0].imageUrl}
+                          alt="Report photo"
+                          className="w-10 h-10 object-cover rounded border border-[#182619]"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/samples/waste-before.jpg';
+                          }}
+                        />
+                      ) : (
+                        <div className="w-10 h-10 bg-[#EFEFE1] rounded border border-[#c9c8b3] flex items-center justify-center text-[10px] text-[#7f9280]">
+                          No Photo
+                        </div>
+                      )}
+                    </td>
                     <td className="p-3">{r.category?.nameBn}</td>
                     <td className="p-3 max-w-[180px] truncate">{r.locationAddress}</td>
                     <td className="p-3">{r.mobileNumber || '—'}</td>

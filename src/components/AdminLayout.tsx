@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Map, FolderTree, BarChart3, HelpCircle, History, LogOut, ChevronRight, ShieldCheck, Loader2 } from 'lucide-react';
+import { LayoutDashboard, FileText, Map, FolderTree, BarChart3, HelpCircle, History, LogOut, ChevronRight, ShieldCheck, Loader2, Globe, Menu, X } from 'lucide-react';
+import { useLanguage } from '../lib/i18n';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -12,9 +13,11 @@ interface AdminLayoutProps {
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { lang, setLang, t } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [adminUser, setAdminUser] = useState<any>(null);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Verify admin authentication status
@@ -38,6 +41,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       });
   }, [router]);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   const handleLogout = async () => {
     setLoggingOut(true);
     try {
@@ -49,13 +57,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   };
 
   const navItems = [
-    { href: '/admin', label: 'ড্যাশবোর্ড (Dashboard)', icon: LayoutDashboard },
-    { href: '/admin/reports', label: 'রিপোর্ট সমূহ (Reports)', icon: FileText },
-    { href: '/admin/map', label: 'লাইভ ম্যাপ (Live Map)', icon: Map },
-    { href: '/admin/categories', label: 'ক্যাটেগরি (Categories)', icon: FolderTree },
-    { href: '/admin/statistics', label: 'পরিসংখ্যান (Statistics)', icon: BarChart3 },
-    { href: '/admin/faq', label: 'প্রশ্নোত্তর (FAQ)', icon: HelpCircle },
-    { href: '/admin/activity-logs', label: 'অডিট লগ (Activity Logs)', icon: History },
+    { href: '/admin', label: t('admin.nav.dashboard'), icon: LayoutDashboard },
+    { href: '/admin/reports', label: t('admin.nav.reports'), icon: FileText },
+    { href: '/admin/map', label: t('admin.nav.liveMap'), icon: Map },
+    { href: '/admin/categories', label: t('admin.nav.categories'), icon: FolderTree },
+    { href: '/admin/statistics', label: t('admin.nav.statistics'), icon: BarChart3 },
+    { href: '/admin/faq', label: t('admin.nav.faq'), icon: HelpCircle },
+    { href: '/admin/activity-logs', label: t('admin.nav.activityLogs'), icon: History },
   ];
 
   if (loading) {
@@ -66,8 +74,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <ShieldCheck className="w-6 h-6" />
           </div>
           <Loader2 className="w-6 h-6 animate-spin text-[#0F4C2E] mx-auto mb-3" />
-          <h3 className="font-bold text-base text-[#182619] mb-1">সিকিউরিটি ভেরিফিকেশন...</h3>
-          <p className="text-xs text-[#3f4f40]">অ্যাডমিন সেশন যাচাই করা হচ্ছে</p>
+          <h3 className="font-bold text-base text-[#182619] mb-1">{t('admin.securityVerification')}</h3>
+          <p className="text-xs text-[#3f4f40]">{t('admin.checkingSession')}</p>
         </div>
       </div>
     );
@@ -75,17 +83,57 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-[#F8F7EC] flex flex-col md:flex-row">
+      {/* Mobile Top Header */}
+      <div className="md:hidden bg-[#182619] text-white p-4 border-b-2 border-[#182619] flex items-center justify-between sticky top-0 z-40">
+        <Link href="/admin" className="flex items-center gap-2">
+          <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-7 w-auto object-contain bg-[#F8F7EC] p-0.5 rounded border border-[#37473a]" />
+          <span className="font-bold text-xs text-[#E39A2E]">Control Room</span>
+        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
+            className="flex items-center gap-1 px-2 py-1 text-[11px] font-bold bg-[#37473a] text-white border border-[#536856] rounded hover:bg-[#E39A2E] hover:text-[#182619]"
+          >
+            <Globe className="w-3 h-3" />
+            <span>{lang === 'bn' ? 'EN' : 'বাং'}</span>
+          </button>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-1.5 bg-[#37473a] text-white rounded border border-[#536856]"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
       {/* Admin Sidebar */}
-      <aside className="w-full md:w-64 bg-[#182619] text-white flex-shrink-0 border-r-2 border-[#182619] flex flex-col justify-between">
+      <aside
+        className={`w-full md:w-64 bg-[#182619] text-white flex-shrink-0 border-r-2 border-[#182619] flex flex-col justify-between transition-all ${
+          mobileMenuOpen ? 'block' : 'hidden md:flex'
+        }`}
+      >
         <div>
           {/* Header Branding */}
           <div className="p-4 sm:p-5 border-b border-[#37473a]">
-            <Link href="/admin" className="flex items-center gap-2">
-              <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-8 w-auto object-contain bg-[#F8F7EC] p-1 rounded border border-[#37473a]" />
-            </Link>
-            <div className="text-[10px] text-[#9fb09f] uppercase tracking-wider font-bold mt-2 flex items-center justify-between">
-              <span>Admin Control Room</span>
-              <span className="w-2 h-2 rounded-full bg-[#2F9E5A]" title="Authenticated"></span>
+            <div className="flex items-center justify-between">
+              <Link href="/admin" className="flex items-center gap-2">
+                <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-8 w-auto object-contain bg-[#F8F7EC] p-1 rounded border border-[#37473a]" />
+              </Link>
+              {/* Language Switcher */}
+              <button
+                onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
+                className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold bg-[#37473a] text-white border border-[#536856] rounded hover:bg-[#E39A2E] hover:text-[#182619] transition-colors"
+                title={lang === 'bn' ? 'Switch to English' : 'বাংলায় সুইচ করুন'}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>{lang === 'bn' ? 'EN' : 'বাং'}</span>
+              </button>
+            </div>
+
+            <div className="text-[10px] text-[#9fb09f] uppercase tracking-wider font-bold mt-3 flex items-center justify-between">
+              <span>{t('admin.controlRoom')}</span>
+              <span className="w-2 h-2 rounded-full bg-[#2F9E5A]" title={t('admin.authenticated')}></span>
             </div>
             {adminUser && (
               <div className="mt-2 text-xs font-semibold text-[#E39A2E] truncate">
@@ -126,7 +174,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             href="/"
             className="block text-center text-xs font-bold text-[#9fb09f] hover:text-white mb-3 transition-colors"
           >
-            ← ফিরে যান পাবলিক সাইটে
+            {t('admin.backToPublic')}
           </Link>
           <button
             onClick={handleLogout}
@@ -134,13 +182,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             className="w-full bg-[#C23B36] text-white border-2 border-black rounded-md py-2 text-xs font-bold flex items-center justify-center gap-2 hover:bg-red-700 transition-colors shadow-[2px_2px_0_#000]"
           >
             <LogOut className="w-3.5 h-3.5" />
-            {loggingOut ? 'লগআউট হচ্ছে...' : 'লগআউট (Logout)'}
+            {loggingOut ? t('admin.loggingOut') : t('admin.logout')}
           </button>
         </div>
       </aside>
 
       {/* Main Admin Content Area */}
-      <main className="flex-1 p-6 lg:p-10 overflow-y-auto">{children}</main>
+      <main className="flex-1 p-4 sm:p-6 lg:p-10 overflow-y-auto">{children}</main>
     </div>
   );
 };

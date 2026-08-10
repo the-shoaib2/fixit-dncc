@@ -143,5 +143,23 @@
     "privacy": "প্রাইভেসি পলিসি",
     "terms": "ব্যবহারের শর্তাবলী",
     "copyright": "© ২০২৬ FixIt DNCC. সর্বস্বত্ব সংরক্ষিত। ঢাকা উত্তর সিটি কর্পোরেশন।"
+  },
+  "admin": {
+    "controlRoom": "এডমিন কন্ট্রোল রুম",
+    "authenticated": "প্রমাণিত সেশন",
+    "securityVerification": "সিকিউরিটি ভেরিফিকেশন...",
+    "checkingSession": "অ্যাডমিন সেশন যাচাই করা হচ্ছে",
+    "backToPublic": "← ফিরে যান পাবলিক সাইটে",
+    "logout": "লগআউট",
+    "loggingOut": "লগআউট হচ্ছে...",
+    "nav": {
+      "dashboard": "ড্যাশবোর্ড",
+      "reports": "রিপোর্ট সমূহ",
+      "liveMap": "লাইভ ম্যাপ",
+      "categories": "ক্যাটেগরি",
+      "statistics": "পরিসংখ্যান",
+      "faq": "প্রশ্নোত্তর",
+      "activityLogs": "অডিট লগ"
+    }
   }
 }

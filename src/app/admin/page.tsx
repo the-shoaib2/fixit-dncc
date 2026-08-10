@@ -3,21 +3,39 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../../components/AdminLayout';
 import Link from 'next/link';
-import { FileText, CheckCircle2, Clock, AlertTriangle, XCircle, ArrowRight, Eye } from 'lucide-react';
+import { FileText, CheckCircle2, Clock, AlertTriangle, XCircle, ArrowRight, Eye, RefreshCw } from 'lucide-react';
 import { formatDate } from '../../lib/utils';
+import { useLanguage } from '../../lib/i18n';
 
 export default function AdminDashboardPage() {
+  const { lang, t } = useLanguage();
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchReports = async (showRefreshing = false) => {
+    if (showRefreshing) setRefreshing(true);
+    else setLoading(true);
+
+    try {
+      const res = await fetch('/api/admin/reports');
+      const data = await res.json();
+      if (data.success) setReports(data.data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    fetch('/api/admin/reports')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) setReports(data.data);
-      })
-      .finally(() => setLoading(false));
+    fetchReports();
   }, []);
+
+  const handleRefresh = () => {
+    fetchReports(true);
+  };
 
   const total = reports.length;
   const pending = reports.filter((r) => r.status === 'SUBMITTED' || r.status === 'UNDER_VERIFICATION').length;
@@ -28,11 +46,28 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-black font-['Archivo'] text-[#0F4C2E]">কন্ট্রোল রুম ড্যাশবোর্ড</h1>
-        <p className="text-xs text-[#3f4f40] font-semibold mt-1">
-          ঢাকা উত্তর সিটি কর্পোরেশনের সামগ্রিক বর্জ্য অভিযোগ ও সমাধান পর্যবেক্ষণ
-        </p>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black font-['Archivo'] text-[#0F4C2E]">
+            {lang === 'bn' ? 'কন্ট্রোল রুম ড্যাশবোর্ড' : 'Control Room Dashboard'}
+          </h1>
+          <p className="text-xs text-[#3f4f40] font-semibold mt-1">
+            {lang === 'bn'
+              ? 'ঢাকা উত্তর সিটি কর্পোরেশনের সামগ্রিক বর্জ্য অভিযোগ ও সমাধান পর্যবেক্ষণ'
+              : 'Dhaka North City Corporation Overall Waste Complaint & Resolution Monitoring'}
+          </p>
+        </div>
+
+        {/* Dashboard Refresh Button */}
+        <button
+          onClick={handleRefresh}
+          disabled={refreshing || loading}
+          className="inline-flex items-center gap-2 bg-[#E39A2E] text-[#182619] border-2 border-[#182619] px-4 py-2 rounded-md font-bold text-xs shadow-[3px_3px_0_#182619] hover:bg-[#C97C16] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+          title={lang === 'bn' ? 'ড্যাশবোর্ড রিফ্রেশ করুন' : 'Refresh Dashboard'}
+        >
+          <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+          <span>{lang === 'bn' ? (refreshing ? 'রিফ্রেশ হচ্ছে...' : 'রিফ্রেশ') : (refreshing ? 'Refreshing...' : 'Refresh')}</span>
+        </button>
       </div>
 
       {/* Metrics Cards */}

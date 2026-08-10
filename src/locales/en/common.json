@@ -143,5 +143,23 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
     "copyright": "© 2026 FixIt DNCC. All rights reserved. Dhaka North City Corporation."
+  },
+  "admin": {
+    "controlRoom": "Admin Control Room",
+    "authenticated": "Authenticated",
+    "securityVerification": "Security Verification...",
+    "checkingSession": "Verifying Admin Session",
+    "backToPublic": "← Back to Public Site",
+    "logout": "Logout",
+    "loggingOut": "Logging out...",
+    "nav": {
+      "dashboard": "Dashboard",
+      "reports": "Reports",
+      "liveMap": "Live Map",
+      "categories": "Categories",
+      "statistics": "Statistics",
+      "faq": "FAQ",
+      "activityLogs": "Audit Logs"
+    }
   }
 }

@@ -242,18 +242,33 @@ export default function AdminReportDetailPage() {
               দ্রুত স্ট্যাটাস পরিবর্তন
             </h3>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <button
-                onClick={() => handleUpdate('VERIFIED')}
-                className="bg-[#1E7A45] text-white text-xs font-bold py-2 px-3 rounded border-2 border-[#182619] hover:bg-[#0F4C2E]"
+                onClick={() => {
+                  setNewStatus('VERIFIED');
+                  handleUpdate('VERIFIED');
+                }}
+                className="bg-[#1E7A45] text-white text-[11px] font-bold py-2 px-2 rounded border-2 border-[#182619] hover:bg-[#0F4C2E] transition-colors text-center"
               >
                 ✓ Verify
               </button>
               <button
-                onClick={() => handleUpdate('IN_PROGRESS')}
-                className="bg-[#E39A2E] text-[#182619] text-xs font-bold py-2 px-3 rounded border-2 border-[#182619] hover:bg-[#C97C16]"
+                onClick={() => {
+                  setNewStatus('IN_PROGRESS');
+                  handleUpdate('IN_PROGRESS');
+                }}
+                className="bg-[#E39A2E] text-[#182619] text-[11px] font-bold py-2 px-2 rounded border-2 border-[#182619] hover:bg-[#C97C16] transition-colors text-center"
               >
-                ⚙ In Progress
+                ⚙ Progress
+              </button>
+              <button
+                onClick={() => {
+                  setNewStatus('RESOLVED');
+                  handleUpdate('RESOLVED');
+                }}
+                className="bg-[#2F9E5A] text-white text-[11px] font-bold py-2 px-2 rounded border-2 border-[#182619] hover:bg-[#1E7A45] transition-colors text-center"
+              >
+                ✔ Resolved
               </button>
             </div>
 

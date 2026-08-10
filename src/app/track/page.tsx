@@ -167,30 +167,51 @@ function TrackPageContent() {
                 </div>
 
                 {/* Before & After Images */}
-                <div className="grid grid-cols-2 gap-4">
-                  {report.images?.filter((img: any) => img.type === 'BEFORE')[0] && (
-                    <div>
-                      <span className="block text-xs font-extrabold uppercase text-[#3f4f40] mb-1">
-                        {t('beforeAfter.before')}
-                      </span>
-                      <img
-                        src={report.images.find((img: any) => img.type === 'BEFORE').imageUrl}
-                        alt="Before"
-                        className="w-full h-36 object-cover border-2 border-[#182619] rounded-md"
-                      />
-                    </div>
-                  )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t-2 border-[#EFEFE1]">
+                  <div>
+                    <span className="block text-xs font-extrabold uppercase tracking-wider text-[#3f4f40] mb-2 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#C23B36]"></span>
+                      {t('beforeAfter.before')} (সমস্যা)
+                    </span>
+                    <img
+                      src={
+                        report.images?.find((img: any) => img.type === 'BEFORE')?.imageUrl ||
+                        report.images?.[0]?.imageUrl ||
+                        '/samples/waste-before.jpg'
+                      }
+                      alt="Before Waste"
+                      className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-95 transition-opacity"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/samples/waste-before.jpg';
+                      }}
+                    />
+                  </div>
 
-                  {report.cleaningActivity?.afterImageUrl && (
+                  {report.cleaningActivity?.afterImageUrl ? (
                     <div>
-                      <span className="block text-xs font-extrabold uppercase text-[#2F9E5A] mb-1">
-                        {t('beforeAfter.after')}
+                      <span className="block text-xs font-extrabold uppercase tracking-wider text-[#2F9E5A] mb-2 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-[#2F9E5A]"></span>
+                        {t('beforeAfter.after')} (সমাধান)
                       </span>
                       <img
                         src={report.cleaningActivity.afterImageUrl}
-                        alt="After"
-                        className="w-full h-36 object-cover border-2 border-[#182619] rounded-md"
+                        alt="After Cleanup"
+                        className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-95 transition-opacity"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/samples/waste-after.jpg';
+                        }}
                       />
+                    </div>
+                  ) : (
+                    <div>
+                      <span className="block text-xs font-extrabold uppercase tracking-wider text-[#7f9280] mb-2 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-[#E39A2E]"></span>
+                        {t('beforeAfter.after')} (অপেক্ষমাণ)
+                      </span>
+                      <div className="flex flex-col justify-center items-center bg-[#F8F7EC] border-2 border-dashed border-[#c9c8b3] rounded-md h-44 p-4 text-center">
+                        <span className="text-xs font-bold text-[#0F4C2E] mb-1">পরিচ্ছন্নতা কার্যক্রম চলমান</span>
+                        <span className="text-[11px] text-[#3f4f40]">DNCC পরিচ্ছন্নতা দল এলাকাটি পরিস্কার করার পর আফটার ছবি প্রকাশ করবে</span>
+                      </div>
                     </div>
                   )}
                 </div>

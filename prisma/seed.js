@@ -203,7 +203,12 @@ async function main() {
   ];
 
   for (const faq of faqs) {
-    await prisma.faq.create({ data: faq });
+    const existingFaq = await prisma.faq.findFirst({
+      where: { questionEn: faq.questionEn },
+    });
+    if (!existingFaq) {
+      await prisma.faq.create({ data: faq });
+    }
   }
 
   console.log('Seeding completed successfully!');

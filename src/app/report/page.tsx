@@ -346,20 +346,44 @@ export default function ReportPage() {
                   </div>
                 )}
 
-                {/* Upload Button Box */}
-                <label className="border-2 border-dashed border-[#c9c8b3] rounded-md p-3.5 text-center bg-[#EFEFE1] cursor-pointer block hover:border-[#0F4C2E] transition-colors">
-                  <Camera className="w-6 h-6 text-[#1E7A45] mx-auto mb-1" />
-                  <span className="font-semibold text-xs text-[#3f4f40]">
-                    {t('form.imageHint')}
-                  </span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </label>
+                {/* Dual Action Upload & Camera Option Buttons */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {/* Option 1: Direct Camera Capture */}
+                  <label className="border-2 border-[#182619] rounded-md p-3.5 text-center bg-[#E39A2E]/10 border-dashed hover:border-[#182619] hover:bg-[#E39A2E]/20 cursor-pointer block transition-colors">
+                    <Camera className="w-6 h-6 text-[#182619] mx-auto mb-1.5" />
+                    <span className="block font-bold text-xs text-[#182619]">
+                      📷 ক্যামেরা দিয়ে ছবি তুলুন
+                    </span>
+                    <span className="block text-[11px] text-[#3f4f40] mt-0.5">
+                      (Take Live Photo)
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+
+                  {/* Option 2: Device File Gallery Upload */}
+                  <label className="border-2 border-[#182619] rounded-md p-3.5 text-center bg-[#EFEFE1] border-dashed hover:border-[#0F4C2E] hover:bg-[#EFEFE1]/80 cursor-pointer block transition-colors">
+                    <Upload className="w-6 h-6 text-[#1E7A45] mx-auto mb-1.5" />
+                    <span className="block font-bold text-xs text-[#182619]">
+                      📁 ফাইল/গ্যালারি নির্বাচন
+                    </span>
+                    <span className="block text-[11px] text-[#3f4f40] mt-0.5">
+                      (Upload File from Device)
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
               </div>
 
               {/* Category Select */}

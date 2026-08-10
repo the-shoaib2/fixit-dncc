@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
+import { AdminLayout } from '../../../components/AdminLayout';
 import { FolderTree, Plus, Trash2 } from 'lucide-react';
 
 export default function AdminCategoriesPage() {

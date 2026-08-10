@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
+import { AdminLayout } from '../../../../components/AdminLayout';
 import { useParams, useRouter } from 'next/navigation';
 import { MapPin, Calendar, Phone, CheckCircle2, XCircle, UserCheck, Clock, FileText, Camera, Upload, AlertCircle, ArrowLeft } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
+import { formatDate } from '../../../../lib/utils';
 
 export default function AdminReportDetailPage() {
   const params = useParams();

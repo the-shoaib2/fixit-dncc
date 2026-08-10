@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
-import { WasteMap } from '@/components/WasteMap';
+import { AdminLayout } from '../../../components/AdminLayout';
+import { WasteMap } from '../../../components/WasteMap';
 import { Filter } from 'lucide-react';
 
 export default function AdminMapPage() {

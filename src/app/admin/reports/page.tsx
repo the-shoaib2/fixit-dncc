@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
+import { AdminLayout } from '../../../components/AdminLayout';
 import Link from 'next/link';
 import { Search, Filter, Eye, AlertCircle } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
+import { formatDate } from '../../../lib/utils';
 
 export default function AdminReportsListPage() {
   const [reports, setReports] = useState<any[]>([]);

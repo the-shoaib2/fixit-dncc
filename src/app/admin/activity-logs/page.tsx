@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
-import { formatDate } from '@/lib/utils';
+import { AdminLayout } from '../../../components/AdminLayout';
+import { formatDate } from '../../../lib/utils';
 
 export default function AdminActivityLogsPage() {
   const [logs, setLogs] = useState<any[]>([]);

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
+import { AdminLayout } from '../../../components/AdminLayout';
 import { BarChart3, TrendingUp, CheckCircle2, AlertTriangle, Users } from 'lucide-react';
 
 export default function AdminStatisticsPage() {

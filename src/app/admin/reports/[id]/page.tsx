@@ -14,6 +14,7 @@ export default function AdminReportDetailPage() {
   const [report, setReport] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [activeModalImage, setActiveModalImage] = useState<{ url: string; title: string } | null>(null);
 
   // Form Controls for Status Update
   const [newStatus, setNewStatus] = useState('');
@@ -184,13 +185,24 @@ export default function AdminReportDetailPage() {
 
             {/* Before Images */}
             <div className="mt-6 pt-4 border-t-2 border-[#EFEFE1]">
-              <h4 className="font-bold text-xs uppercase text-[#0F4C2E] mb-3">
-                বিফোর ইমেজ (Citizen Uploaded Evidence)
+              <h4 className="font-bold text-xs uppercase text-[#0F4C2E] mb-3 flex items-center justify-between">
+                <span>বিফোর ইমেজ (Citizen Uploaded Evidence)</span>
+                <span className="text-[11px] text-[#3f4f40] font-normal lowercase">(ক্লিক করে বড় করে দেখুন)</span>
               </h4>
               <div className="grid grid-cols-2 gap-4">
                 {report.images?.map((img: any) => (
-                  <div key={img.id} className="border-2 border-[#182619] rounded overflow-hidden">
-                    <img src={img.imageUrl} alt="Before" className="w-full h-40 object-cover" />
+                  <div key={img.id} className="border-2 border-[#182619] rounded overflow-hidden group relative">
+                    <img
+                      src={img.imageUrl}
+                      alt="Before"
+                      onClick={() =>
+                        setActiveModalImage({
+                          url: img.imageUrl,
+                          title: `Before Evidence — #${report.publicId}`,
+                        })
+                      }
+                      className="w-full h-40 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                    />
                     <span className="block text-[10px] font-bold p-1 bg-[#EFEFE1] text-center">
                       {img.type}
                     </span>
@@ -202,11 +214,22 @@ export default function AdminReportDetailPage() {
             {/* Resolved After Evidence (If Available) */}
             {report.cleaningActivity?.afterImageUrl && (
               <div className="mt-6 pt-4 border-t-2 border-[#2F9E5A]">
-                <h4 className="font-bold text-xs uppercase text-[#2F9E5A] mb-3">
-                  আফটার ক্লিনিং প্রমাণ (After Cleanup Evidence)
+                <h4 className="font-bold text-xs uppercase text-[#2F9E5A] mb-3 flex items-center justify-between">
+                  <span>আফটার ক্লিনিং প্রমাণ (After Cleanup Evidence)</span>
+                  <span className="text-[11px] text-[#3f4f40] font-normal lowercase">(ক্লিক করে বড় করে দেখুন)</span>
                 </h4>
                 <div className="max-w-xs border-2 border-[#182619] rounded overflow-hidden">
-                  <img src={report.cleaningActivity.afterImageUrl} alt="After" className="w-full h-40 object-cover" />
+                  <img
+                    src={report.cleaningActivity.afterImageUrl}
+                    alt="After"
+                    onClick={() =>
+                      setActiveModalImage({
+                        url: report.cleaningActivity.afterImageUrl,
+                        title: `Cleaned After Evidence — #${report.publicId}`,
+                      })
+                    }
+                    className="w-full h-40 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                  />
                   <span className="block text-[10px] font-bold p-1 bg-[#2F9E5A] text-white text-center">
                     CLEANED AFTER
                   </span>

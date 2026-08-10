@@ -62,6 +62,70 @@ export default function ReportPage() {
     }
   };
 
+  // Client-side automatic image compression targeting ~150-200 KB
+  const compressImage = (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      // If already small (< 200KB), return as is
+      if (file.size <= 200 * 1024) {
+        resolve(file);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDimension = 1200;
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(file);
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress JPEG targeting 150KB-200KB quality (0.7 quality)
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            0.7
+          );
+        };
+        img.onerror = () => resolve(file);
+      };
+      reader.onerror = () => resolve(file);
+    });
+  };
+
   // Instant Image Upload & Preview Handler
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -70,7 +134,8 @@ export default function ReportPage() {
     setErrorMsg('');
 
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+      const rawFile = files[i];
+      const file = await compressImage(rawFile);
       const itemId = `img_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
       const clientPreviewUrl = URL.createObjectURL(file);
 

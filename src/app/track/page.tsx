@@ -15,6 +15,7 @@ function TrackPageContent() {
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [activeModalImage, setActiveModalImage] = useState<{ url: string; title: string } | null>(null);
 
   const fetchTrackData = async (searchQuery: string) => {
     if (!searchQuery.trim()) return;
@@ -189,32 +190,48 @@ function TrackPageContent() {
                   <div>
                     <span className="block text-xs font-extrabold uppercase tracking-wider text-[#3f4f40] mb-2 flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-[#C23B36]"></span>
-                      {t('beforeAfter.before')} (সমস্যা)
+                      {t('beforeAfter.before')} (সমস্যা) — ক্লিক করে বড় করে দেখুন
                     </span>
-                    <img
-                      src={
+                    {(() => {
+                      const beforeUrl =
                         report.images?.find((img: any) => img.type === 'BEFORE')?.imageUrl ||
                         report.images?.[0]?.imageUrl ||
-                        SAMPLE_BEFORE_IMAGE
-                      }
-                      alt="Before Waste"
-                      className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-95 transition-opacity"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = SAMPLE_BEFORE_IMAGE;
-                      }}
-                    />
+                        SAMPLE_BEFORE_IMAGE;
+                      return (
+                        <img
+                          src={beforeUrl}
+                          alt="Before Waste"
+                          onClick={() =>
+                            setActiveModalImage({
+                              url: beforeUrl,
+                              title: `${t('beforeAfter.before')} — #${report.publicId}`,
+                            })
+                          }
+                          className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-90 cursor-pointer transition-opacity"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = SAMPLE_BEFORE_IMAGE;
+                          }}
+                        />
+                      );
+                    })()}
                   </div>
 
                   {report.cleaningActivity?.afterImageUrl ? (
                     <div>
                       <span className="block text-xs font-extrabold uppercase tracking-wider text-[#2F9E5A] mb-2 flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-[#2F9E5A]"></span>
-                        {t('beforeAfter.after')} (সমাধান)
+                        {t('beforeAfter.after')} (সমাধান) — ক্লিক করে বড় করে দেখুন
                       </span>
                       <img
                         src={report.cleaningActivity.afterImageUrl}
                         alt="After Cleanup"
-                        className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-95 transition-opacity"
+                        onClick={() =>
+                          setActiveModalImage({
+                            url: report.cleaningActivity.afterImageUrl,
+                            title: `${t('beforeAfter.after')} — #${report.publicId}`,
+                          })
+                        }
+                        className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-90 cursor-pointer transition-opacity"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = SAMPLE_AFTER_IMAGE;
                         }}
@@ -238,6 +255,37 @@ function TrackPageContent() {
           </div>
         )}
       </div>
+
+      {/* Enlarged Image Preview Modal Dialog */}
+      {activeModalImage && (
+        <div
+          className="fixed inset-0 z-[1000] bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setActiveModalImage(null)}
+        >
+          <div
+            className="relative max-w-4xl max-h-[90vh] bg-[#F8F7EC] border-4 border-[#182619] rounded-xl p-3 shadow-[8px_8px_0_#000] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-2 mb-2 border-b-2 border-[#182619] px-1">
+              <span className="font-bold text-xs text-[#0F4C2E] uppercase tracking-wider">
+                {activeModalImage.title}
+              </span>
+              <button
+                onClick={() => setActiveModalImage(null)}
+                className="bg-[#C23B36] text-white p-1 rounded-full border-2 border-[#182619] hover:bg-red-700 transition-colors"
+                title="বন্ধ করুন"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <img
+              src={activeModalImage.url}
+              alt="Enlarged view"
+              className="w-full max-h-[78vh] object-contain rounded-lg border border-[#c9c8b3]"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

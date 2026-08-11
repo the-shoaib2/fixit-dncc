@@ -10,41 +10,41 @@ export const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[1000] bg-[#F8F7EC] border-b-2 border-[#182619]">
+    <header className="sticky top-0 z-[1000] bg-white border-b border-gray-100">
       <div className="max-w-[1180px] mx-auto px-4 sm:px-6 h-[52px] flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2 py-1">
-          <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-9 sm:h-10 w-auto object-contain" />
+          <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-7 sm:h-8 w-auto object-contain" />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-6">
-          <Link href="/" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+        <nav className="hidden md:flex items-center gap-6">
+          <Link href="/" className="text-sm font-semibold text-[#374151] hover:text-[#0F4C2E] transition-colors">
             {t('nav.home')}
           </Link>
-          <Link href="/report" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+          <Link href="/report" className="text-sm font-semibold text-[#374151] hover:text-[#0F4C2E] transition-colors">
             {t('nav.report')}
           </Link>
-          <Link href="/track" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+          <Link href="/track" className="text-sm font-semibold text-[#374151] hover:text-[#0F4C2E] transition-colors">
             {t('nav.track')}
           </Link>
-          <Link href="/#map" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+          <Link href="/#map" className="text-sm font-semibold text-[#374151] hover:text-[#0F4C2E] transition-colors">
             {t('nav.map')}
           </Link>
-          <Link href="/faq" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+          <Link href="/faq" className="text-sm font-semibold text-[#374151] hover:text-[#0F4C2E] transition-colors">
             {t('nav.faq')}
           </Link>
-          <Link href="/contact" className="text-[13.5px] font-semibold text-[#3f4f40] hover:text-[#0F4C2E] transition-colors">
+          <Link href="/contact" className="text-sm font-semibold text-[#374151] hover:text-[#0F4C2E] transition-colors">
             {t('nav.contact')}
           </Link>
         </nav>
 
         {/* Action Controls & i18n switcher */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Language Switcher */}
           <button
             onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
-            className="text-[11px] font-bold font-['Archivo'] px-2.5 py-1 rounded-full border-2 border-[#182619] bg-[#EFEFE1] hover:bg-[#E39A2E] text-[#182619] transition-all"
+            className="text-xs font-bold font-['Archivo'] px-3 py-1.5 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
             aria-label="Switch Language"
           >
             {lang === 'bn' ? 'English' : 'বাংলা'}
@@ -53,7 +53,7 @@ export const Header: React.FC = () => {
           {/* CTA Report Button */}
           <Link
             href="/report"
-            className="hidden sm:inline-flex bg-[#E39A2E] border-2 border-[#182619] rounded-[6px] px-3.5 py-1 font-bold text-xs text-[#182619] shadow-[2px_2px_0_#182619] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#182619] transition-all"
+            className="inline-flex items-center justify-center bg-[#E39A2E] hover:bg-[#d58e24] text-[#182619] rounded-full px-3.5 py-1.5 sm:px-4.5 font-bold text-xs transition-all duration-200 shadow-sm"
           >
             {t('nav.report')}
           </Link>
@@ -62,71 +62,71 @@ export const Header: React.FC = () => {
           <Link
             href="/admin/login"
             title="Admin Login"
-            className="p-1.5 rounded-md border-2 border-[#182619] bg-[#EFEFE1] hover:bg-[#0F4C2E] hover:text-white transition-colors"
+            className="p-2 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
           >
-            <ShieldAlert className="w-3.5 h-3.5" />
+            <ShieldAlert className="w-4 h-4" />
           </Link>
 
           {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex items-center justify-center w-8 h-8 border-2 border-[#182619] rounded-md bg-[#F8F7EC]"
+            className="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-[#EAF0EB] text-[#182619]"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer Menu */}
-      <div className={`md:hidden grid transition-[grid-template-rows,opacity] duration-300 ease-in-out border-t-2 border-[#182619] bg-[#F8F7EC] ${mobileOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'}`}>
-        <div className="overflow-hidden px-5 py-3 flex flex-col gap-2 shadow-lg">
+      <div className={`md:hidden grid transition-[grid-template-rows,opacity] duration-300 ease-in-out bg-white ${mobileOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'}`}>
+        <div className="overflow-hidden px-6 py-4 flex flex-col gap-3">
           <Link
             href="/"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold py-1.5 border-b border-[#c9c8b3] text-[#182619]"
+            className="text-sm font-semibold py-2 text-[#182619]"
           >
             {t('nav.home')}
           </Link>
           <Link
             href="/report"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold py-1.5 border-b border-[#c9c8b3] text-[#182619]"
+            className="text-sm font-semibold py-2 text-[#182619]"
           >
             {t('nav.report')}
           </Link>
           <Link
             href="/track"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold py-1.5 border-b border-[#c9c8b3] text-[#182619]"
+            className="text-sm font-semibold py-2 text-[#182619]"
           >
             {t('nav.track')}
           </Link>
           <Link
             href="/#map"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold py-1.5 border-b border-[#c9c8b3] text-[#182619]"
+            className="text-sm font-semibold py-2 text-[#182619]"
           >
             {t('nav.map')}
           </Link>
           <Link
             href="/faq"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold py-1.5 border-b border-[#c9c8b3] text-[#182619]"
+            className="text-sm font-semibold py-2 text-[#182619]"
           >
             {t('nav.faq')}
           </Link>
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold py-1.5 text-[#182619]"
+            className="text-sm font-semibold py-2 text-[#182619]"
           >
             {t('nav.contact')}
           </Link>
           <Link
             href="/report"
             onClick={() => setMobileOpen(false)}
-            className="mt-1 text-center bg-[#E39A2E] border-2 border-[#182619] rounded-[6px] py-2 font-bold text-xs text-[#182619] shadow-[2px_2px_0_#182619]"
+            className="mt-2 text-center bg-[#E39A2E] text-[#182619] rounded-full py-2.5 font-bold text-xs"
           >
             {t('nav.report')}
           </Link>
@@ -135,3 +135,4 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+

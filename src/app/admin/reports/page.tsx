@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../../../components/AdminLayout';
 import Link from 'next/link';
-import { Search, Filter, Eye, AlertCircle } from 'lucide-react';
-import { formatDate, SAMPLE_BEFORE_IMAGE } from '../../../lib/utils';
+import { Search, Eye } from 'lucide-react';
+import { formatDate } from '../../../lib/utils';
 
 export default function AdminReportsListPage() {
   const [reports, setReports] = useState<any[]>([]);
@@ -59,31 +59,31 @@ export default function AdminReportsListPage() {
         </div>
       </div>
 
-      {/* Search & Filter Controls */}
-      <div className="bg-white border-2 border-[#182619] rounded-lg p-5 mb-6 shadow-[4px_4px_0_rgba(0,0,0,0.06)] space-y-4">
+      {/* Search & Filter Controls - Clean No Border No Shadow */}
+      <div className="bg-white rounded-2xl p-5 mb-6 space-y-4">
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="আইডি, এলাকা, বিবরণ বা ফোন দিয়ে সার্চ করুন..."
-            className="flex-1 px-3.5 py-2 border-2 border-[#c9c8b3] rounded-md text-xs font-semibold focus:outline-none focus:border-[#0F4C2E]"
+            className="flex-1 px-4 py-2.5 bg-[#F6F8F6] text-[#182619] rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
           />
           <button
             type="submit"
-            className="bg-[#0F4C2E] text-white border-2 border-[#182619] px-5 py-2 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-[#1E7A45]"
+            className="bg-[#0F4C2E] text-white px-6 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 hover:bg-[#1E7A45] transition-colors"
           >
             <Search className="w-3.5 h-3.5" /> সার্চ
           </button>
         </form>
 
-        <div className="flex flex-wrap gap-4 text-xs font-bold">
+        <div className="flex flex-wrap gap-4 text-xs font-bold text-[#182619]">
           <div className="flex items-center gap-2">
             <label>স্ট্যাটাস:</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="px-3 py-1.5 border-2 border-[#c9c8b3] rounded-md focus:outline-none bg-white"
+              className="px-3.5 py-1.5 rounded-full bg-[#F6F8F6] focus:outline-none border-none text-xs"
             >
               <option value="ALL">সকল (All Statuses)</option>
               <option value="SUBMITTED">SUBMITTED (জমা)</option>
@@ -101,7 +101,7 @@ export default function AdminReportsListPage() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="px-3 py-1.5 border-2 border-[#c9c8b3] rounded-md focus:outline-none bg-white"
+              className="px-3.5 py-1.5 rounded-full bg-[#F6F8F6] focus:outline-none border-none text-xs"
             >
               <option value="ALL">সকল ক্যাটেগরি</option>
               {categories.map((c) => (
@@ -117,7 +117,7 @@ export default function AdminReportsListPage() {
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="px-3 py-1.5 border-2 border-[#c9c8b3] rounded-md focus:outline-none bg-white"
+              className="px-3.5 py-1.5 rounded-full bg-[#F6F8F6] focus:outline-none border-none text-xs"
             >
               <option value="ALL">সকল অগ্রাধিকার</option>
               <option value="LOW">LOW</option>
@@ -129,8 +129,8 @@ export default function AdminReportsListPage() {
         </div>
       </div>
 
-      {/* Reports Table */}
-      <div className="bg-white border-2 border-[#182619] rounded-lg p-6 shadow-[6px_6px_0_rgba(0,0,0,0.08)]">
+      {/* Reports Table - Clean No Border No Shadow */}
+      <div className="bg-white rounded-2xl p-6">
         {loading ? (
           <div className="text-center py-12 text-xs font-bold text-[#3f4f40]">রিপোর্ট লোড হচ্ছে...</div>
         ) : reports.length === 0 ? (
@@ -139,46 +139,47 @@ export default function AdminReportsListPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-semibold">
               <thead>
-                <tr className="border-b-2 border-[#182619] bg-[#EFEFE1] text-[#182619]">
-                  <th className="p-3">আইডি</th>
-                  <th className="p-3">ছবি</th>
-                  <th className="p-3">ক্যাটেগরি</th>
-                  <th className="p-3">অবস্থান</th>
-                  <th className="p-3">মোবাইল</th>
-                  <th className="p-3">তারিখ</th>
-                  <th className="p-3">অগ্রাধিকার</th>
-                  <th className="p-3">স্ট্যাটাস</th>
-                  <th className="p-3 text-right">অ্যাকশন</th>
+                <tr className="bg-[#F6F8F6] text-[#182619]">
+                  <th className="p-3.5 rounded-l-xl">আইডি</th>
+                  <th className="p-3.5">ছবি</th>
+                  <th className="p-3.5">ক্যাটেগরি</th>
+                  <th className="p-3.5">অবস্থান</th>
+                  <th className="p-3.5">মোবাইল</th>
+                  <th className="p-3.5">তারিখ</th>
+                  <th className="p-3.5">অগ্রাধিকার</th>
+                  <th className="p-3.5">স্ট্যাটাস</th>
+                  <th className="p-3.5 text-right rounded-r-xl">অ্যাকশন</th>
                 </tr>
               </thead>
-              <tbody className="divide-y border-b border-[#c9c8b3]">
+              <tbody className="divide-y divide-gray-100">
                 {reports.map((r) => (
-                  <tr key={r.id} className="hover:bg-[#F8F7EC]">
-                    <td className="p-3 font-['Archivo'] font-bold text-[#0F4C2E]">#{r.publicId}</td>
-                    <td className="p-3">
+                  <tr key={r.id} className="hover:bg-[#F6F8F6]/50 transition-colors">
+                    <td className="p-3.5 font-['Archivo'] font-bold text-[#0F4C2E]">#{r.publicId}</td>
+                    <td className="p-3.5">
                       {r.images && r.images.length > 0 ? (
                         <img
                           src={r.images[0].imageUrl}
-                          alt="Report photo"
-                          className="w-10 h-10 object-cover rounded border border-[#182619]"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = SAMPLE_BEFORE_IMAGE;
-                          }}
+                          alt="waste"
+                          className="w-10 h-10 object-cover rounded-lg"
                         />
                       ) : (
-                        <div className="w-10 h-10 bg-[#EFEFE1] rounded border border-[#c9c8b3] flex items-center justify-center text-[10px] text-[#7f9280]">
-                          No Photo
+                        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-[10px] text-gray-400">
+                          ছবি নেই
                         </div>
                       )}
                     </td>
-                    <td className="p-3">{r.category?.nameBn}</td>
-                    <td className="p-3 max-w-[180px] truncate">{r.locationAddress}</td>
-                    <td className="p-3">{r.mobileNumber || '—'}</td>
-                    <td className="p-3">{formatDate(r.createdAt, 'bn')}</td>
-                    <td className="p-3 font-bold">{r.priority}</td>
-                    <td className="p-3">
+                    <td className="p-3.5">{r.category?.nameBn}</td>
+                    <td className="p-3.5 max-w-[180px] truncate">{r.locationAddress}</td>
+                    <td className="p-3.5 font-mono text-gray-600">{r.mobileNumber || '—'}</td>
+                    <td className="p-3.5">{formatDate(r.createdAt, 'bn')}</td>
+                    <td className="p-3.5">
+                      <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 text-[10px] font-bold">
+                        {r.priority}
+                      </span>
+                    </td>
+                    <td className="p-3.5">
                       <span
-                        className={`inline-block px-2 py-0.5 rounded-full border border-[#182619] text-[10px] font-bold ${
+                        className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
                           r.status === 'RESOLVED'
                             ? 'bg-[#2F9E5A] text-white'
                             : r.status === 'REJECTED'
@@ -189,12 +190,12 @@ export default function AdminReportsListPage() {
                         {r.status}
                       </span>
                     </td>
-                    <td className="p-3 text-right">
+                    <td className="p-3.5 text-right">
                       <Link
                         href={`/admin/reports/${r.id}`}
-                        className="inline-flex items-center gap-1 bg-[#EFEFE1] border border-[#182619] px-2.5 py-1 rounded text-[11px] font-bold hover:bg-[#E39A2E]"
+                        className="inline-flex items-center gap-1 bg-[#EAF0EB] text-[#0F4C2E] px-3 py-1.5 rounded-full text-[11px] font-bold hover:bg-[#0F4C2E] hover:text-white transition-colors"
                       >
-                        <Eye className="w-3 h-3" /> ম্যানেজ করুন
+                        <Eye className="w-3 h-3" /> বিস্তারিত
                       </Link>
                     </td>
                   </tr>

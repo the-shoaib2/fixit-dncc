@@ -91,24 +91,24 @@ export const WasteMap: React.FC<WasteMapProps> = ({
 
   useEffect(() => {
     import('leaflet').then((L) => {
-      // Create colored marker icons matching exact palette
+      // Create sleek borderless marker icons
       const redIcon = L.divIcon({
         className: 'custom-pin-red',
-        html: `<div style="background:#C23B36; width:22px; height:22px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #182619;"></div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 22],
+        html: `<div style="background:#C23B36; width:20px; height:20px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); shadow:none;"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 20],
       });
       const amberIcon = L.divIcon({
         className: 'custom-pin-amber',
-        html: `<div style="background:#E39A2E; width:22px; height:22px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #182619;"></div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 22],
+        html: `<div style="background:#E39A2E; width:20px; height:20px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); shadow:none;"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 20],
       });
       const greenIcon = L.divIcon({
         className: 'custom-pin-green',
-        html: `<div style="background:#2F9E5A; width:22px; height:22px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #182619;"></div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 22],
+        html: `<div style="background:#2F9E5A; width:20px; height:20px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); shadow:none;"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 20],
       });
 
       setCustomIcons({
@@ -136,13 +136,13 @@ export const WasteMap: React.FC<WasteMapProps> = ({
     return (
       <div
         style={{ height }}
-        className="w-full bg-[#DDE6D3] grid-texture border-2 border-[#182619] rounded-lg shadow-[4px_4px_0_rgba(0,0,0,0.15)]"
+        className="w-full bg-[#EAF0EB] rounded-2xl"
       />
     );
   }
 
   return (
-    <div className="relative w-full border-2 border-[#182619] rounded-lg overflow-hidden shadow-[4px_4px_0_rgba(0,0,0,0.15)]">
+    <div className="relative w-full rounded-2xl overflow-hidden">
       <div style={{ height }}>
         {/* @ts-ignore */}
         <MapContainer
@@ -190,12 +190,12 @@ export const WasteMap: React.FC<WasteMapProps> = ({
                 {/* @ts-ignore */}
                 <Popup>
                   <div className="p-1 max-w-[220px]">
-                    <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
                       <span className="font-['Archivo'] font-black text-xs text-[#0F4C2E]">
                         #{m.publicId}
                       </span>
                       <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#182619] ${
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                           m.status === 'RESOLVED'
                             ? 'bg-[#2F9E5A] text-white'
                             : m.status === 'SUBMITTED'
@@ -211,21 +211,21 @@ export const WasteMap: React.FC<WasteMapProps> = ({
                       {lang === 'bn' ? m.category?.nameBn : m.category?.nameEn}
                     </div>
 
-                    <div className="text-[11px] text-[#3f4f40] line-clamp-2 mb-1">
+                    <div className="text-[11px] text-[#4b5563] line-clamp-2 mb-1.5">
                       📍 {m.locationAddress}
                     </div>
 
                     {m.description && (
-                      <div className="text-[11px] text-[#182619] italic line-clamp-2 mb-2 bg-[#F8F7EC] p-1 rounded border border-[#c9c8b3]">
+                      <div className="text-[11px] text-[#182619] italic line-clamp-2 mb-2 bg-[#F6F8F6] p-2 rounded-lg">
                         "{m.description}"
                       </div>
                     )}
 
                     <a
                       href={`/track?q=${m.publicId}`}
-                      className="block text-center text-xs font-bold bg-[#0F4C2E] text-white py-1 px-2 rounded border border-[#182619] shadow-[2px_2px_0_#182619] hover:bg-[#1E7A45] transition-colors"
+                      className="block text-center text-xs font-bold bg-[#0F4C2E] text-white py-1.5 px-3 rounded-full hover:bg-[#1E7A45] transition-colors"
                     >
-                      🔍 স্ট্যাটাস ট্র্যাক করুন (Track Report) →
+                      🔍 স্ট্যাটাস ট্র্যাক করুন →
                     </a>
                   </div>
                 </Popup>
@@ -236,7 +236,7 @@ export const WasteMap: React.FC<WasteMapProps> = ({
       </div>
 
       {/* Map Legend */}
-      <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur border-2 border-[#182619] rounded-md px-3 py-2 text-xs font-bold flex gap-4 z-10">
+      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md rounded-full px-4 py-2 text-xs font-bold flex gap-4 z-10 text-[#182619]">
         <span className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#C23B36]"></span>
           {t('hero.status.submitted')}
@@ -253,3 +253,4 @@ export const WasteMap: React.FC<WasteMapProps> = ({
     </div>
   );
 };
+

@@ -49,30 +49,30 @@ function TrackPageContent() {
   };
 
   return (
-    <div className="py-16 bg-[#F8F7EC] border-t-2 border-[#182619] min-h-[calc(100vh-52px)]">
+    <div className="py-16 bg-[#F6F8F6] min-h-[calc(100vh-64px)]">
       <div className="max-w-[1180px] mx-auto px-6">
-        <div className="text-center max-w-xl mx-auto mb-11">
+        <div className="text-center max-w-xl mx-auto mb-12">
           <span className="font-['Archivo'] font-extrabold text-xs tracking-widest text-[#1E7A45] uppercase block mb-2">
             {t('track.tag')}
           </span>
-          <h1 className="text-3xl font-bold mb-3">{t('track.title')}</h1>
-          <p className="text-base text-[#3f4f40]">{t('track.subtitle')}</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#0F4C2E] mb-3">{t('track.title')}</h1>
+          <p className="text-base text-[#4b5563]">{t('track.subtitle')}</p>
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-2xl mx-auto bg-white border-2 border-[#182619] rounded-lg p-6 shadow-[6px_6px_0_rgba(0,0,0,0.08)] mb-12">
-          <form onSubmit={handleSearch} className="flex gap-2">
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl p-6 mb-12">
+          <form onSubmit={handleSearch} className="flex gap-3">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="যেমন: FIX-2026-000101 অথবা মোবাইল নম্বর"
-              className="flex-1 px-4 py-3 border-2 border-[#c9c8b3] rounded-md font-semibold text-sm focus:outline-none focus:border-[#0F4C2E]"
+              className="flex-1 px-5 py-3.5 bg-[#F6F8F6] rounded-full font-semibold text-sm text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
             />
             <button
               type="submit"
               disabled={loading}
-              className="bg-[#E39A2E] text-[#182619] border-2 border-[#182619] rounded-md px-6 py-3 font-bold text-sm hover:bg-[#C97C16] transition-colors flex items-center gap-2"
+              className="bg-[#E39A2E] text-[#182619] rounded-full px-7 py-3.5 font-bold text-sm hover:bg-[#d58e24] transition-all flex items-center gap-2"
             >
               <Search className="w-4 h-4" />
               {t('track.btn')}
@@ -86,7 +86,7 @@ function TrackPageContent() {
             স্ট্যাটাস খোঁজা হচ্ছে...
           </div>
         ) : searched && reports.length === 0 ? (
-          <div className="max-w-md mx-auto bg-[#C23B36]/10 border-2 border-[#C23B36] rounded-lg p-6 text-center text-[#C23B36] font-bold">
+          <div className="max-w-md mx-auto bg-[#C23B36]/10 rounded-2xl p-6 text-center text-[#C23B36] font-bold">
             {t('track.notFound')}
           </div>
         ) : (
@@ -94,20 +94,20 @@ function TrackPageContent() {
             {reports.map((report) => (
               <div
                 key={report.publicId}
-                className="bg-white border-2 border-[#182619] rounded-lg p-6 shadow-[6px_6px_0_rgba(0,0,0,0.08)] max-w-3xl mx-auto"
+                className="bg-white rounded-2xl p-8 max-w-3xl mx-auto"
               >
-                <div className="flex flex-wrap items-center justify-between border-b-2 border-[#EFEFE1] pb-4 mb-5 gap-3">
+                <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-5 mb-6 gap-3">
                   <div>
-                    <span className="text-xs uppercase font-extrabold text-[#3f4f40] block">
+                    <span className="text-xs uppercase font-extrabold text-[#4b5563] block">
                       রিপোর্ট আইডি
                     </span>
-                    <span className="font-['Archivo'] font-black text-2xl text-[#0F4C2E]">
+                    <span className="font-['Archivo'] font-black text-3xl text-[#0F4C2E]">
                       #{report.publicId}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span
-                      className={`text-xs font-bold px-3.5 py-1.5 rounded-full border-2 border-[#182619] shadow-[2px_2px_0_#182619] ${
+                      className={`text-xs font-bold px-4 py-1.5 rounded-full ${
                         report.status === 'RESOLVED'
                           ? 'bg-[#2F9E5A] text-white'
                           : report.status === 'REJECTED'
@@ -124,27 +124,27 @@ function TrackPageContent() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm mb-8">
                   <div>
-                    <span className="font-bold text-[#3f4f40] block">ক্যাটেগরি:</span>
+                    <span className="font-bold text-[#4b5563] block">ক্যাটেগরি:</span>
                     <span className="font-semibold text-[#182619]">
                       {lang === 'bn' ? report.category?.nameBn : report.category?.nameEn}
                     </span>
                   </div>
                   <div>
-                    <span className="font-bold text-[#3f4f40] block">জমা দেওয়ার তারিখ:</span>
+                    <span className="font-bold text-[#4b5563] block">জমা দেওয়ার তারিখ:</span>
                     <span className="font-semibold text-[#182619]">
                       {formatDate(report.createdAt, lang)}
                     </span>
                   </div>
                   <div className="sm:col-span-2">
-                    <span className="font-bold text-[#3f4f40] flex items-center gap-1">
+                    <span className="font-bold text-[#4b5563] flex items-center gap-1.5 mb-0.5">
                       <MapPin className="w-4 h-4 text-[#0F4C2E]" /> অবস্থান:
                     </span>
                     <span className="font-semibold text-[#182619]">{report.locationAddress}</span>
                   </div>
                   <div className="sm:col-span-2">
-                    <span className="font-bold text-[#3f4f40] flex items-center gap-1">
+                    <span className="font-bold text-[#4b5563] flex items-center gap-1.5 mb-0.5">
                       <FileText className="w-4 h-4 text-[#0F4C2E]" /> বিবরণ:
                     </span>
                     <span className="text-[#182619]">{report.description}</span>
@@ -152,11 +152,11 @@ function TrackPageContent() {
                 </div>
 
                 {/* Status Timeline */}
-                <div className="bg-[#F8F7EC] border-2 border-[#182619] rounded-md p-5 mb-6">
-                  <h4 className="font-bold text-xs uppercase text-[#0F4C2E] tracking-wider mb-3">
+                <div className="bg-[#F6F8F6] rounded-2xl p-6 mb-8">
+                  <h4 className="font-bold text-xs uppercase text-[#0F4C2E] tracking-wider mb-4">
                     অগ্রগতির ইতিহাস (Timeline)
                   </h4>
-                  <div className="space-y-3 border-l-2 border-[#182619] ml-2 pl-4">
+                  <div className="space-y-4 border-l-2 border-[#0F4C2E]/20 ml-2 pl-5">
                     {report.statusHistory?.map((h: any, idx: number) => {
                       const statusUpper = h.status?.toUpperCase();
                       const dotBg =
@@ -172,11 +172,11 @@ function TrackPageContent() {
 
                       return (
                         <div key={idx} className="relative">
-                          <div className={`absolute -left-[23px] top-1 w-3 h-3 rounded-full border-2 border-[#182619] ${dotBg}`} />
+                          <div className={`absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full ${dotBg}`} />
                           <div className="text-xs font-bold text-[#182619]">
                             {t(`track.timeline.${h.status.toLowerCase()}`) || h.status}
                           </div>
-                          <div className="text-[11px] text-[#3f4f40]">
+                          <div className="text-[11px] text-[#4b5563]">
                             {formatDate(h.createdAt, lang)}
                           </div>
                         </div>
@@ -186,11 +186,11 @@ function TrackPageContent() {
                 </div>
 
                 {/* Before & After Images */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t-2 border-[#EFEFE1]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-4 border-t border-slate-100">
                   <div>
-                    <span className="block text-xs font-extrabold uppercase tracking-wider text-[#3f4f40] mb-2 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#C23B36]"></span>
-                      {t('beforeAfter.before')} (সমস্যা) — ক্লিক করে বড় করে দেখুন
+                    <span className="block text-xs font-extrabold uppercase tracking-wider text-[#4b5563] mb-2.5 flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#C23B36]"></span>
+                      {t('beforeAfter.before')} (সমস্যা)
                     </span>
                     {(() => {
                       const beforeUrl =
@@ -207,7 +207,7 @@ function TrackPageContent() {
                               title: `${t('beforeAfter.before')} — #${report.publicId}`,
                             })
                           }
-                          className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-90 cursor-pointer transition-opacity"
+                          className="w-full h-48 object-cover rounded-xl hover:opacity-95 cursor-pointer transition-opacity"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src = SAMPLE_BEFORE_IMAGE;
                           }}
@@ -218,9 +218,9 @@ function TrackPageContent() {
 
                   {report.cleaningActivity?.afterImageUrl ? (
                     <div>
-                      <span className="block text-xs font-extrabold uppercase tracking-wider text-[#2F9E5A] mb-2 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-[#2F9E5A]"></span>
-                        {t('beforeAfter.after')} (সমাধান) — ক্লিক করে বড় করে দেখুন
+                      <span className="block text-xs font-extrabold uppercase tracking-wider text-[#2F9E5A] mb-2.5 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#2F9E5A]"></span>
+                        {t('beforeAfter.after')} (সমাধান)
                       </span>
                       <img
                         src={report.cleaningActivity.afterImageUrl}
@@ -231,7 +231,7 @@ function TrackPageContent() {
                             title: `${t('beforeAfter.after')} — #${report.publicId}`,
                           })
                         }
-                        className="w-full h-44 object-cover border-2 border-[#182619] rounded-md shadow-[3px_3px_0_rgba(0,0,0,0.1)] hover:opacity-90 cursor-pointer transition-opacity"
+                        className="w-full h-48 object-cover rounded-xl hover:opacity-95 cursor-pointer transition-opacity"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = SAMPLE_AFTER_IMAGE;
                         }}
@@ -239,13 +239,13 @@ function TrackPageContent() {
                     </div>
                   ) : (
                     <div>
-                      <span className="block text-xs font-extrabold uppercase tracking-wider text-[#7f9280] mb-2 flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-[#E39A2E]"></span>
+                      <span className="block text-xs font-extrabold uppercase tracking-wider text-[#7f9280] mb-2.5 flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#E39A2E]"></span>
                         {t('beforeAfter.after')} (অপেক্ষমাণ)
                       </span>
-                      <div className="flex flex-col justify-center items-center bg-[#F8F7EC] border-2 border-dashed border-[#c9c8b3] rounded-md h-44 p-4 text-center">
+                      <div className="flex flex-col justify-center items-center bg-[#F6F8F6] rounded-xl h-48 p-4 text-center">
                         <span className="text-xs font-bold text-[#0F4C2E] mb-1">পরিচ্ছন্নতা কার্যক্রম চলমান</span>
-                        <span className="text-[11px] text-[#3f4f40]">DNCC পরিচ্ছন্নতা দল এলাকাটি পরিস্কার করার পর আফটার ছবি প্রকাশ করবে</span>
+                        <span className="text-[11px] text-[#4b5563]">DNCC পরিচ্ছন্নতা দল এলাকাটি পরিস্কার করার পর আফটার ছবি প্রকাশ করবে</span>
                       </div>
                     </div>
                   )}
@@ -263,16 +263,16 @@ function TrackPageContent() {
           onClick={() => setActiveModalImage(null)}
         >
           <div
-            className="relative max-w-4xl max-h-[90vh] bg-[#F8F7EC] border-4 border-[#182619] rounded-xl p-3 shadow-[8px_8px_0_#000] overflow-hidden"
+            className="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl p-4 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-2 mb-2 border-b-2 border-[#182619] px-1">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 px-1">
               <span className="font-bold text-xs text-[#0F4C2E] uppercase tracking-wider">
                 {activeModalImage.title}
               </span>
               <button
                 onClick={() => setActiveModalImage(null)}
-                className="bg-[#C23B36] text-white p-1 rounded-full border-2 border-[#182619] hover:bg-red-700 transition-colors"
+                className="bg-[#C23B36] text-white p-1.5 rounded-full hover:bg-red-700 transition-colors"
                 title="বন্ধ করুন"
               >
                 <X className="w-4 h-4" />
@@ -281,7 +281,7 @@ function TrackPageContent() {
             <img
               src={activeModalImage.url}
               alt="Enlarged view"
-              className="w-full max-h-[78vh] object-contain rounded-lg border border-[#c9c8b3]"
+              className="w-full max-h-[78vh] object-contain rounded-xl"
             />
           </div>
         </div>
@@ -297,3 +297,4 @@ export default function TrackPage() {
     </Suspense>
   );
 }
+

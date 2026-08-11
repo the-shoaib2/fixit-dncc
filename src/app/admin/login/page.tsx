@@ -37,20 +37,20 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#EFEFE1] grid-texture flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-[#F8F7EC] border-2 border-[#182619] rounded-lg p-8 shadow-[8px_8px_0_rgba(0,0,0,0.2)]">
+    <div className="min-h-screen bg-[#F6F8F6] flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-white rounded-2xl p-8 sm:p-10">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-[#0F4C2E] border-2 border-[#182619] rounded-full flex items-center justify-center mx-auto mb-3">
+          <div className="w-14 h-14 bg-[#0F4C2E] rounded-2xl flex items-center justify-center mx-auto mb-4">
             <ShieldAlert className="w-8 h-8 text-[#E39A2E]" />
           </div>
-          <h1 className="text-2xl font-black font-['Archivo'] text-[#182619]">DNCC Admin Portal</h1>
-          <p className="text-xs text-[#3f4f40] font-semibold mt-1">
+          <h1 className="text-2xl font-extrabold font-['Archivo'] text-[#0F4C2E]">DNCC Admin Portal</h1>
+          <p className="text-xs text-[#4b5563] font-semibold mt-1">
             ঢাকা উত্তর সিটি কর্পোরেশন এডমিন প্রবেশাধিকার
           </p>
         </div>
 
         {errorMsg && (
-          <div className="bg-[#C23B36]/10 border-2 border-[#C23B36] text-[#C23B36] p-3 rounded-md text-xs font-bold flex items-center gap-2 mb-6">
+          <div className="bg-[#C23B36]/10 text-[#C23B36] p-3 rounded-xl text-xs font-bold flex items-center gap-2 mb-6">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             {errorMsg}
           </div>
@@ -58,29 +58,29 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-xs font-bold text-[#182619] mb-1">ইমেইল (Email)</label>
+            <label className="block text-xs font-bold text-[#182619] mb-1.5">ইমেইল (Email)</label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-[#3f4f40] absolute left-3 top-3" />
+              <Mail className="w-4 h-4 text-[#4b5563] absolute left-3.5 top-3.5" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-9 pr-3 py-2.5 border-2 border-[#c9c8b3] rounded-md text-sm font-semibold focus:outline-none focus:border-[#0F4C2E] bg-white"
+                className="w-full pl-10 pr-4 py-3 bg-[#F6F8F6] rounded-xl text-sm font-semibold text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#182619] mb-1">পাসওয়ার্ড (Password)</label>
+            <label className="block text-xs font-bold text-[#182619] mb-1.5">পাসওয়ার্ড (Password)</label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-[#3f4f40] absolute left-3 top-3" />
+              <Lock className="w-4 h-4 text-[#4b5563] absolute left-3.5 top-3.5" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-9 pr-3 py-2.5 border-2 border-[#c9c8b3] rounded-md text-sm font-semibold focus:outline-none focus:border-[#0F4C2E] bg-white"
+                className="w-full pl-10 pr-4 py-3 bg-[#F6F8F6] rounded-xl text-sm font-semibold text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
               />
             </div>
           </div>
@@ -88,18 +88,19 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0F4C2E] text-white border-2 border-[#182619] rounded-md py-3 text-sm font-bold shadow-[4px_4px_0_rgba(0,0,0,0.25)] hover:bg-[#1E7A45] transition-all"
+            className="w-full bg-[#0F4C2E] text-white rounded-full py-3.5 text-sm font-bold hover:bg-[#1E7A45] transition-all"
           >
             {loading ? 'যাচাই করা হচ্ছে...' : 'লগইন করুন (Login)'}
           </button>
         </form>
 
-        <div className="mt-6 pt-4 border-t border-[#c9c8b3] text-center">
-          <span className="text-[11px] text-[#3f4f40] font-semibold">
-            ডিফল্ট ইমেইল: <code className="bg-[#EFEFE1] px-1.5 py-0.5 rounded border border-[#c9c8b3]">admin@dncc.gov.bd</code>
+        <div className="mt-8 pt-4 border-t border-slate-100 text-center">
+          <span className="text-xs text-[#4b5563] font-semibold">
+            ডিফল্ট ইমেইল: <code className="bg-[#F6F8F6] px-2 py-1 rounded-md">admin@dncc.gov.bd</code>
           </span>
         </div>
       </div>
     </div>
   );
 }
+

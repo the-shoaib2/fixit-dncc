@@ -253,37 +253,37 @@ export default function ReportPage() {
   };
 
   return (
-    <div className="py-6 sm:py-8 bg-[#F8F7EC] border-t-2 border-[#182619] min-h-[calc(100vh-52px)]">
+    <div className="py-12 sm:py-16 bg-[#F6F8F6] min-h-[calc(100vh-64px)]">
       <div className="max-w-[1180px] mx-auto px-4 sm:px-6">
         {submittedReport ? (
           /* SUCCESS SCREEN */
-          <div className="max-w-xl mx-auto bg-white border-2 border-[#182619] rounded-lg p-6 shadow-[6px_6px_0_rgba(0,0,0,0.15)] text-center">
-            <CheckCircle2 className="w-14 h-14 text-[#2F9E5A] mx-auto mb-3" />
-            <h2 className="text-xl font-bold text-[#0F4C2E] mb-1">
+          <div className="max-w-xl mx-auto bg-white rounded-2xl p-8 sm:p-10 text-center">
+            <CheckCircle2 className="w-16 h-16 text-[#2F9E5A] mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-[#0F4C2E] mb-2">
               {t('form.successTitle')}
             </h2>
-            <p className="text-xs text-[#3f4f40] mb-4">{t('form.saveNotice')}</p>
+            <p className="text-sm text-[#4b5563] mb-6">{t('form.saveNotice')}</p>
 
-            <div className="bg-[#EFEFE1] border-2 border-[#182619] rounded-md p-4 my-4 relative">
-              <div className="text-[11px] uppercase font-extrabold tracking-wider text-[#3f4f40] mb-1">
+            <div className="bg-[#F6F8F6] rounded-2xl p-6 my-6 relative">
+              <div className="text-xs uppercase font-extrabold tracking-wider text-[#4b5563] mb-1">
                 {t('form.reportIdLabel')}
               </div>
-              <div className="font-['Archivo'] font-black text-2xl sm:text-3xl text-[#0F4C2E] tracking-wider my-1">
+              <div className="font-['Archivo'] font-black text-3xl text-[#0F4C2E] tracking-wider my-2">
                 {submittedReport.publicId}
               </div>
               <button
                 onClick={copyReportId}
-                className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold bg-[#E39A2E] text-[#182619] border-2 border-[#182619] px-3.5 py-1.5 rounded-full shadow-[2px_2px_0_#182619] hover:bg-[#C97C16]"
+                className="mt-3 inline-flex items-center gap-2 text-xs font-bold bg-[#E39A2E] text-[#182619] px-5 py-2 rounded-full hover:bg-[#d58e24] transition-all"
               >
-                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'অনুলিপি করা হয়েছে' : 'আইডি কপি করুন'}
               </button>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3 mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-8">
               <Link
                 href={`/track?q=${submittedReport.publicId}`}
-                className="bg-[#0F4C2E] text-white font-bold text-xs px-5 py-2.5 rounded-full border-2 border-[#182619] shadow-[2px_2px_0_#182619]"
+                className="bg-[#0F4C2E] text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-[#1E7A45] transition-all"
               >
                 {t('hero.ctaTrack')}
               </Link>
@@ -294,7 +294,7 @@ export default function ReportPage() {
                   setLocationAddress('');
                   setImagePreviews([]);
                 }}
-                className="bg-[#EFEFE1] text-[#182619] font-bold text-xs px-5 py-2.5 rounded-full border-2 border-[#182619]"
+                className="bg-slate-100 text-[#182619] font-bold text-sm px-6 py-3 rounded-full hover:bg-slate-200 transition-all"
               >
                 নতুন রিপোর্ট করুন
               </button>
@@ -302,38 +302,38 @@ export default function ReportPage() {
           </div>
         ) : (
           /* FORM VIEW */
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             {/* Left side info */}
             <div>
-              <span className="font-['Archivo'] font-extrabold text-[11px] tracking-widest text-[#1E7A45] uppercase block mb-1">
+              <span className="font-['Archivo'] font-extrabold text-xs tracking-widest text-[#1E7A45] uppercase block mb-2">
                 {t('form.tag')}
               </span>
-              <h2 className="text-2xl font-bold mb-2">{t('form.title')}</h2>
-              <p className="text-sm text-[#3f4f40] leading-relaxed mb-5">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#0F4C2E] mb-3">{t('form.title')}</h2>
+              <p className="text-base text-[#4b5563] leading-relaxed mb-6">
                 {t('form.subtitle')}
               </p>
 
-              <ul className="space-y-2.5 mb-6">
-                <li className="flex items-center gap-2.5 font-semibold text-xs text-[#3f4f40]">
-                  <span className="w-6 h-6 rounded-full bg-[#E39A2E] border-2 border-[#182619] flex items-center justify-center font-['Archivo'] font-black text-[11px] text-[#182619]">
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center gap-3.5 font-semibold text-sm text-[#4b5563]">
+                  <span className="w-7 h-7 rounded-full bg-[#E39A2E] flex items-center justify-center font-['Archivo'] font-black text-xs text-[#182619]">
                     1
                   </span>
                   {t('form.steps.0')}
                 </li>
-                <li className="flex items-center gap-2.5 font-semibold text-xs text-[#3f4f40]">
-                  <span className="w-6 h-6 rounded-full bg-[#E39A2E] border-2 border-[#182619] flex items-center justify-center font-['Archivo'] font-black text-[11px] text-[#182619]">
+                <li className="flex items-center gap-3.5 font-semibold text-sm text-[#4b5563]">
+                  <span className="w-7 h-7 rounded-full bg-[#E39A2E] flex items-center justify-center font-['Archivo'] font-black text-xs text-[#182619]">
                     2
                   </span>
                   {t('form.steps.1')}
                 </li>
-                <li className="flex items-center gap-2.5 font-semibold text-xs text-[#3f4f40]">
-                  <span className="w-6 h-6 rounded-full bg-[#E39A2E] border-2 border-[#182619] flex items-center justify-center font-['Archivo'] font-black text-[11px] text-[#182619]">
+                <li className="flex items-center gap-3.5 font-semibold text-sm text-[#4b5563]">
+                  <span className="w-7 h-7 rounded-full bg-[#E39A2E] flex items-center justify-center font-['Archivo'] font-black text-xs text-[#182619]">
                     3
                   </span>
                   {t('form.steps.2')}
                 </li>
-                <li className="flex items-center gap-2.5 font-semibold text-xs text-[#3f4f40]">
-                  <span className="w-6 h-6 rounded-full bg-[#E39A2E] border-2 border-[#182619] flex items-center justify-center font-['Archivo'] font-black text-[11px] text-[#182619]">
+                <li className="flex items-center gap-3.5 font-semibold text-sm text-[#4b5563]">
+                  <span className="w-7 h-7 rounded-full bg-[#E39A2E] flex items-center justify-center font-['Archivo'] font-black text-xs text-[#182619]">
                     4
                   </span>
                   {t('form.steps.3')}
@@ -344,10 +344,10 @@ export default function ReportPage() {
             {/* Right side form */}
             <form
               onSubmit={handleSubmit}
-              className="bg-white border-2 border-[#182619] rounded-lg p-5 sm:p-6 shadow-[5px_5px_0_rgba(0,0,0,0.08)] space-y-3.5"
+              className="bg-white rounded-2xl p-6 sm:p-8 space-y-5"
             >
               {errorMsg && (
-                <div className="bg-[#C23B36]/10 border-2 border-[#C23B36] rounded-md p-2.5 text-xs text-[#C23B36] font-bold flex items-center gap-2">
+                <div className="bg-[#C23B36]/10 rounded-xl p-3 text-xs text-[#C23B36] font-bold flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   {errorMsg}
                 </div>
@@ -355,16 +355,16 @@ export default function ReportPage() {
 
               {/* Instant Image Upload & Previews Grid */}
               <div>
-                <label className="block font-bold text-xs text-[#182619] mb-1">
+                <label className="block font-bold text-xs text-[#182619] mb-2">
                   {t('form.imageLabel')}
                 </label>
 
                 {imagePreviews.length > 0 && (
-                  <div className="grid grid-cols-3 gap-2.5 mb-3">
+                  <div className="grid grid-cols-3 gap-3 mb-4">
                     {imagePreviews.map((img) => (
                       <div
                         key={img.id}
-                        className="relative group border-2 border-[#182619] rounded-md overflow-hidden h-24 bg-[#EFEFE1]"
+                        className="relative group rounded-xl overflow-hidden h-24 bg-[#F6F8F6]"
                       >
                         <img
                           src={img.previewUrl}
@@ -382,17 +382,17 @@ export default function ReportPage() {
 
                         {/* Success Badge */}
                         {!img.uploading && !img.error && (
-                          <div className="absolute bottom-1 left-1 bg-[#2F9E5A] text-white p-0.5 rounded-full border border-[#182619]">
+                          <div className="absolute bottom-1.5 left-1.5 bg-[#2F9E5A] text-white p-0.5 rounded-full">
                             <Check className="w-3 h-3" />
                           </div>
                         )}
 
                         {/* Action Buttons: Preview & Delete */}
-                        <div className="absolute top-1 right-1 flex gap-1">
+                        <div className="absolute top-1.5 right-1.5 flex gap-1">
                           <button
                             type="button"
                             onClick={() => setActiveModalImage(img.previewUrl)}
-                            className="bg-[#182619] text-white p-1 rounded-full border border-white hover:bg-[#0F4C2E]"
+                            className="bg-[#182619]/80 text-white p-1 rounded-full hover:bg-[#0F4C2E]"
                             title="বড় করে দেখুন"
                           >
                             <Eye className="w-3 h-3" />
@@ -400,7 +400,7 @@ export default function ReportPage() {
                           <button
                             type="button"
                             onClick={() => removeImagePreview(img.id)}
-                            className="bg-[#C23B36] text-white p-1 rounded-full border border-white hover:bg-red-700"
+                            className="bg-[#C23B36] text-white p-1 rounded-full hover:bg-red-700"
                             title="ছবি মুছুন"
                           >
                             <Trash2 className="w-3 h-3" />
@@ -412,14 +412,14 @@ export default function ReportPage() {
                 )}
 
                 {/* Dual Action Upload & Camera Option Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Option 1: Direct Camera Capture */}
-                  <label className="border-2 border-[#182619] rounded-md p-3.5 text-center bg-[#E39A2E]/10 border-dashed hover:border-[#182619] hover:bg-[#E39A2E]/20 cursor-pointer block transition-colors">
-                    <Camera className="w-6 h-6 text-[#182619] mx-auto mb-1.5" />
+                  <label className="rounded-xl p-4 text-center bg-[#F6F8F6] hover:bg-[#EAF0EB] cursor-pointer block transition-colors">
+                    <Camera className="w-6 h-6 text-[#0F4C2E] mx-auto mb-2" />
                     <span className="block font-bold text-xs text-[#182619]">
                       📷 ক্যামেরা দিয়ে ছবি তুলুন
                     </span>
-                    <span className="block text-[11px] text-[#3f4f40] mt-0.5">
+                    <span className="block text-[11px] text-[#4b5563] mt-0.5">
                       (Take Live Photo)
                     </span>
                     <input
@@ -432,12 +432,12 @@ export default function ReportPage() {
                   </label>
 
                   {/* Option 2: Device File Gallery Upload */}
-                  <label className="border-2 border-[#182619] rounded-md p-3.5 text-center bg-[#EFEFE1] border-dashed hover:border-[#0F4C2E] hover:bg-[#EFEFE1]/80 cursor-pointer block transition-colors">
-                    <Upload className="w-6 h-6 text-[#1E7A45] mx-auto mb-1.5" />
+                  <label className="rounded-xl p-4 text-center bg-[#F6F8F6] hover:bg-[#EAF0EB] cursor-pointer block transition-colors">
+                    <Upload className="w-6 h-6 text-[#1E7A45] mx-auto mb-2" />
                     <span className="block font-bold text-xs text-[#182619]">
                       📁 ফাইল/গ্যালারি নির্বাচন
                     </span>
-                    <span className="block text-[11px] text-[#3f4f40] mt-0.5">
+                    <span className="block text-[11px] text-[#4b5563] mt-0.5">
                       (Upload File from Device)
                     </span>
                     <input
@@ -453,14 +453,14 @@ export default function ReportPage() {
 
               {/* Category Select */}
               <div>
-                <label htmlFor="category" className="block font-bold text-xs text-[#182619] mb-1">
+                <label htmlFor="category" className="block font-bold text-xs text-[#182619] mb-1.5">
                   {t('form.categoryLabel')}
                 </label>
                 <select
                   id="category"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 py-2 border-2 border-[#c9c8b3] rounded-md bg-white font-semibold text-xs focus:outline-none focus:border-[#0F4C2E]"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F6F8F6] font-semibold text-xs text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
                 >
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -472,31 +472,31 @@ export default function ReportPage() {
 
               {/* Location Input & GPS */}
               <div>
-                <label htmlFor="location" className="block font-bold text-xs text-[#182619] mb-1">
+                <label htmlFor="location" className="block font-bold text-xs text-[#182619] mb-1.5">
                   {t('form.locationLabel')}
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-2.5">
                   <input
                     type="text"
                     id="location"
                     value={locationAddress}
                     onChange={(e) => setLocationAddress(e.target.value)}
                     placeholder={t('form.locationPlaceholder')}
-                    className="flex-1 px-3 py-2 border-2 border-[#c9c8b3] rounded-md text-xs font-semibold focus:outline-none focus:border-[#0F4C2E]"
+                    className="flex-1 px-4 py-3 rounded-xl bg-[#F6F8F6] text-xs font-semibold text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
                   />
                   <button
                     type="button"
                     onClick={handleGPS}
-                    className="border-2 border-[#182619] bg-[#EFEFE1] rounded-md px-3 text-[11px] font-bold flex items-center gap-1 whitespace-nowrap hover:bg-[#E39A2E] transition-colors"
+                    className="bg-[#EAF0EB] text-[#0F4C2E] rounded-xl px-4 text-xs font-bold flex items-center gap-1.5 whitespace-nowrap hover:bg-[#0F4C2E] hover:text-white transition-colors"
                   >
-                    <MapPin className="w-3.5 h-3.5 text-[#0F4C2E]" />
+                    <MapPin className="w-4 h-4" />
                     {t('form.gpsBtn')}
                   </button>
                 </div>
 
                 {/* Map coordinate picker */}
-                <div className="mt-2">
-                  <div className="text-[11px] font-bold text-[#3f4f40] mb-1">
+                <div className="mt-3">
+                  <div className="text-[11px] font-bold text-[#4b5563] mb-1.5">
                     ম্যাপে পিন পয়েন্ট করে অবস্থান নির্বাচন করতে পারেন:
                   </div>
                   <WasteMap
@@ -506,29 +506,29 @@ export default function ReportPage() {
                       setLongitude(lng);
                       setLocationAddress(`Pin: ${lat.toFixed(4)}, ${lng.toFixed(4)} (Dhaka North)`);
                     }}
-                    height="140px"
+                    height="160px"
                   />
                 </div>
               </div>
 
               {/* Details Textarea */}
               <div>
-                <label htmlFor="details" className="block font-bold text-xs text-[#182619] mb-1">
+                <label htmlFor="details" className="block font-bold text-xs text-[#182619] mb-1.5">
                   {t('form.detailsLabel')}
                 </label>
                 <textarea
                   id="details"
-                  rows={2}
+                  rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder={t('form.detailsPlaceholder')}
-                  className="w-full px-3 py-2 border-2 border-[#c9c8b3] rounded-md text-xs font-semibold focus:outline-none focus:border-[#0F4C2E]"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F6F8F6] text-xs font-semibold text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
                 ></textarea>
               </div>
 
               {/* Mobile Number */}
               <div>
-                <label htmlFor="phone" className="block font-bold text-xs text-[#182619] mb-1">
+                <label htmlFor="phone" className="block font-bold text-xs text-[#182619] mb-1.5">
                   {t('form.phoneLabel')}
                 </label>
                 <input
@@ -537,14 +537,14 @@ export default function ReportPage() {
                   value={mobileNumber}
                   onChange={(e) => setMobileNumber(e.target.value)}
                   placeholder={t('form.phonePlaceholder')}
-                  className="w-full px-3 py-2 border-2 border-[#c9c8b3] rounded-md text-xs font-semibold focus:outline-none focus:border-[#0F4C2E]"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F6F8F6] text-xs font-semibold text-[#182619] focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-[#0F4C2E] text-white border-2 border-[#182619] rounded-md py-2.5 font-bold text-sm shadow-[3px_3px_0_rgba(0,0,0,0.25)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_rgba(0,0,0,0.25)] transition-all"
+                className="w-full bg-[#0F4C2E] text-white rounded-full py-3.5 font-bold text-sm hover:bg-[#1E7A45] transition-all"
               >
                 {submitting ? t('form.submitting') : t('form.submitBtn')}
               </button>
@@ -556,17 +556,17 @@ export default function ReportPage() {
       {/* Fullsize Image Preview Modal */}
       {activeModalImage && (
         <div className="fixed inset-0 z-[1000] bg-black/80 flex items-center justify-center p-4">
-          <div className="relative max-w-3xl max-h-[85vh] bg-[#F8F7EC] border-2 border-[#182619] rounded-lg p-2 overflow-hidden shadow-2xl">
+          <div className="relative max-w-3xl max-h-[85vh] bg-white rounded-2xl p-3 overflow-hidden">
             <button
               onClick={() => setActiveModalImage(null)}
-              className="absolute top-3 right-3 bg-[#C23B36] text-white p-1.5 rounded-full border-2 border-[#182619] hover:bg-red-700 z-10"
+              className="absolute top-4 right-4 bg-[#C23B36] text-white p-2 rounded-full hover:bg-red-700 z-10"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
             <img
               src={activeModalImage}
               alt="Enlarged waste preview"
-              className="w-full max-h-[80vh] object-contain rounded"
+              className="w-full max-h-[80vh] object-contain rounded-xl"
             />
           </div>
         </div>
@@ -574,3 +574,4 @@ export default function ReportPage() {
     </div>
   );
 }
+

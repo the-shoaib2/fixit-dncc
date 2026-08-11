@@ -37,30 +37,30 @@ export default function MapPage() {
   }, [selectedCat, selectedStatus]);
 
   return (
-    <div className="py-12 bg-[#F8F7EC] border-t-2 border-[#182619] min-h-[calc(100vh-52px)]">
+    <div className="py-12 bg-[#F6F8F6] min-h-[calc(100vh-64px)]">
       <div className="max-w-[1180px] mx-auto px-6">
-        <div className="text-center max-w-xl mx-auto mb-8">
+        <div className="text-center max-w-xl mx-auto mb-10">
           <span className="font-['Archivo'] font-extrabold text-xs tracking-widest text-[#1E7A45] uppercase block mb-2">
             Live Map
           </span>
-          <h1 className="text-3xl font-bold mb-3">ইন্টারঅ্যাকটিভ ঢাকা শহর লাইভ রিপোর্ট ম্যাপ</h1>
-          <p className="text-sm text-[#3f4f40]">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#0F4C2E] mb-3">ইন্টারঅ্যাকটিভ ঢাকা শহর লাইভ রিপোর্ট ম্যাপ</h1>
+          <p className="text-sm text-[#4b5563]">
             ঢাকা উত্তর সিটি কর্পোরেশনের এলাকার সকল সচল ও সমাধানকৃত বর্জ্য রিপোর্টের লাইভ মানচিত্র।
           </p>
         </div>
 
         {/* Filters */}
-        <div className="bg-white border-2 border-[#182619] rounded-lg p-4 mb-6 flex flex-wrap items-center gap-4 shadow-[4px_4px_0_rgba(0,0,0,0.08)]">
+        <div className="bg-white rounded-2xl p-5 mb-8 flex flex-wrap items-center gap-6">
           <div className="flex items-center gap-2 font-bold text-xs text-[#0F4C2E] uppercase tracking-wider">
             <Filter className="w-4 h-4" /> ফিল্টার:
           </div>
 
           <div className="flex items-center gap-2">
-            <label className="text-xs font-bold">ক্যাটেগরি:</label>
+            <label className="text-xs font-bold text-[#182619]">ক্যাটেগরি:</label>
             <select
               value={selectedCat}
               onChange={(e) => setSelectedCat(e.target.value)}
-              className="px-3 py-1.5 border-2 border-[#c9c8b3] rounded-md text-xs font-semibold focus:outline-none"
+              className="px-4 py-2 rounded-xl bg-[#F6F8F6] text-xs font-semibold text-[#182619] border-none focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
             >
               <option value="ALL">সকল ক্যাটেগরি</option>
               {categories.map((c) => (
@@ -72,11 +72,11 @@ export default function MapPage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <label className="text-xs font-bold">স্ট্যাটাস:</label>
+            <label className="text-xs font-bold text-[#182619]">স্ট্যাটাস:</label>
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="px-3 py-1.5 border-2 border-[#c9c8b3] rounded-md text-xs font-semibold focus:outline-none"
+              className="px-4 py-2 rounded-xl bg-[#F6F8F6] text-xs font-semibold text-[#182619] border-none focus:outline-none focus:ring-2 focus:ring-[#0F4C2E]"
             >
               <option value="ALL">সকল স্ট্যাটাস</option>
               <option value="SUBMITTED">জমা দেওয়া হয়েছে</option>
@@ -87,8 +87,9 @@ export default function MapPage() {
         </div>
 
         {/* Map Container */}
-        <WasteMap markers={reports} height="520px" />
+        <WasteMap markers={reports} height="540px" />
       </div>
     </div>
   );
 }
+

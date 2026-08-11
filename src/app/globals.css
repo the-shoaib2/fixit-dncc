@@ -7,8 +7,8 @@
 
 :root {
   --ink: #182619;
-  --ink-soft: #3f4f40;
-  --paper: #EFEFE1;
+  --ink-soft: #4b5563;
+  --paper: #F8F7EC;
   --paper-raised: #F8F7EC;
   --green-deep: #0F4C2E;
   --green-mid: #1E7A45;
@@ -16,9 +16,9 @@
   --amber: #E39A2E;
   --amber-deep: #C97C16;
   --red: #C23B36;
-  --line: #c9c8b3;
-  --shadow: 0 10px 24px rgba(15, 76, 46, 0.12);
-  --radius: 6px;
+  --line: transparent;
+  --shadow: none;
+  --radius: 16px;
 }
 
 * {
@@ -38,6 +38,7 @@ body {
   font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
   font-size: 16px;
   line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, .disp {
@@ -58,83 +59,75 @@ h1, h2, h3, .disp {
   color: var(--ink);
 }
 
-/* Texture overlay matching index.html */
+/* Subtle clean texture overlay */
 .grid-texture {
-  background-image: radial-gradient(circle, rgba(15, 76, 46, 0.14) 1px, transparent 1.4px);
-  background-size: 20px 20px;
+  background-image: radial-gradient(circle, rgba(15, 76, 46, 0.05) 1px, transparent 1.2px);
+  background-size: 24px 24px;
 }
 
-/* Perforated ticket styling matching index.html */
+/* Version 2 Clean Metric Card (replacing perforated ticket) */
 .ticket {
-  background: var(--paper-raised);
-  color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 6px;
-  padding: 22px 14px 18px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  padding: 24px 18px;
   text-align: center;
   position: relative;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.ticket::before, .ticket::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  background: var(--green-deep);
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-}
-
-.ticket::before {
-  left: -9px;
-}
-
-.ticket::after {
-  right: -9px;
+.ticket:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .ticket .num {
   font-family: 'Archivo', sans-serif;
   font-weight: 900;
-  font-size: 30px;
-  color: var(--green-deep);
+  font-size: 32px;
+  color: #FFFFFF;
 }
 
 .ticket .lbl {
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: #E2E8F0;
   margin-top: 6px;
 }
 
 .ticket .stamp {
   position: absolute;
-  top: 8px;
-  right: 10px;
+  top: 10px;
+  right: 12px;
   font-size: 9.5px;
   font-weight: 800;
-  color: var(--red);
-  border: 1.5px solid var(--red);
+  color: #E39A2E;
+  background: rgba(227, 154, 46, 0.15);
+  border: none;
   border-radius: 100px;
-  padding: 1px 6px;
-  transform: rotate(6deg);
+  padding: 2px 8px;
   font-family: 'Archivo', sans-serif;
   letter-spacing: .05em;
 }
 
-/* Custom interactive map pin style */
+/* Clean interactive map popup style (No border, no hard shadow) */
 .leaflet-popup-content-wrapper {
-  background: var(--paper-raised) !important;
-  border: 2px solid var(--ink) !important;
-  border-radius: 6px !important;
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.2) !important;
+  background: #FFFFFF !important;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
   font-family: 'Hind Siliguri', sans-serif !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-tip {
+  background: #FFFFFF !important;
 }
 
 .leaflet-container {
-  background: #DDE6D3 !important;
+  background: #EAF0EB !important;
   font-family: 'Hind Siliguri', sans-serif !important;
   z-index: 1 !important;
 }
@@ -152,3 +145,4 @@ h1, h2, h3, .disp {
 .leaflet-control-attribution {
   display: none !important;
 }
+

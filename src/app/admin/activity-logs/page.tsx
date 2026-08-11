@@ -8,7 +8,6 @@ export default function AdminActivityLogsPage() {
   const [logs, setLogs] = useState<any[]>([]);
 
   useEffect(() => {
-    // Initial sample logs
     setLogs([
       {
         id: '1',
@@ -36,28 +35,28 @@ export default function AdminActivityLogsPage() {
         </p>
       </div>
 
-      <div className="bg-white border-2 border-[#182619] rounded-lg p-6 shadow-[6px_6px_0_rgba(0,0,0,0.08)] max-w-5xl">
+      <div className="bg-white rounded-2xl p-6 max-w-5xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-semibold">
             <thead>
-              <tr className="border-b-2 border-[#182619] bg-[#EFEFE1] text-[#182619]">
-                <th className="p-3">সময়</th>
-                <th className="p-3">এডমিন</th>
-                <th className="p-3">অ্যাকশন (Action)</th>
-                <th className="p-3">বিস্তারিত (Details)</th>
+              <tr className="bg-[#F6F8F6] text-[#182619]">
+                <th className="p-3.5 rounded-l-xl">সময়</th>
+                <th className="p-3.5">এডমিন</th>
+                <th className="p-3.5">অ্যাকশন (Action)</th>
+                <th className="p-3.5 rounded-r-xl">বিস্তারিত (Details)</th>
               </tr>
             </thead>
-            <tbody className="divide-y border-b border-[#c9c8b3]">
+            <tbody className="divide-y divide-gray-100">
               {logs.map((log) => (
-                <tr key={log.id} className="hover:bg-[#F8F7EC]">
-                  <td className="p-3 font-mono text-[11px]">{formatDate(log.createdAt, 'bn')}</td>
-                  <td className="p-3 font-bold text-[#0F4C2E]">{log.admin?.email}</td>
-                  <td className="p-3">
-                    <span className="bg-[#EFEFE1] px-2 py-0.5 rounded border border-[#182619] font-mono text-[10px] font-bold">
+                <tr key={log.id} className="hover:bg-[#F6F8F6]/50 transition-colors">
+                  <td className="p-3.5 font-mono text-[11px]">{formatDate(log.createdAt, 'bn')}</td>
+                  <td className="p-3.5 font-bold text-[#0F4C2E]">{log.admin?.email}</td>
+                  <td className="p-3.5">
+                    <span className="bg-[#F6F8F6] px-2.5 py-1 rounded-full font-mono text-[10px] font-bold text-[#0F4C2E]">
                       {log.action}
                     </span>
                   </td>
-                  <td className="p-3 text-[#3f4f40]">{log.details}</td>
+                  <td className="p-3.5 text-[#3f4f40]">{log.details}</td>
                 </tr>
               ))}
             </tbody>

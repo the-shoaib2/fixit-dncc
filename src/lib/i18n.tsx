@@ -23,22 +23,28 @@ const LanguageContext = createContext<LanguageContextType>({
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLangState] = useState<Language>('bn');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const saved = localStorage.getItem('fixit_lang') as Language;
-    if (saved && (saved === 'bn' || saved === 'en')) {
+    if (saved === 'bn' || saved === 'en') {
       setLangState(saved);
     }
   }, []);
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
-    localStorage.setItem('fixit_lang', newLang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('fixit_lang', newLang);
+    }
   };
+
+  const currentLang = mounted ? lang : 'bn';
 
   const t = (keyPath: string): string => {
     const keys = keyPath.split('.');
-    let current: any = translations[lang];
+    let current: any = translations[currentLang];
     for (const key of keys) {
       if (current && typeof current === 'object' && key in current) {
         current = current[key];
@@ -59,7 +65,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={{ lang: currentLang, setLang, t }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -32,15 +32,15 @@ export default function AdminMapPage() {
         </p>
       </div>
 
-      {/* Map Control Bar */}
-      <div className="bg-white border-2 border-[#182619] rounded-lg p-4 mb-6 flex items-center gap-4 shadow-[4px_4px_0_rgba(0,0,0,0.06)]">
-        <div className="flex items-center gap-2 text-xs font-bold">
+      {/* Map Control Bar - Clean No Border No Shadow */}
+      <div className="bg-white rounded-2xl p-4 mb-6 flex items-center gap-4">
+        <div className="flex items-center gap-2 text-xs font-bold text-[#182619]">
           <Filter className="w-4 h-4 text-[#0F4C2E]" /> ফিল্টার:
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3 py-1.5 border-2 border-[#c9c8b3] rounded-md text-xs font-bold bg-white focus:outline-none"
+          className="px-4 py-2 rounded-full text-xs font-bold bg-[#F6F8F6] border-none focus:outline-none"
         >
           <option value="ALL">সকল স্ট্যাটাস (All Statuses)</option>
           <option value="SUBMITTED">SUBMITTED</option>
@@ -51,11 +51,13 @@ export default function AdminMapPage() {
       </div>
 
       {loading ? (
-        <div className="h-[500px] bg-[#DDE6D3] border-2 border-[#182619] rounded-lg flex items-center justify-center font-bold text-[#0F4C2E]">
+        <div className="h-[500px] bg-white rounded-2xl flex items-center justify-center font-bold text-[#0F4C2E]">
           ম্যাপ লোড হচ্ছে...
         </div>
       ) : (
-        <WasteMap markers={reports} height="560px" />
+        <div className="rounded-2xl overflow-hidden">
+          <WasteMap markers={reports} height="560px" />
+        </div>
       )}
     </AdminLayout>
   );

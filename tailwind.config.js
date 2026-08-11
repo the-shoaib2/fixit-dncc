@@ -29,6 +29,10 @@ module.exports = {
         line: '#c9c8b3',
       },
       fontFamily: {
+        sans: ['Geist', '"Hind Siliguri"', 'Roboto', 'sans-serif'],
+        heading: ['Geist', '"Baloo Da 2"', 'sans-serif'],
+        bn: ['"Hind Siliguri"', 'Roboto', 'Arial', 'sans-serif'],
+        handwriting: ['Caveat', 'cursive'],
         bengali: ['"Hind Siliguri"', '"Noto Sans Bengali"', 'sans-serif'],
         display: ['"Baloo Da 2"', '"Hind Siliguri"', 'sans-serif'],
         archivo: ['Archivo', 'sans-serif'],

@@ -34,8 +34,8 @@ export async function GET() {
       const beforeImgObj = report.images.find((img: any) => img.type === 'BEFORE') || report.images[0];
       const afterImgObj = report.images.find((img: any) => img.type === 'AFTER');
       
-      const beforeImage = beforeImgObj?.imageUrl || 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=600&q=80';
-      const afterImage = afterImgObj?.imageUrl || report.cleaningActivity?.afterImageUrl || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80';
+      const beforeImage = beforeImgObj?.imageUrl || '/samples/waste-before.jpg';
+      const afterImage = afterImgObj?.imageUrl || report.cleaningActivity?.afterImageUrl || '/samples/waste-after.jpg';
 
       return {
         id: report.id,
@@ -51,12 +51,9 @@ export async function GET() {
       };
     });
 
-    return NextResponse.json({
-      success: true,
-      data: formattedResults,
-    });
+    return NextResponse.json({ success: true, data: formattedResults });
   } catch (error) {
     console.error('Error fetching resolved reports:', error);
-    return NextResponse.json({ success: false, error: 'Failed to fetch reports' }, { status: 500 });
+    return NextResponse.json({ success: true, data: [] });
   }
 }

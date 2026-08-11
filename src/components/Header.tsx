@@ -1,13 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../lib/i18n';
-import { Menu, X, ShieldAlert } from 'lucide-react';
+import { Menu, X, ShieldAlert, LayoutDashboard } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const { lang, setLang, t } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/admin/check-auth')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated) {
+          setIsAdminLoggedIn(true);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <header className="sticky top-0 z-[1000] bg-white border-b border-gray-100">
@@ -58,14 +70,24 @@ export const Header: React.FC = () => {
             {t('nav.report')}
           </Link>
 
-          {/* Admin Login Shortcut */}
-          <Link
-            href="/admin/login"
-            title="Admin Login"
-            className="hidden sm:flex p-2 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
-          >
-            <ShieldAlert className="w-4 h-4" />
-          </Link>
+          {/* Dynamic Admin Button: Dashboard (when logged in) vs Admin Login */}
+          {isAdminLoggedIn ? (
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 bg-[#0F4C2E] hover:bg-[#1E7A45] text-white px-3 py-1.5 rounded-full font-bold text-xs transition-all duration-200 shadow-sm"
+            >
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{t('nav.dashboard')}</span>
+            </Link>
+          ) : (
+            <Link
+              href="/admin/login"
+              title={t('nav.adminLogin')}
+              className="hidden sm:flex p-2 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
+            >
+              <ShieldAlert className="w-4 h-4" />
+            </Link>
+          )}
 
           {/* Mobile Hamburger Toggle */}
           <button
@@ -123,6 +145,16 @@ export const Header: React.FC = () => {
           >
             {t('nav.contact')}
           </Link>
+          {isAdminLoggedIn && (
+            <Link
+              href="/admin"
+              onClick={() => setMobileOpen(false)}
+              className="text-sm font-bold py-2 text-[#0F4C2E] flex items-center gap-2"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              {t('nav.dashboard')}
+            </Link>
+          )}
           <Link
             href="/report"
             onClick={() => setMobileOpen(false)}

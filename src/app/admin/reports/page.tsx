@@ -5,8 +5,10 @@ import { AdminLayout } from '../../../components/AdminLayout';
 import Link from 'next/link';
 import { Search, Eye } from 'lucide-react';
 import { formatDate } from '../../../lib/utils';
+import { useLanguage } from '../../../lib/i18n';
 
 export default function AdminReportsListPage() {
+  const { lang, t } = useLanguage();
   const [reports, setReports] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [search, setSearch] = useState('');
@@ -79,20 +81,20 @@ export default function AdminReportsListPage() {
 
         <div className="flex flex-wrap gap-4 text-xs font-bold text-[#182619]">
           <div className="flex items-center gap-2">
-            <label>স্ট্যাটাস:</label>
+            <label>{t('admin.colStatus')}:</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="px-3.5 py-1.5 rounded-full bg-[#F6F8F6] focus:outline-none border-none text-xs"
+              className="px-3.5 py-1.5 rounded-full bg-[#F6F8F6] focus:outline-none border-none text-xs font-semibold"
             >
-              <option value="ALL">সকল (All Statuses)</option>
-              <option value="SUBMITTED">SUBMITTED (জমা)</option>
-              <option value="UNDER_VERIFICATION">UNDER_VERIFICATION (যাচাই চলছে)</option>
-              <option value="VERIFIED">VERIFIED (যাচাই সম্পন্ন)</option>
-              <option value="ASSIGNED">ASSIGNED (দায়িত্ব অর্পণ)</option>
-              <option value="IN_PROGRESS">IN_PROGRESS (কাজ চলছে)</option>
-              <option value="RESOLVED">RESOLVED (সমাধান)</option>
-              <option value="REJECTED">REJECTED (বাতিল)</option>
+              <option value="ALL">{lang === 'bn' ? 'সকল স্ট্যাটাস' : 'All Statuses'}</option>
+              <option value="SUBMITTED">{t('track.status.SUBMITTED')}</option>
+              <option value="UNDER_VERIFICATION">{t('track.status.UNDER_VERIFICATION')}</option>
+              <option value="VERIFIED">{t('track.status.VERIFIED')}</option>
+              <option value="ASSIGNED">{t('track.status.ASSIGNED')}</option>
+              <option value="IN_PROGRESS">{t('track.status.IN_PROGRESS')}</option>
+              <option value="RESOLVED">{t('track.status.RESOLVED')}</option>
+              <option value="REJECTED">{t('track.status.REJECTED')}</option>
             </select>
           </div>
 
@@ -187,7 +189,7 @@ export default function AdminReportsListPage() {
                             : 'bg-[#E39A2E] text-[#182619]'
                         }`}
                       >
-                        {r.status}
+                        {t(`track.status.${r.status}`) || r.status}
                       </span>
                     </td>
                     <td className="p-3.5 text-right">

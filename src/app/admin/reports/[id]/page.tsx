@@ -4,9 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../../../../components/AdminLayout';
 import { useParams, useRouter } from 'next/navigation';
 import { formatDate } from '../../../../lib/utils';
+import { useLanguage } from '../../../../lib/i18n';
 import { ArrowLeft, MapPin, Calendar, Phone, AlertCircle, FileText, CheckCircle2, ShieldCheck, X } from 'lucide-react';
 
 export default function AdminReportDetailPage() {
+  const { lang, t } = useLanguage();
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
@@ -157,7 +159,7 @@ export default function AdminReportDetailPage() {
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <span className="text-xs font-bold text-gray-500 uppercase">সামগ্রিক তথ্য</span>
               <span
-                className={`text-xs font-bold px-3 py-1 rounded-full ${
+                className={`px-3 py-1 rounded-full text-xs font-bold ${
                   report.status === 'RESOLVED'
                     ? 'bg-[#2F9E5A] text-white'
                     : report.status === 'REJECTED'
@@ -165,7 +167,7 @@ export default function AdminReportDetailPage() {
                     : 'bg-[#E39A2E] text-[#182619]'
                 }`}
               >
-                {report.status}
+                {t(`track.status.${report.status}`) || report.status}
               </span>
             </div>
 
@@ -307,13 +309,13 @@ export default function AdminReportDetailPage() {
                 onChange={(e) => setNewStatus(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-full text-xs font-bold bg-[#F6F8F6] border-none focus:outline-none"
               >
-                <option value="SUBMITTED">SUBMITTED</option>
-                <option value="UNDER_VERIFICATION">UNDER_VERIFICATION</option>
-                <option value="VERIFIED">VERIFIED</option>
-                <option value="ASSIGNED">ASSIGNED</option>
-                <option value="IN_PROGRESS">IN_PROGRESS</option>
-                <option value="RESOLVED">RESOLVED</option>
-                <option value="REJECTED">REJECTED</option>
+                <option value="SUBMITTED">{t('track.status.SUBMITTED')}</option>
+                <option value="UNDER_VERIFICATION">{t('track.status.UNDER_VERIFICATION')}</option>
+                <option value="VERIFIED">{t('track.status.VERIFIED')}</option>
+                <option value="ASSIGNED">{t('track.status.ASSIGNED')}</option>
+                <option value="IN_PROGRESS">{t('track.status.IN_PROGRESS')}</option>
+                <option value="RESOLVED">{t('track.status.RESOLVED')}</option>
+                <option value="REJECTED">{t('track.status.REJECTED')}</option>
               </select>
             </div>
 

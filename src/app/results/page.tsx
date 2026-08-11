@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../../lib/i18n';
-import { AlertTriangle, CheckCircle2, ShieldCheck, MapPin, ArrowRight, X } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle2, ShieldCheck, MapPin, X } from 'lucide-react';
 
 interface ResolvedReportItem {
   id: string;
@@ -18,19 +18,19 @@ interface ResolvedReportItem {
   resolvedAt: string;
 }
 
-export const ResultsSection: React.FC = () => {
+export default function AllResultsPage() {
   const { t, lang } = useLanguage();
   const [items, setItems] = useState<ResolvedReportItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalImage, setModalImage] = useState<{ url: string; title: string } | null>(null);
 
   useEffect(() => {
-    async function fetchLatestResolved() {
+    async function fetchAllResolved() {
       try {
         const res = await fetch('/api/reports/resolved');
         const json = await res.json();
         if (json.success && json.data) {
-          setItems(json.data.slice(0, 3));
+          setItems(json.data);
         }
       } catch (err) {
         console.error('Failed to load resolved reports:', err);
@@ -38,22 +38,35 @@ export const ResultsSection: React.FC = () => {
         setLoading(false);
       }
     }
-    fetchLatestResolved();
+    fetchAllResolved();
   }, []);
 
   return (
-    <section className="py-20 bg-[#F6F8F6]">
+    <div className="py-12 bg-[#F6F8F6] min-h-screen">
       <div className="max-w-[1180px] mx-auto px-6">
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="font-['Archivo'] font-extrabold text-xs tracking-widest text-[#1E7A45] uppercase block mb-2">
-            {t('beforeAfter.tag')}
-          </span>
-          <h2 className="text-2xl sm:text-4xl text-[#0F4C2E] font-bold">{t('beforeAfter.title')}</h2>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C2E] hover:underline mb-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {lang === 'bn' ? 'হোমে ফিরে যান' : 'Back to Home'}
+            </Link>
+            <h1 className="text-3xl font-extrabold text-[#0F4C2E]">
+              {lang === 'bn' ? 'সকল বিফোর অ্যান্ড আফটার ফলাফল' : 'All Before & After Results'}
+            </h1>
+            <p className="text-xs text-gray-600 mt-1 font-semibold">
+              {lang === 'bn'
+                ? 'ঢাকা উত্তর সিটি কর্পোরেশনের সম্পন্নকৃত ময়লা পরিষ্কার কার্যক্রমের তালিকা'
+                : 'Complete archive of verified waste resolution actions by DNCC field teams'}
+            </p>
+          </div>
         </div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((n) => (
+            {[1, 2, 3, 4, 5, 6].map((n) => (
               <div key={n} className="rounded-2xl overflow-hidden bg-white shadow-sm animate-pulse h-64">
                 <div className="h-44 bg-gray-200" />
                 <div className="p-4 space-y-2">
@@ -74,7 +87,7 @@ export const ResultsSection: React.FC = () => {
                 key={item.id}
                 className="rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 flex flex-col justify-between"
               >
-                {/* Before & After Verified Images */}
+                {/* Before & After Images */}
                 <div className="grid grid-cols-2 h-44 relative overflow-hidden">
                   {/* Before Side */}
                   <div
@@ -123,7 +136,7 @@ export const ResultsSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Card Details Footer */}
+                {/* Details Footer */}
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-1.5 text-xs text-[#0F4C2E] font-bold mb-1">
@@ -145,18 +158,6 @@ export const ResultsSection: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-        )}
-
-        {items.length > 0 && (
-          <div className="mt-10 text-center">
-            <Link
-              href="/results"
-              className="inline-flex items-center gap-2 bg-[#0F4C2E] hover:bg-[#1E7A45] text-white px-6 py-3 rounded-full text-xs font-bold shadow-md hover:shadow-lg transition-all"
-            >
-              <span>{t('beforeAfter.viewAll')}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         )}
       </div>
@@ -190,6 +191,6 @@ export const ResultsSection: React.FC = () => {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
-};
+}

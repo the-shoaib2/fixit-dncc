@@ -60,11 +60,11 @@ export default function AdminDashboardPage() {
         <button
           onClick={handleRefresh}
           disabled={refreshing || loading}
-          className="inline-flex items-center gap-2 bg-[#E39A2E] text-[#182619] px-4.5 py-2.5 rounded-full font-bold text-xs hover:bg-[#d58e24] transition-all"
+          className="inline-flex items-center justify-center gap-2 bg-[#E39A2E] hover:bg-[#d58e24] active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed text-[#182619] px-4 py-2.5 rounded-full font-bold text-xs shadow-sm hover:shadow transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap min-w-[110px]"
           title={t('admin.refresh')}
         >
-          <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-          <span>{refreshing ? t('admin.refreshing') : t('admin.refresh')}</span>
+          <RefreshCw className={`w-4 h-4 shrink-0 ${refreshing ? 'animate-spin' : ''}`} />
+          <span className="leading-none">{refreshing ? t('admin.refreshing') : t('admin.refresh')}</span>
         </button>
       </div>
 
@@ -145,7 +145,7 @@ export default function AdminDashboardPage() {
                             : 'bg-[#E39A2E] text-[#182619]'
                         }`}
                       >
-                        {t(`status.${r.status.toLowerCase()}`) || r.status}
+                        {t(`track.status.${r.status}`) || r.status}
                       </span>
                     </td>
                     <td className="p-3.5 text-right">

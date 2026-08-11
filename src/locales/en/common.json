@@ -9,7 +9,8 @@
     "map": "Waste Map",
     "faq": "FAQ",
     "contact": "Contact",
-    "adminLogin": "Admin Login"
+    "adminLogin": "Admin Login",
+    "dashboard": "Dashboard"
   },
   "hero": {
     "eyebrow": "Dhaka North City Corporation — Civic Service",
@@ -102,13 +103,24 @@
       "in_progress": "Work In Progress",
       "resolved": "Resolved",
       "rejected": "Rejected"
+    },
+    "status": {
+      "SUBMITTED": "Submitted",
+      "UNDER_VERIFICATION": "Under Verification",
+      "VERIFIED": "Verified",
+      "ASSIGNED": "Assigned",
+      "IN_PROGRESS": "In Progress",
+      "RESOLVED": "Resolved",
+      "REJECTED": "Rejected"
     }
   },
   "beforeAfter": {
     "tag": "Results",
     "title": "Before & After",
     "before": "BEFORE",
-    "after": "AFTER"
+    "after": "AFTER",
+    "viewAll": "View All Results →",
+    "noData": "No cleanup results available yet."
   },
   "why": {
     "tag": "Benefits",

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Map, FolderTree, BarChart3, HelpCircle, History, LogOut, ChevronRight, ShieldCheck, Loader2, Globe, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, Map, FolderTree, BarChart3, HelpCircle, History, Settings, LogOut, ChevronRight, ShieldCheck, Loader2, Globe, Menu, X } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 
 interface AdminLayoutProps {
@@ -64,6 +64,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { href: '/admin/statistics', label: t('admin.nav.statistics'), icon: BarChart3 },
     { href: '/admin/faq', label: t('admin.nav.faq'), icon: HelpCircle },
     { href: '/admin/activity-logs', label: t('admin.nav.activityLogs'), icon: History },
+    { href: '/admin/settings', label: t('admin.nav.settings'), icon: Settings },
   ];
 
   if (loading) {
@@ -170,16 +171,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
         {/* Footer & Logout */}
         <div className="p-4 border-t border-white/10">
-          <Link
-            href="/"
-            className="block text-center text-xs font-bold text-[#9fb09f] hover:text-white mb-3 transition-colors"
-          >
-            {t('admin.backToPublic')}
-          </Link>
           <button
             onClick={handleLogout}
             disabled={loggingOut}
-            className="w-full bg-[#C23B36] text-white rounded-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 hover:bg-red-700 transition-colors"
+            className="w-full bg-[#C23B36] text-white rounded-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 hover:bg-red-700 transition-colors cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             {loggingOut ? t('admin.loggingOut') : t('admin.logout')}

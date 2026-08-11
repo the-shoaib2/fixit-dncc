@@ -11,7 +11,7 @@ export interface AdminPayload {
 }
 
 export function signAdminToken(payload: AdminPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: '15d' });
 }
 
 export function verifyAdminToken(token: string): AdminPayload | null {

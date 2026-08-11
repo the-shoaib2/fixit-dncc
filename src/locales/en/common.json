@@ -193,7 +193,8 @@
       "categories": "Categories",
       "statistics": "Statistics",
       "faq": "FAQ",
-      "activityLogs": "Audit Logs"
+      "activityLogs": "Audit Logs",
+      "settings": "Settings & Security"
     }
   }
 }

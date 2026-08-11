@@ -86,7 +86,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Mobile Top Header */}
       <div className="md:hidden bg-[#0C1C11] text-white p-4 flex items-center justify-between sticky top-0 z-40">
         <Link href="/admin" className="flex items-center gap-2">
-          <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-7 w-auto object-contain bg-white p-1 rounded-lg" />
+          <img src="/logo/logo-light.png" alt="FixIt DNCC Logo" className="h-7 w-auto object-contain" />
           <span className="font-bold text-xs text-[#E39A2E]">Control Room</span>
         </Link>
         <div className="flex items-center gap-2">
@@ -118,7 +118,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <div className="p-5 border-b border-white/10">
             <div className="flex items-center justify-between">
               <Link href="/admin" className="flex items-center gap-2">
-                <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-8 w-auto object-contain bg-white p-1.5 rounded-xl" />
+                <img src="/logo/logo-light.png" alt="FixIt DNCC Logo" className="h-8 w-auto object-contain" />
               </Link>
               {/* Language Switcher */}
               <button

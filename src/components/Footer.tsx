@@ -12,8 +12,8 @@ export const Footer: React.FC = () => {
       <div className="max-w-[1180px] mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between gap-10 pb-10 border-b border-white/10">
           <div className="max-w-md">
-            <Link href="/" className="inline-block mb-4 bg-white p-2 rounded-xl">
-              <img src="/logo/logo-dark.png" alt="FixIt DNCC Logo" className="h-9 w-auto object-contain" />
+            <Link href="/" className="inline-block mb-4">
+              <img src="/logo/logo-light.png" alt="FixIt DNCC Logo" className="h-9 w-auto object-contain" />
             </Link>
             <p className="text-sm text-[#9fb09f] leading-relaxed">
               {t('footer.brandDesc')}

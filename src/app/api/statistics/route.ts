@@ -15,16 +15,16 @@ export async function GET() {
       by: ['mobileNumber'],
       where: { mobileNumber: { not: null } },
     });
-    const citizenParticipation = uniqueMobiles.length > 0 ? uniqueMobiles.length : Math.max(totalReports, 1);
+    const citizenParticipation = uniqueMobiles.length;
 
     return NextResponse.json({
       success: true,
       data: {
-        totalReports: totalReports > 0 ? totalReports : 12480,
-        resolvedReports: resolvedReports > 0 ? resolvedReports : 9635,
-        inProgress: inProgress > 0 ? inProgress : 2140,
-        cleaningDone: cleaningDone > 0 ? cleaningDone : 785,
-        citizenParticipation: citizenParticipation > 1 ? citizenParticipation : 6320,
+        totalReports,
+        resolvedReports,
+        inProgress,
+        cleaningDone,
+        citizenParticipation,
       },
     });
   } catch (error) {

@@ -14,11 +14,11 @@ import { FinalCtaSection } from '../components/home/FinalCtaSection';
 
 export default function HomePage() {
   const [stats, setStats] = useState({
-    totalReports: 12480,
-    resolvedReports: 9635,
-    inProgress: 2140,
-    cleaningDone: 785,
-    citizenParticipation: 6320,
+    totalReports: 0,
+    resolvedReports: 0,
+    inProgress: 0,
+    cleaningDone: 0,
+    citizenParticipation: 0,
   });
   const [mapMarkers, setMapMarkers] = useState<any[]>([]);
 

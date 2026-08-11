@@ -40,11 +40,11 @@ export const Header: React.FC = () => {
         </nav>
 
         {/* Action Controls & i18n switcher */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           {/* Language Switcher */}
           <button
             onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
-            className="text-xs font-bold font-['Archivo'] px-3 py-1.5 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
+            className="text-xs font-bold font-['Archivo'] px-2.5 py-1.5 sm:px-3 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
             aria-label="Switch Language"
           >
             {lang === 'bn' ? 'English' : 'বাংলা'}
@@ -53,7 +53,7 @@ export const Header: React.FC = () => {
           {/* CTA Report Button */}
           <Link
             href="/report"
-            className="inline-flex items-center justify-center bg-[#E39A2E] hover:bg-[#d58e24] text-[#182619] rounded-full px-3.5 py-1.5 sm:px-4.5 font-bold text-xs transition-all duration-200 shadow-sm"
+            className="inline-flex items-center justify-center bg-[#E39A2E] hover:bg-[#d58e24] text-[#182619] rounded-full px-2.5 py-1.5 sm:px-4.5 font-bold text-xs transition-all duration-200 shadow-sm"
           >
             {t('nav.report')}
           </Link>
@@ -62,7 +62,7 @@ export const Header: React.FC = () => {
           <Link
             href="/admin/login"
             title="Admin Login"
-            className="p-2 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
+            className="hidden sm:flex p-2 rounded-full bg-[#EAF0EB] text-[#0F4C2E] hover:bg-[#0F4C2E] hover:text-white transition-all duration-200"
           >
             <ShieldAlert className="w-4 h-4" />
           </Link>
@@ -70,10 +70,10 @@ export const Header: React.FC = () => {
           {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex items-center justify-center w-9 h-9 rounded-full bg-[#EAF0EB] text-[#182619]"
+            className="md:hidden flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#EAF0EB] text-[#182619]"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
         </div>
       </div>

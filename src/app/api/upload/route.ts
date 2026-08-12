@@ -28,6 +28,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       url: dataUrl,
+      imageUrl: dataUrl,
     });
   } catch (error) {
     console.error('File upload error:', error);

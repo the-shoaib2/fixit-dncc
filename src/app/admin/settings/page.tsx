@@ -93,8 +93,35 @@ export default function AdminSettingsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Security Overview Card */}
+        {/* Security & Profile Overview Sidebar */}
         <div className="lg:col-span-1 space-y-6">
+          {/* Admin Account Profile Card */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#0F4C2E] text-white flex items-center justify-center font-bold">
+                <User className="w-5 h-5" />
+              </div>
+              <div className="overflow-hidden">
+                <h3 className="text-sm font-bold text-[#182619] truncate">
+                  {adminUser?.name || 'Admin Account'}
+                </h3>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EAF0EB] text-[#0F4C2E] inline-block">
+                  {adminUser?.role || 'ADMIN'}
+                </span>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-gray-100 text-xs space-y-2">
+              <div className="flex items-center gap-2 text-gray-600 font-semibold">
+                <Mail className="w-3.5 h-3.5 text-[#0F4C2E] shrink-0" />
+                <span className="truncate font-mono text-[#182619] font-bold">
+                  {adminUser?.email || 'admin@dncc.gov.bd'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Security Status Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-[#EAF0EB] text-[#0F4C2E] flex items-center justify-center font-bold">

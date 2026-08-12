@@ -36,6 +36,8 @@ export function NumberTicker({
       timer = setTimeout(() => {
         motionValue.set(direction === 'down' ? startValue : value);
       }, delay * 1000);
+    } else {
+      motionValue.set(direction === 'down' ? value : startValue);
     }
 
     return () => {
@@ -44,6 +46,10 @@ export function NumberTicker({
       }
     };
   }, [motionValue, isInView, delay, value, direction, startValue]);
+
+  useEffect(() => {
+    motionValue.set(direction === 'down' ? startValue : value);
+  }, [value, motionValue, direction, startValue]);
 
   useEffect(
     () =>

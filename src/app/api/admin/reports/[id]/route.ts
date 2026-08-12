@@ -104,10 +104,16 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       });
 
       if (afterImageUrl) {
-        const hasAfterImage = await prisma.reportImage.findFirst({
+        const existingAfterImage = await prisma.reportImage.findFirst({
           where: { reportId: existing.id, type: 'AFTER' },
         });
-        if (!hasAfterImage) {
+
+        if (existingAfterImage) {
+          await prisma.reportImage.update({
+            where: { id: existingAfterImage.id },
+            data: { imageUrl: afterImageUrl },
+          });
+        } else {
           await prisma.reportImage.create({
             data: {
               reportId: existing.id,
@@ -119,16 +125,19 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       }
     }
 
-    // Audit Log (safely handled)
+    // Audit Log (safely handled with DB verification)
     try {
       if (admin.id) {
-        await prisma.activityLog.create({
-          data: {
-            adminId: admin.id,
-            action: 'UPDATE_REPORT',
-            details: `Updated report ${existing.publicId} status to ${status || existing.status}`,
-          },
-        });
+        const adminExists = await prisma.admin.findUnique({ where: { id: admin.id } });
+        if (adminExists) {
+          await prisma.activityLog.create({
+            data: {
+              adminId: admin.id,
+              action: 'UPDATE_REPORT',
+              details: `Updated report ${existing.publicId} status to ${status || existing.status}`,
+            },
+          });
+        }
       }
     } catch (e) {
       console.warn('Could not record activity log:', e);

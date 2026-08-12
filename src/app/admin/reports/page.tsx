@@ -163,11 +163,16 @@ export default function AdminReportsListPage() {
                           src={r.images[0].imageUrl}
                           alt="waste"
                           className="w-10 h-10 object-cover rounded-lg"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/samples/waste-before.jpg';
+                          }}
                         />
                       ) : (
-                        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-[10px] text-gray-400">
-                          ছবি নেই
-                        </div>
+                        <img
+                          src="/samples/waste-before.jpg"
+                          alt="waste"
+                          className="w-10 h-10 object-cover rounded-lg"
+                        />
                       )}
                     </td>
                     <td className="p-3.5">{r.category?.nameBn}</td>

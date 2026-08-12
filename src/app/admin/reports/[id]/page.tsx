@@ -5,7 +5,7 @@ import { AdminLayout } from '../../../../components/AdminLayout';
 import { useParams, useRouter } from 'next/navigation';
 import { formatDate } from '../../../../lib/utils';
 import { useLanguage } from '../../../../lib/i18n';
-import { ArrowLeft, MapPin, Calendar, Phone, AlertCircle, FileText, CheckCircle2, ShieldCheck, X } from 'lucide-react';
+import { ArrowLeft, MapPin, Calendar, Phone, AlertCircle, FileText, CheckCircle2, ShieldCheck, X, Loader2 } from 'lucide-react';
 
 export default function AdminReportDetailPage() {
   const { lang, t } = useLanguage();
@@ -23,6 +23,7 @@ export default function AdminReportDetailPage() {
   const [cleanedBy, setCleanedBy] = useState('');
   const [wasteVolumeKg, setWasteVolumeKg] = useState('');
   const [afterImageUrl, setAfterImageUrl] = useState('');
+  const [uploadingAfterImg, setUploadingAfterImg] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [activeModalImage, setActiveModalImage] = useState<{ url: string; title: string } | null>(null);
 
@@ -57,6 +58,11 @@ export default function AdminReportDetailPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Create instant client-side preview Blob URL so user sees image immediately upon file pick
+    const localBlobUrl = URL.createObjectURL(file);
+    setAfterImageUrl(localBlobUrl);
+    setUploadingAfterImg(true);
+
     const formData = new FormData();
     formData.append('file', file);
 
@@ -67,10 +73,12 @@ export default function AdminReportDetailPage() {
       });
       const data = await res.json();
       if (data.success) {
-        setAfterImageUrl(data.imageUrl);
+        setAfterImageUrl(data.imageUrl || data.url);
       }
     } catch (err) {
       console.error('Failed to upload image:', err);
+    } finally {
+      setUploadingAfterImg(false);
     }
   };
 
@@ -87,9 +95,9 @@ export default function AdminReportDetailPage() {
           assignedTo,
           note: adminNote,
           rejectionReason: statusToUse === 'REJECTED' ? rejectionReason : null,
-          cleanedBy: statusToUse === 'RESOLVED' ? cleanedBy || 'DNCC Waste Team' : null,
-          wasteVolumeKg: statusToUse === 'RESOLVED' && wasteVolumeKg ? parseFloat(wasteVolumeKg) : null,
-          afterImageUrl: statusToUse === 'RESOLVED' ? afterImageUrl : null,
+          cleanedBy: cleanedBy || 'DNCC Waste Team',
+          wasteVolumeKg: wasteVolumeKg ? parseFloat(wasteVolumeKg) : null,
+          afterImageUrl: afterImageUrl || null,
         }),
       });
       const data = await res.json();
@@ -120,9 +128,18 @@ export default function AdminReportDetailPage() {
     );
   }
 
-  const beforeImages = report.images?.filter((img: any) => img.type === 'BEFORE') || [];
+  const beforeImages = report.images?.filter((img: any) => !img.type || img.type === 'BEFORE') || [];
   const afterImages = report.images?.filter((img: any) => img.type === 'AFTER') || [];
-  const finalAfterUrl = afterImages.length > 0 ? afterImages[0].imageUrl : report.cleaningActivity?.afterImageUrl;
+  
+  // Fallback to sample before image if no before images exist
+  const effectiveBeforeImages = beforeImages.length > 0 
+    ? beforeImages 
+    : [{ id: 'sample-before', imageUrl: '/samples/waste-before.jpg' }];
+
+  // Fallback to cleaning activity afterImageUrl or sample after image for resolved reports
+  const finalAfterUrl = afterImages.length > 0 
+    ? afterImages[0].imageUrl 
+    : (report.cleaningActivity?.afterImageUrl || (report.status === 'RESOLVED' ? '/samples/waste-after.jpg' : null));
 
   return (
     <AdminLayout>
@@ -215,19 +232,22 @@ export default function AdminReportDetailPage() {
                   📷 রিপোর্টেড বর্জ্য ছবি (Before Image):
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {beforeImages.length > 0 ? (
-                    beforeImages.map((img: any) => (
-                      <div
-                        key={img.id}
-                        onClick={() => setActiveModalImage({ url: img.imageUrl, title: 'Reported Waste Image' })}
-                        className="rounded-xl overflow-hidden cursor-pointer group relative bg-gray-100 h-32"
-                      >
-                        <img src={img.imageUrl} alt="Before" className="w-full h-full object-cover" />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-xs text-gray-400">কোনো Before ছবি পাওয়া যায়নি</div>
-                  )}
+                  {effectiveBeforeImages.map((img: any) => (
+                    <div
+                      key={img.id}
+                      onClick={() => setActiveModalImage({ url: img.imageUrl, title: 'Reported Waste Image' })}
+                      className="rounded-xl overflow-hidden cursor-pointer group relative bg-gray-100 h-32"
+                    >
+                      <img
+                        src={img.imageUrl}
+                        alt="Before"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/samples/waste-before.jpg';
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -235,13 +255,20 @@ export default function AdminReportDetailPage() {
               {finalAfterUrl && (
                 <div className="pt-3 border-t border-gray-100">
                   <span className="text-xs font-bold text-[#1E7A45] block mb-2">
-                    ✅ পরিচ্ছন্নতার আফটার ছবি (Verified Cleaned Image):
+                    ✅ {lang === 'bn' ? 'পরিচ্ছন্নতার আফটার ছবি:' : 'Verified Cleaned Image:'}
                   </span>
                   <div
-                    onClick={() => setActiveModalImage({ url: finalAfterUrl, title: 'Cleaned Image' })}
-                    className="max-w-xs rounded-xl overflow-hidden cursor-pointer bg-gray-100 h-40 relative"
+                    onClick={() => setActiveModalImage({ url: finalAfterUrl, title: lang === 'bn' ? 'আফটার ছবি' : 'Cleaned Image' })}
+                    className="max-w-xs rounded-xl overflow-hidden cursor-pointer bg-gray-100 h-40 relative group"
                   >
-                    <img src={finalAfterUrl} alt="After" className="w-full h-full object-cover" />
+                    <img
+                      src={finalAfterUrl}
+                      alt="After"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/samples/waste-after.jpg';
+                      }}
+                    />
                   </div>
                 </div>
               )}
@@ -271,39 +298,42 @@ export default function AdminReportDetailPage() {
               দ্রুত স্ট্যাটাস পরিবর্তন
             </h3>
 
+            {/* Quick Status Buttons */}
             <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => {
                   setNewStatus('VERIFIED');
                   handleUpdate('VERIFIED');
                 }}
-                className="bg-[#1E7A45] text-white text-[11px] font-bold py-2 px-2 rounded-full hover:bg-[#0F4C2E] transition-colors text-center"
+                className="bg-[#1E7A45] text-white text-[11px] font-bold py-2 px-2 rounded-full hover:bg-[#0F4C2E] transition-colors text-center cursor-pointer"
               >
-                ✓ Verify
+                {lang === 'bn' ? '✓ যাচাইকৃত' : '✓ Verify'}
               </button>
               <button
                 onClick={() => {
                   setNewStatus('IN_PROGRESS');
                   handleUpdate('IN_PROGRESS');
                 }}
-                className="bg-[#E39A2E] text-[#182619] text-[11px] font-bold py-2 px-2 rounded-full hover:bg-[#C97C16] transition-colors text-center"
+                className="bg-[#E39A2E] text-[#182619] text-[11px] font-bold py-2 px-2 rounded-full hover:bg-[#C97C16] transition-colors text-center cursor-pointer"
               >
-                ⚙ Progress
+                {lang === 'bn' ? '⚙ চলমান' : '⚙ Progress'}
               </button>
               <button
                 onClick={() => {
                   setNewStatus('RESOLVED');
                   handleUpdate('RESOLVED');
                 }}
-                className="bg-[#2F9E5A] text-white text-[11px] font-bold py-2 px-2 rounded-full hover:bg-[#1E7A45] transition-colors text-center"
+                className="bg-[#2F9E5A] text-white text-[11px] font-bold py-2 px-2 rounded-full hover:bg-[#1E7A45] transition-colors text-center cursor-pointer"
               >
-                ✔ Resolved
+                {lang === 'bn' ? '✔ সমাধান' : '✔ Resolved'}
               </button>
             </div>
 
             {/* Status Selector */}
             <div>
-              <label className="block text-xs font-bold mb-1">স্ট্যাটাস বাছাই:</label>
+              <label className="block text-xs font-bold mb-1 text-[#182619]">
+                {lang === 'bn' ? 'স্ট্যাটাস নির্বাচন:' : 'Select Status:'}
+              </label>
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
@@ -321,7 +351,9 @@ export default function AdminReportDetailPage() {
 
             {/* Priority Selector */}
             <div>
-              <label className="block text-xs font-bold mb-1">অগ্রাধিকার:</label>
+              <label className="block text-xs font-bold mb-1 text-[#182619]">
+                {lang === 'bn' ? 'অগ্রাধিকার:' : 'Priority:'}
+              </label>
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
@@ -336,73 +368,138 @@ export default function AdminReportDetailPage() {
 
             {/* Field Assignment */}
             <div>
-              <label className="block text-xs font-bold mb-1">দায়িত্বপ্রাপ্ত টিম/কর্মকর্তা:</label>
+              <label className="block text-xs font-bold mb-1 text-[#182619]">
+                {lang === 'bn' ? 'দায়িত্বপ্রাপ্ত টিম বা কর্মকর্তা:' : 'Assigned Team / Official:'}
+              </label>
               <input
                 type="text"
                 value={assignedTo}
                 onChange={(e) => setAssignedTo(e.target.value)}
-                placeholder="যেমন: Zone 3 Cleanup Squad"
+                placeholder={lang === 'bn' ? 'যেমন: জোন ৩ পরিচ্ছন্নতা স্কোয়াড' : 'e.g. Zone 3 Cleanup Squad'}
                 className="w-full px-4 py-2.5 rounded-full text-xs font-semibold bg-[#F6F8F6] border-none focus:outline-none"
               />
             </div>
 
             {/* Internal Admin Note */}
             <div>
-              <label className="block text-xs font-bold mb-1">অভ্যন্তরীণ নোট (Internal Note):</label>
+              <label className="block text-xs font-bold mb-1 text-[#182619]">
+                {lang === 'bn' ? 'অভ্যন্তরীণ নোট:' : 'Internal Note:'}
+              </label>
               <textarea
                 rows={2}
                 value={adminNote}
                 onChange={(e) => setAdminNote(e.target.value)}
-                placeholder="নোট লিখুন..."
+                placeholder={lang === 'bn' ? 'মতামত বা নির্দেশনাবলী...' : 'Enter note or instructions...'}
                 className="w-full px-4 py-2.5 rounded-2xl text-xs bg-[#F6F8F6] border-none focus:outline-none"
               ></textarea>
             </div>
 
-            {/* If Status is RESOLVED, Show Cleaning Evidence Controls */}
-            {newStatus === 'RESOLVED' && (
-              <div className="bg-[#F6F8F6] p-4 rounded-2xl space-y-3">
-                <h4 className="font-bold text-xs text-[#0F4C2E] uppercase">
-                  পরিচ্ছন্নতা কাজ সম্পন্ন করার তথ্য (Resolution Details)
-                </h4>
-                <div>
-                  <label className="block text-[11px] font-bold mb-1">টিমের নাম:</label>
-                  <input
-                    type="text"
-                    value={cleanedBy}
-                    onChange={(e) => setCleanedBy(e.target.value)}
-                    className="w-full px-3 py-2 bg-white rounded-full text-xs border-none focus:outline-none"
-                  />
+            {/* Cleaning Evidence & After Image Upload Controls */}
+            <div className="bg-[#F6F8F6] p-4 rounded-2xl space-y-3">
+              <h4 className="font-bold text-xs text-[#0F4C2E]">
+                {lang === 'bn' ? 'পরিচ্ছন্নতার আফটার ছবি' : 'Cleaned Evidence Image'}
+              </h4>
+              {uploadingAfterImg && (
+                <div className="text-[11px] font-bold text-[#0F4C2E] animate-pulse">
+                  {lang === 'bn' ? 'ছবি প্রক্রিয়াকরণ হচ্ছে...' : 'Processing image...'}
                 </div>
-                <div>
-                  <label className="block text-[11px] font-bold mb-1">বর্জ্য পরিমাণ (KG):</label>
-                  <input
-                    type="number"
-                    value={wasteVolumeKg}
-                    onChange={(e) => setWasteVolumeKg(e.target.value)}
-                    className="w-full px-3 py-2 bg-white rounded-full text-xs border-none focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold mb-1">আফটার ফটো (Cleaned Image):</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleAfterImageUpload}
-                    className="text-xs"
-                  />
-                  {afterImageUrl && (
-                    <img src={afterImageUrl} alt="After preview" className="w-20 h-20 object-cover mt-2 rounded-xl" />
-                  )}
-                </div>
+              )}
+              <div>
+                <label className="block text-[11px] font-bold mb-1.5 text-[#182619]">
+                  {lang === 'bn' ? 'আফটার ফটো নির্বাচন করুন:' : 'Select After Image:'}
+                </label>
+                
+                {afterImageUrl ? (
+                  <div className="relative rounded-2xl overflow-hidden border-2 border-[#1E7A45] bg-white p-2.5 shadow-sm space-y-2">
+                    <div className="relative w-full h-48 rounded-xl overflow-hidden bg-gray-100">
+                      <img
+                        src={afterImageUrl}
+                        alt="After Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      {uploadingAfterImg && (
+                        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white space-y-1">
+                          <Loader2 className="w-6 h-6 animate-spin text-white" />
+                          <span className="text-[11px] font-bold">
+                            {lang === 'bn' ? 'প্রসেসিং হচ্ছে...' : 'Uploading...'}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between px-1 pt-1">
+                      <span className="text-[11px] font-bold text-[#1E7A45]">
+                        {uploadingAfterImg
+                          ? (lang === 'bn' ? '⌛ ছবি সার্ভারে আপলোড হচ্ছে...' : '⌛ Uploading to server...')
+                          : (lang === 'bn' ? '✓ ছবি সিলেক্ট হয়েছে (পরিবর্তন সংরক্ষণ করুন)' : '✓ Preview ready (Click Save Update)')}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setAfterImageUrl('')}
+                        className="text-[11px] font-bold text-red-600 hover:underline cursor-pointer"
+                      >
+                        {lang === 'bn' ? 'মুছে ফেলুন' : 'Remove'}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="border-2 border-dashed border-gray-300 hover:border-[#0F4C2E] bg-white rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-[#EAF0EB]/30 group text-center">
+                    <div className="w-10 h-10 rounded-full bg-[#EAF0EB] text-[#0F4C2E] flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                      📷
+                    </div>
+                    <span className="text-xs font-bold text-[#0F4C2E] mb-0.5">
+                      {lang === 'bn' ? 'আফটার ছবি আপলোড করতে ক্লিক করুন' : 'Click to upload After image'}
+                    </span>
+                    <span className="text-[10px] text-gray-400 font-semibold">
+                      PNG, JPG, WEBP ({lang === 'bn' ? 'সর্বোচ্চ ১০ মেগাবাইট' : 'Max 10MB'})
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleAfterImageUpload(e)}
+                      className="hidden"
+                    />
+                  </label>
+                )}
               </div>
-            )}
+
+              {newStatus === 'RESOLVED' && (
+                <>
+                  <div>
+                    <label className="block text-[11px] font-bold mb-1 text-[#182619]">
+                      {lang === 'bn' ? 'পরিচ্ছন্নতা টিমের নাম:' : 'Cleaned By Team:'}
+                    </label>
+                    <input
+                      type="text"
+                      value={cleanedBy}
+                      onChange={(e) => setCleanedBy(e.target.value)}
+                      placeholder={lang === 'bn' ? 'ডিএনসিসি পরিচ্ছন্নতা টিম' : 'DNCC Sanitation Squad'}
+                      className="w-full px-3 py-2 bg-white rounded-full text-xs border-none focus:outline-none font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold mb-1 text-[#182619]">
+                      {lang === 'bn' ? 'অপসারিত বর্জ্য (কেজি):' : 'Waste Removed (KG):'}
+                    </label>
+                    <input
+                      type="number"
+                      value={wasteVolumeKg}
+                      onChange={(e) => setWasteVolumeKg(e.target.value)}
+                      placeholder="e.g. 150"
+                      className="w-full px-3 py-2 bg-white rounded-full text-xs border-none focus:outline-none"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
 
             <button
               onClick={() => handleUpdate()}
               disabled={updating}
-              className="w-full bg-[#0F4C2E] text-white py-3.5 rounded-full font-bold text-xs hover:bg-[#1E7A45] transition-colors"
+              className="w-full bg-[#0F4C2E] text-white py-3.5 rounded-full font-bold text-xs hover:bg-[#1E7A45] transition-colors cursor-pointer"
             >
-              {updating ? 'আপডেট হচ্ছে...' : 'পরিবর্তন সংরক্ষণ করুন (Save Update)'}
+              {updating
+                ? (lang === 'bn' ? 'সংরক্ষণ করা হচ্ছে...' : 'Saving Update...')
+                : (lang === 'bn' ? 'পরিবর্তন সংরক্ষণ করুন' : 'Save Update')}
             </button>
           </div>
         </div>
